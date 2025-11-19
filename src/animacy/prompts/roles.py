@@ -6,7 +6,7 @@ from pydantic import BaseModel
 
 
 class Role(BaseModel):
-    name: str
+    role_name: str
     group: Literal["Animal", "People", "Object", "Other"]
     system_prompt: str
 
@@ -31,7 +31,7 @@ def get_article(word: str) -> str:
 
 
 def create_role(
-    name: str,
+    role_name: str,
     group: Literal["Animal", "People", "Object", "Other"],
     extra_instructions: str = "",
 ) -> Role:
@@ -39,15 +39,15 @@ def create_role(
     Construct a single Role from relevant text inputs.
 
     Args:
-        name: The name of the role.
+        role_name: The name of the role.
         group: The category group of the role.
 
     Returns:
         A Role object with the generated system prompt.
     """
-    article = get_article(name)
-    system_prompt = f"{BASE_STEM} {article} {name}."
-    return Role(name=name, group=group, system_prompt=system_prompt)
+    article = get_article(role_name)
+    system_prompt = f"{BASE_STEM} {article} {role_name}."
+    return Role(role_name=role_name, group=group, system_prompt=system_prompt)
 
 
 def create_roles_from_df(
@@ -63,4 +63,4 @@ def create_roles_from_df(
         An iterable of Role objects.
     """
     for _, row in df.iterrows():
-        yield create_role(name=row["word"], group=row["group"])
+        yield create_role(role_name=row["word"], group=row["group"])
