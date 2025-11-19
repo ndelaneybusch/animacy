@@ -1,0 +1,61 @@
+from collections.abc import Iterable
+from typing import Literal
+
+import pandas as pd
+from pydantic import BaseModel
+
+
+class Role(BaseModel):
+    name: str
+    group: Literal["Animal", "People", "Object", "Other"]
+    system_prompt: str
+
+
+BASE_STEM = "You are"
+
+
+def get_article(word: str) -> str:
+    """
+    Determine the appropriate indefinite article ('a' or 'an') for a word.
+
+    Args:
+        word: The word to check.
+
+    Returns:
+        'an' if the word starts with a vowel, 'a' otherwise.
+    """
+    if not word:
+        return "a"
+    return "an" if word[0].lower() in "aeiou" else "a"
+
+
+def create_role(
+    name: str, group: Literal["Animal", "People", "Object", "Other"]
+) -> Role:
+    """
+    Construct a single Role from relevant text inputs.
+
+    Args:
+        name: The name of the role.
+        group: The category group of the role.
+
+    Returns:
+        A Role object with the generated system prompt.
+    """
+    article = get_article(name)
+    system_prompt = f"{BASE_STEM} {article} {name}."
+    return Role(name=name, group=group, system_prompt=system_prompt)
+
+
+def create_roles_from_df(df: pd.DataFrame) -> Iterable[Role]:
+    """
+    Create an iterable of Roles from a DataFrame.
+
+    Args:
+        df: A pandas DataFrame containing 'word' and 'group' columns.
+
+    Returns:
+        An iterable of Role objects.
+    """
+    for _, row in df.iterrows():
+        yield create_role(name=row["word"], group=row["group"])

@@ -1,0 +1,72 @@
+[project]
+name = "animacy"
+version = "0.1.0"
+description = "A new Python library"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "numpy",
+    "pandas",
+    "matplotlib",
+    "statsmodels",
+    "seaborn",
+    "pydantic",
+    "vllm",
+]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/animacy"]
+
+[tool.uv]
+dev-dependencies = [
+    "pytest>=8.0",
+    "ruff>=0.1.0",
+    "mypy>=1.0",
+    "ipython>=9.4.0",
+    "ipdb>=0.13.13",
+    "pandas-stubs>=2.0.0",
+]
+
+[tool.uv.pip]
+torch-backend = "auto"
+
+[tool.ruff]
+line-length = 88
+target-version = "py312"
+
+[tool.ruff.lint]
+select = [
+    "E",  # pycodestyle errors
+    "W",  # pycodestyle warnings
+    "F",  # pyflakes
+    "I",  # isort
+    "B",  # flake8-bugbear
+    "UP", # pyupgrade
+]
+ignore = []
+
+[tool.ruff.format]
+# Inherits line-length from [tool.ruff] if not set here.
+docstring-code-format = true
+quote-style = "double"
+
+[tool.mypy]
+python_version = "3.12"
+strict = true
+warn_return_any = true
+warn_unused_configs = true
+disallow_untyped_defs = true
+
+[[tool.mypy.overrides]]
+module = "tests.*"
+disallow_untyped_defs = false
+
+[tool.pytest.ini_options]
+minversion = "6.0"
+addopts = "-ra -q"
+testpaths = ["tests"]
+pythonpath = ["src"]
