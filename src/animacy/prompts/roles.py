@@ -12,6 +12,7 @@ class Role(BaseModel):
 
 
 BASE_STEM = "You are"
+EARNEST_INSTRUCTIONS = "Adhere to this role earnestly."
 
 
 def get_article(word: str) -> str:
@@ -30,7 +31,9 @@ def get_article(word: str) -> str:
 
 
 def create_role(
-    name: str, group: Literal["Animal", "People", "Object", "Other"]
+    name: str,
+    group: Literal["Animal", "People", "Object", "Other"],
+    extra_instructions: str = "",
 ) -> Role:
     """
     Construct a single Role from relevant text inputs.
@@ -47,7 +50,9 @@ def create_role(
     return Role(name=name, group=group, system_prompt=system_prompt)
 
 
-def create_roles_from_df(df: pd.DataFrame) -> Iterable[Role]:
+def create_roles_from_df(
+    df: pd.DataFrame, extra_instructions: str = EARNEST_INSTRUCTIONS
+) -> Iterable[Role]:
     """
     Create an iterable of Roles from a DataFrame.
 
