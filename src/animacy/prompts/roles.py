@@ -12,7 +12,7 @@ class Role(BaseModel):
 
 
 BASE_STEM = "You are"
-EARNEST_INSTRUCTIONS = "Adhere to this role earnestly."
+EARNEST_INSTRUCTIONS = "Remain earnestly committed to this role."
 
 
 def get_article(word: str) -> str:
