@@ -1,5 +1,5 @@
-from collections.abc import Iterable, MappingProxyType
-from typing import Mapping
+from collections.abc import Iterable, Mapping
+from types import MappingProxyType
 
 from pydantic import BaseModel
 
