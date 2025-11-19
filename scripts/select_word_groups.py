@@ -14,7 +14,7 @@ Example:
 import argparse
 import logging
 from pathlib import Path
-from typing import Any
+from typing import Any, Dict, List, Optional
 
 import numpy as np
 import pandas as pd
@@ -43,7 +43,7 @@ def load_data(filepath: str | Path) -> pd.DataFrame:
         raise FileNotFoundError(f"File not found: {path}")
 
     df = pd.read_excel(path, sheet_name="Words")
-    return df
+    return df.loc[df["remove"] != 1].reset_index(drop=True)
 
 
 def clean_column_names(df: pd.DataFrame) -> pd.DataFrame:
@@ -125,8 +125,8 @@ def categorize_broad_category(category: Any) -> str:
     if first_char == "A":
         return "Animal"
 
-    # People/Humans/Body parts
-    if first_char in ("H", "B"):
+    # People/Humans
+    if first_char in ("H"):
         return "People"
 
     # Objects (including vehicles, environments, etc.)
@@ -138,7 +138,7 @@ def categorize_broad_category(category: Any) -> str:
 
 def select_matched_groups(
     df: pd.DataFrame, n: int, balance_categories: bool = True
-) -> dict[int, pd.DataFrame]:
+) -> Dict[int, pd.DataFrame]:
     """Select matched word groups based on animacy dimensions.
 
     Selects n words for each of three groups defined by animacy dimensions:
@@ -218,6 +218,159 @@ def select_matched_groups(
         selected = select_with_matching(pools, n, match_features)
 
     return selected
+
+
+def select_with_matching(
+    pools: dict[int, pd.DataFrame],
+    n: int,
+    match_features: list[str],
+    bias_animacy: bool = True,
+) -> dict[int, pd.DataFrame]:
+    """Select words from pools to match feature means across groups.
+
+    Uses an iterative greedy algorithm to select words that minimize differences
+    in feature means across groups. On each iteration, selects the word from
+    each pool that brings the group's feature means closest to the overall
+    target means.
+
+    Optimized using vectorized numpy operations for performance.
+
+    Args:
+        pools: Dictionary mapping group IDs to DataFrames of candidate words.
+        n: Number of words to select from each pool.
+        match_features: List of column names to match across groups.
+        bias_animacy: If True, biases selection towards words with animacy
+            scores furthest from 350.
+
+    Returns:
+        Dictionary mapping group IDs to DataFrames of selected words.
+    """
+    # Constants for animacy bias
+    ANIMACY_TARGET = 350
+    ANIMACY_WEIGHT = 0.05  # Weight for the animacy bias term
+
+    # Initialize containers
+    selected_dfs = {gid: [] for gid in pools}
+
+    # Create working copies to track available candidates
+    # We keep them as DataFrames to return the final rows easily
+    working_pools = {gid: df.copy() for gid, df in pools.items()}
+
+    # Pre-calculate global stats for normalization
+    all_data = pd.concat(working_pools.values())
+    if all_data.empty:
+        return {gid: pd.DataFrame() for gid in pools}
+
+    feature_stds = all_data[match_features].std().values
+    # Handle zero std to avoid division by zero
+    feature_stds = np.where(feature_stds == 0, 1.0, feature_stds)
+
+    # Pre-calculate normalized animacy scores for bias
+    # Score = (|Mental - 350| + |Physical - 350|) / Scale
+    # We want to MAXIMIZE this score.
+    animacy_scores_map = {}
+    for gid, pool in working_pools.items():
+        # Calculate raw distance from target
+        dist = np.abs(pool["anim_mental"] - ANIMACY_TARGET) + np.abs(
+            pool["anim_physical"] - ANIMACY_TARGET
+        )
+        # Normalize roughly to 0-1 range (max dist is approx 700)
+        animacy_scores_map[gid] = dist / 700.0
+
+    # Track current sums and counts for efficient mean calculation
+    # Using numpy arrays for speed
+    grp_sums = {gid: np.zeros(len(match_features)) for gid in pools}
+    grp_ns = {gid: 0 for gid in pools}
+
+    for i in range(n):
+        # Calculate target mean (grand mean of all selected so far)
+        total_sum = sum(grp_sums.values())  # type: ignore
+        total_n = sum(grp_ns.values())
+
+        if total_n == 0:
+            # First iteration
+            for gid in pools:
+                pool = working_pools[gid]
+                if len(pool) > 0:
+                    if bias_animacy:
+                        # Pick word with max animacy distance
+                        # We need to look up scores for current pool indices
+                        current_scores = animacy_scores_map[gid].loc[pool.index]
+                        best_idx_label = current_scores.idxmax()
+                    else:
+                        # Random selection
+                        best_idx_label = pool.sample(1).index[0]
+
+                    selected_row = pool.loc[[best_idx_label]]
+                    vals = selected_row[match_features].values[0]
+
+                    selected_dfs[gid].append(selected_row)
+                    grp_sums[gid] += vals
+                    grp_ns[gid] += 1
+
+                    working_pools[gid] = working_pools[gid].drop(best_idx_label)
+            continue
+
+        # Calculate target mean
+        target_mean = total_sum / total_n
+
+        # Greedy selection for each group
+        for gid in pools:
+            pool = working_pools[gid]
+            if len(pool) == 0:
+                continue
+
+            # Get candidates as numpy array for vectorized calc
+            candidates_vals = pool[match_features].values
+
+            # Calculate what the new group mean WOULD be for each candidate
+            # Broadcasting: (n_features,) + (n_candidates, n_features) -> (n_candidates, n_features)
+            new_grp_means = (grp_sums[gid] + candidates_vals) / (grp_ns[gid] + 1)
+
+            # Calculate distance to target_mean
+            # Normalize by standard deviation
+            diffs = (new_grp_means - target_mean) / feature_stds
+            dists = np.sum(diffs**2, axis=1)
+
+            # Combine with animacy bias if requested
+            if bias_animacy:
+                # Get scores aligned with current pool
+                # Note: pool.index matches the order of candidates_vals?
+                # Yes, providing we don't sort/filter in between.
+                # To be safe, we use loc with index.
+                current_anim_scores = animacy_scores_map[gid].loc[pool.index].values
+
+                # We want to minimize cost.
+                # High animacy score is good -> subtract it.
+                final_cost = dists - (ANIMACY_WEIGHT * current_anim_scores)
+            else:
+                final_cost = dists
+
+            # Find best candidate
+            best_idx_in_pool = np.argmin(final_cost)
+            best_original_idx = pool.index[best_idx_in_pool]
+            best_vals = candidates_vals[best_idx_in_pool]
+
+            # Add to selected
+            selected_row = pool.loc[[best_original_idx]]
+            selected_dfs[gid].append(selected_row)
+
+            # Update state
+            grp_sums[gid] += best_vals
+            grp_ns[gid] += 1
+
+            # Remove from pool
+            working_pools[gid] = working_pools[gid].drop(best_original_idx)
+
+    # Convert to dataframes
+    result = {}
+    for gid, dfs in selected_dfs.items():
+        if dfs:
+            result[gid] = pd.concat(dfs)
+        else:
+            result[gid] = pd.DataFrame()
+
+    return result
 
 
 def select_with_category_balance(
@@ -310,116 +463,7 @@ def select_with_category_balance(
     return result
 
 
-def select_with_matching(
-    pools: dict[int, pd.DataFrame], n: int, match_features: list[str]
-) -> dict[int, pd.DataFrame]:
-    """Select words from pools to match feature means across groups.
-
-    Uses an iterative greedy algorithm to select words that minimize differences
-    in feature means across groups. On each iteration, selects the word from
-    each pool that brings the group's feature means closest to the overall
-    target means.
-
-    Optimized using vectorized numpy operations for performance.
-
-    Args:
-        pools: Dictionary mapping group IDs to DataFrames of candidate words.
-        n: Number of words to select from each pool.
-        match_features: List of column names to match across groups.
-
-    Returns:
-        Dictionary mapping group IDs to DataFrames of selected words.
-    """
-    # Initialize containers
-    selected_dfs = {gid: [] for gid in pools}
-
-    # Create working copies to track available candidates
-    # We keep them as DataFrames to return the final rows easily
-    working_pools = {gid: df.copy() for gid, df in pools.items()}
-
-    # Pre-calculate global stats for normalization
-    all_data = pd.concat(working_pools.values())
-    if all_data.empty:
-        return {gid: pd.DataFrame() for gid in pools}
-
-    feature_stds = all_data[match_features].std().values
-    # Handle zero std to avoid division by zero
-    feature_stds = np.where(feature_stds == 0, 1.0, feature_stds)
-
-    # Track current sums and counts for efficient mean calculation
-    # Using numpy arrays for speed
-    grp_sums = {gid: np.zeros(len(match_features)) for gid in pools}
-    grp_ns = {gid: 0 for gid in pools}
-
-    for i in range(n):
-        # Calculate target mean (grand mean of all selected so far)
-        total_sum = sum(grp_sums.values())  # type: ignore
-        total_n = sum(grp_ns.values())
-
-        if total_n == 0:
-            # First iteration: Random selection
-            for gid in pools:
-                if len(working_pools[gid]) > 0:
-                    sample = working_pools[gid].sample(1)
-                    idx = sample.index[0]
-                    vals = sample[match_features].values[0]
-
-                    selected_dfs[gid].append(sample)
-                    grp_sums[gid] += vals
-                    grp_ns[gid] += 1
-
-                    working_pools[gid] = working_pools[gid].drop(idx)
-            continue
-
-        # Calculate target mean
-        target_mean = total_sum / total_n
-
-        # Greedy selection for each group
-        for gid in pools:
-            pool = working_pools[gid]
-            if len(pool) == 0:
-                continue
-
-            # Get candidates as numpy array for vectorized calc
-            candidates_vals = pool[match_features].values
-
-            # Calculate what the new group mean WOULD be for each candidate
-            # Broadcasting: (n_features,) + (n_candidates, n_features) -> (n_candidates, n_features)
-            new_grp_means = (grp_sums[gid] + candidates_vals) / (grp_ns[gid] + 1)
-
-            # Calculate distance to target_mean
-            # Normalize by standard deviation
-            diffs = (new_grp_means - target_mean) / feature_stds
-            dists = np.sum(diffs**2, axis=1)
-
-            # Find best candidate
-            best_idx_in_pool = np.argmin(dists)
-            best_original_idx = pool.index[best_idx_in_pool]
-            best_vals = candidates_vals[best_idx_in_pool]
-
-            # Add to selected
-            selected_row = pool.loc[[best_original_idx]]
-            selected_dfs[gid].append(selected_row)
-
-            # Update state
-            grp_sums[gid] += best_vals
-            grp_ns[gid] += 1
-
-            # Remove from pool
-            working_pools[gid] = working_pools[gid].drop(best_original_idx)
-
-    # Convert to dataframes
-    result = {}
-    for gid, dfs in selected_dfs.items():
-        if dfs:
-            result[gid] = pd.concat(dfs)
-        else:
-            result[gid] = pd.DataFrame()
-
-    return result
-
-
-def print_group_statistics(selected_groups: dict[int, pd.DataFrame]) -> None:
+def print_group_statistics(selected_groups: Dict[int, pd.DataFrame]) -> None:
     """Print descriptive statistics for selected word groups."""
     print("\n" + "=" * 80)
     print("GROUP STATISTICS")
