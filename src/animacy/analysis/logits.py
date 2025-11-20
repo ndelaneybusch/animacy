@@ -18,6 +18,7 @@ class ResponseLogits(BaseModel):
     role_logits: float | None = None
     role_period_logit: float | None = None
     first_100_response_logits: list[float]
+    first_100_response_text_len: int
 
 
 class LogitExtractor:
@@ -178,6 +179,17 @@ class LogitExtractor:
         # 6) First 100 tokens of response
         first_100 = response_logits[:100].tolist()
 
+        # Calculate length of the text for the first 100 tokens
+        # We take the input_ids corresponding to the first 100 response tokens
+        # Note: input_ids[response_start_idx] is the first response token
+        first_100_token_ids = input_ids[
+            0, response_start_idx : response_start_idx + 100
+        ]
+        first_100_text = self.tokenizer.decode(
+            first_100_token_ids, skip_special_tokens=True
+        )
+        first_100_text_len = len(first_100_text)
+
         role_period_logit = None
         role_logits_val = None
 
@@ -244,4 +256,5 @@ class LogitExtractor:
             role_logits=role_logits_val,
             role_period_logit=role_period_logit,
             first_100_response_logits=first_100,
+            first_100_response_text_len=first_100_text_len,
         )
