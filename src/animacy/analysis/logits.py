@@ -11,11 +11,12 @@ class ResponseLogits(BaseModel):
     Container for tokenwise logits of interest from a model response.
     """
 
+    role_name: str
+    task_name: str
+    sample_idx: int
     average_logits: float
+    role_logits: float | None = None
     role_period_logit: float | None = None
-    system_prompt_final_period_logit: float | None = None
-    system_prompt_end_token_logit: float | None = None
-    prompt_end_token_logit: float
     first_100_response_logits: list[float]
 
 
@@ -61,6 +62,7 @@ class LogitExtractor:
         self,
         role_name: str,
         task_name: str,
+        sample_idx: int,
         response_text: str,
         use_system_prompt: bool = True,
     ) -> ResponseLogits:
@@ -70,6 +72,7 @@ class LogitExtractor:
         Args:
             role_name: The name of the role (e.g., "angel").
             task_name: The name of the task (e.g., "meaning_of_life").
+            sample_idx: The index of the sample.
             response_text: The generated response text.
             use_system_prompt: Whether to include the role-assigning system prompt.
 
@@ -120,8 +123,8 @@ class LogitExtractor:
         # Apply logit transform: ln(p / (1 - p))
         # We clamp probabilities to avoid infinity
         epsilon = 1e-9
-        target_probs = torch.clamp(target_probs, min=epsilon, max=1.0 - epsilon)
-        target_logits = torch.log(target_probs / (1.0 - target_probs))
+        target_probs_clamped = torch.clamp(target_probs, min=epsilon, max=1.0 - epsilon)
+        target_logits = torch.log(target_probs_clamped / (1.0 - target_probs_clamped))
 
         # Map indices back to the structure by finding boundaries.
 
@@ -175,20 +178,10 @@ class LogitExtractor:
         # 6) First 100 tokens of response
         first_100 = response_logits[:100].tolist()
 
-        # 5) Token indicating end of prompt
-        # This is input_ids[user_end_idx]
-        # Logit is target_logits[user_end_idx-1]
-        prompt_end_logit = target_logits[user_end_idx - 1].item()
-
-        sys_final_period_logit = None
-        sys_end_token_logit = None
         role_period_logit = None
+        role_logits_val = None
 
         if use_system_prompt:
-            # 4) Token indicating end of system prompt
-            # input_ids[system_end_idx]
-            sys_end_token_logit = target_logits[system_end_idx - 1].item()
-
             # Find periods in system prompt using direct token ID matching
             # Get system prompt tokens (excluding template wrapper)
             sys_text_ids = self.tokenizer(system_prompt, add_special_tokens=False)[
@@ -209,34 +202,46 @@ class LogitExtractor:
                 role_in_sys_idx = self._find_subsequence(sys_text_ids, role_ids)
 
                 if role_in_sys_idx != -1:
+                    # Calculate role_logits: product of probabilities of tokens comprising the role
+                    # Role tokens in input_ids are at [role_start_idx : role_end_idx]
+                    role_start_idx = sys_start_idx + role_in_sys_idx
+                    role_end_idx = role_start_idx + len(role_ids)
+
+                    # Corresponding probabilities are at indices [role_start_idx-1 : role_end_idx-1]
+                    # Note: we use the unclamped probabilities for the product to be precise,
+                    # then clamp the result.
+                    role_probs = target_probs[role_start_idx - 1 : role_end_idx - 1]
+
+                    # Product of probabilities
+                    role_prob_product = torch.prod(role_probs)
+
+                    # Convert to logit: ln(p / (1-p))
+                    p_role = torch.clamp(
+                        role_prob_product, min=epsilon, max=1.0 - epsilon
+                    )
+                    role_logits_val = torch.log(p_role / (1.0 - p_role)).item()
+
                     # Look for first period after role using direct token ID matching
-                    search_start = sys_start_idx + role_in_sys_idx + len(role_ids)
+                    search_start = role_end_idx
                     for i in range(search_start, sys_start_idx + len(sys_text_ids)):
                         if input_ids[0, i].item() in self.period_token_ids:
                             role_period_logit = target_logits[i - 1].item()
                             break
-
-                # Find final period in system prompt by searching backwards
-                search_end = sys_start_idx + len(sys_text_ids) - 1
-                for i in range(search_end, sys_start_idx - 1, -1):
-                    if input_ids[0, i].item() in self.period_token_ids:
-                        sys_final_period_logit = target_logits[i - 1].item()
-                        break
             else:
                 # Fallback: search for period in the whole system block
                 for i in range(system_end_idx, -1, -1):
                     if input_ids[0, i].item() in self.period_token_ids:
-                        sys_final_period_logit = target_logits[i - 1].item()
                         # Assume it's also the role period if we couldn't find role
                         if role_period_logit is None:
-                            role_period_logit = sys_final_period_logit
+                            role_period_logit = target_logits[i - 1].item()
                         break
 
         return ResponseLogits(
+            role_name=role_name,
+            task_name=task_name,
+            sample_idx=sample_idx,
             average_logits=avg_logit,
+            role_logits=role_logits_val,
             role_period_logit=role_period_logit,
-            system_prompt_final_period_logit=sys_final_period_logit,
-            system_prompt_end_token_logit=sys_end_token_logit,
-            prompt_end_token_logit=prompt_end_logit,
             first_100_response_logits=first_100,
         )
