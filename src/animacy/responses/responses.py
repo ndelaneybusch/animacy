@@ -32,3 +32,20 @@ def get_response(model: InferenceEngine, task: Task) -> Response:
         task_name=task.task_name,
         response=response,
     )
+
+
+def sample_responses(
+    model: InferenceEngine, task: Task, num_samples: int = 1
+) -> list[Response]:
+    """
+    Generate multiple responses from a model to a task.
+
+    Args:
+        model: InferenceEngine object.
+        task: Task object.
+        num_samples: Number of responses to generate.
+
+    Returns:
+        List of Response objects.
+    """
+    return [get_response(model, task) for _ in range(num_samples)]
