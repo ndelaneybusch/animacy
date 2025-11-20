@@ -6,7 +6,7 @@ from pathlib import Path
 import pandas as pd
 from tqdm import tqdm
 
-from animacy.models import TransformersModelConfig
+from animacy.models import TransformersModelConfig, VLLMModelConfig
 from animacy.prompts import (
     create_inference_engine,
     create_roles_from_df,
@@ -25,30 +25,73 @@ if str(project_root / "src") not in sys.path:
 def main() -> None:
     parser = argparse.ArgumentParser(description="Run animacy experiment")
 
+    # Backend Selection
+    parser.add_argument(
+        "--backend",
+        type=str,
+        default="transformers",
+        choices=["transformers", "vllm"],
+        help="Inference backend to use (transformers or vllm)",
+    )
+
     # Model Configuration
     parser.add_argument(
         "--model_name", type=str, required=True, help="HuggingFace model name"
-    )
-    parser.add_argument(
-        "--device", type=str, default="auto", help="Device to run on (cuda, cpu, auto)"
-    )
-    parser.add_argument(
-        "--torch_dtype",
-        type=str,
-        default="auto",
-        help="Torch dtype (float16, bfloat16, auto)",
-    )
-    parser.add_argument(
-        "--load_in_8bit", action="store_true", help="Load model in 8-bit quantization"
-    )
-    parser.add_argument(
-        "--load_in_4bit", action="store_true", help="Load model in 4-bit quantization"
     )
     parser.add_argument(
         "--temperature", type=float, default=1.0, help="Sampling temperature"
     )
     parser.add_argument(
         "--max_tokens", type=int, default=1024, help="Maximum tokens to generate"
+    )
+
+    # Transformers-specific arguments
+    parser.add_argument(
+        "--device",
+        type=str,
+        default="auto",
+        help="[Transformers only] Device to run on (cuda, cpu, auto)",
+    )
+    parser.add_argument(
+        "--torch_dtype",
+        type=str,
+        default="auto",
+        help="[Transformers only] Torch dtype (float16, bfloat16, auto)",
+    )
+    parser.add_argument(
+        "--load_in_8bit",
+        action="store_true",
+        help="[Transformers only] Load model in 8-bit quantization",
+    )
+    parser.add_argument(
+        "--load_in_4bit",
+        action="store_true",
+        help="[Transformers only] Load model in 4-bit quantization",
+    )
+
+    # vLLM-specific arguments
+    parser.add_argument(
+        "--tensor_parallel_size",
+        type=int,
+        default=1,
+        help="[vLLM only] Number of GPUs for tensor parallelism",
+    )
+    parser.add_argument(
+        "--gpu_memory_utilization",
+        type=float,
+        default=0.9,
+        help="[vLLM only] Fraction of GPU memory to use (0.0-1.0)",
+    )
+    parser.add_argument(
+        "--dtype",
+        type=str,
+        default="auto",
+        help="[vLLM only] Data type for model weights (auto, half, float16, bfloat16, float, float32)",
+    )
+    parser.add_argument(
+        "--trust_remote_code",
+        action="store_true",
+        help="Trust remote code when loading model",
     )
 
     # Data and Output
@@ -89,16 +132,32 @@ def main() -> None:
         print(f"Error: CSV file not found at {csv_path}")
         sys.exit(1)
 
-    print(f"Initializing model: {args.model_name}...")
-    config = TransformersModelConfig(
-        model_name=args.model_name,
-        device=args.device,
-        torch_dtype=args.torch_dtype,
-        load_in_8bit=args.load_in_8bit,
-        load_in_4bit=args.load_in_4bit,
-        temperature=args.temperature,
-        max_tokens=args.max_tokens,
-    )
+    print(f"Initializing model: {args.model_name} (backend: {args.backend})...")
+
+    # Create appropriate config based on backend
+    if args.backend == "transformers":
+        config = TransformersModelConfig(
+            model_name=args.model_name,
+            device=args.device,
+            torch_dtype=args.torch_dtype,
+            load_in_8bit=args.load_in_8bit,
+            load_in_4bit=args.load_in_4bit,
+            temperature=args.temperature,
+            max_tokens=args.max_tokens,
+            trust_remote_code=args.trust_remote_code,
+        )
+    elif args.backend == "vllm":
+        config = VLLMModelConfig(
+            model_name=args.model_name,
+            tensor_parallel_size=args.tensor_parallel_size,
+            gpu_memory_utilization=args.gpu_memory_utilization,
+            dtype=args.dtype,
+            temperature=args.temperature,
+            max_tokens=args.max_tokens,
+            trust_remote_code=args.trust_remote_code,
+        )
+    else:
+        raise ValueError(f"Unknown backend: {args.backend}")
 
     with create_inference_engine(config) as engine:
         roles = list(create_roles_from_df(df))
