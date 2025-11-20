@@ -1,4 +1,4 @@
-from .models import (
+from .model_config import (
     AnthropicModelConfig,
     ModelConfig,
     TransformersModelConfig,
