@@ -1,7 +1,11 @@
 import argparse
 import json
+import os
 import sys
 from pathlib import Path
+
+# Set CUDA allocation configuration to avoid fragmentation
+os.environ["PYTORCH_CUDA_ALLOC_CONF"] = "expandable_segments:True"
 
 import pandas as pd
 from tqdm import tqdm
@@ -163,12 +167,21 @@ def main() -> None:
         roles = list(create_roles_from_df(df))
         print(f"Processing {len(roles)} roles...")
 
-        for role in tqdm(roles, desc="Generating responses"):
+        for role in tqdm(roles, desc="Roles"):
             role_results = []
             tasks = create_tasks_for_role(role)
 
-            for task in tasks:
-                responses = sample_responses(engine, task, num_samples=args.num_samples)
+            # Calculate total samples for this role
+            total_samples = len(tasks) * args.num_samples
+
+            with tqdm(
+                total=total_samples, desc=f"Samples ({role.role_name})", leave=False
+            ) as pbar:
+                for task in tasks:
+                    responses = sample_responses(
+                        engine, task, num_samples=args.num_samples
+                    )
+                    pbar.update(len(responses))
 
                 for i, response in enumerate(responses):
                     role_results.append(
