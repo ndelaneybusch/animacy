@@ -190,15 +190,15 @@ def main() -> None:
                     )
                     pbar.update(len(responses))
 
-                for i, response in enumerate(responses):
-                    role_results.append(
-                        {
-                            "role_name": response.role_name,
-                            "task_name": response.task_name,
-                            "sample_idx": i + 1,
-                            "response": response.response,
-                        }
-                    )
+                    for i, response in enumerate(responses):
+                        role_results.append(
+                            {
+                                "role_name": response.role_name,
+                                "task_name": response.task_name,
+                                "sample_idx": i + 1,
+                                "response": response.response,
+                            }
+                        )
 
             # Save results for this role
             # Sanitize filename
