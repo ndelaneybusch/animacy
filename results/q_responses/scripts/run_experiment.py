@@ -5,7 +5,7 @@ import sys
 from pathlib import Path
 
 # Set CUDA allocation configuration to avoid fragmentation
-os.environ["PYTORCH_CUDA_ALLOC_CONF"] = "expandable_segments:True"
+os.environ["PYTORCH_ALLOC_CONF"] = "expandable_segments:True"
 
 import pandas as pd
 from tqdm import tqdm
