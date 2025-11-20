@@ -1,4 +1,3 @@
-import pandas as pd
 from pydantic import BaseModel
 
 from animacy.prompts.inference import InferenceEngine
