@@ -1,3 +1,13 @@
+"""
+Inference engine for generating responses from language models.
+
+This module provides a base class for inference engines and concrete
+implementations for different model types (Transformers, vLLM, Anthropic).
+Each has the same interface and can be used interchangeably. The factory
+function `create_inference_engine` is provided to create the appropriate
+inference engine for a given model.
+"""
+
 import os
 from abc import ABC, abstractmethod
 from typing import Any
@@ -94,7 +104,6 @@ class TransformersInferenceEngine(InferenceEngine):
         model_kwargs: dict[str, Any] = {
             "device_map": self.model_config.device,
             "torch_dtype": self.model_config.torch_dtype,
-            "trust_remote_code": self.model_config.trust_remote_code,
         }
 
         if self.model_config.load_in_8bit:

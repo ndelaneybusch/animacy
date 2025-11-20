@@ -7,11 +7,18 @@ from pydantic import BaseModel
 
 class Role(BaseModel):
     role_name: str
-    group: Literal["Animal", "People", "Object", "Other"]
+    role_type: Literal["Animal", "People", "Object", "Other"]
+    group: Literal[
+        "High Mental, High Physical",
+        "Low Mental, High Physical",
+        "Low Mental, Low Physical",
+    ]
     system_prompt: str
 
 
 BASE_STEM = "You are"
+
+#: Additional system prompt instructions to reinforce the role.
 EARNEST_INSTRUCTIONS = "Remain earnestly committed to this role."
 
 
@@ -32,7 +39,12 @@ def get_article(word: str) -> str:
 
 def create_role(
     role_name: str,
-    group: Literal["Animal", "People", "Object", "Other"],
+    role_type: Literal["Animal", "People", "Object", "Other"],
+    group: Literal[
+        "High Mental, High Physical",
+        "Low Mental, High Physical",
+        "Low Mental, Low Physical",
+    ],
     extra_instructions: str = "",
 ) -> Role:
     """
@@ -47,7 +59,12 @@ def create_role(
     """
     article = get_article(role_name)
     system_prompt = f"{BASE_STEM} {article} {role_name}."
-    return Role(role_name=role_name, group=group, system_prompt=system_prompt)
+    return Role(
+        role_name=role_name,
+        role_type=role_type,
+        group=group,
+        system_prompt=system_prompt,
+    )
 
 
 def create_roles_from_df(
@@ -63,4 +80,9 @@ def create_roles_from_df(
         An iterable of Role objects.
     """
     for _, row in df.iterrows():
-        yield create_role(role_name=row["word"], group=row["group"])
+        yield create_role(
+            role_name=row["word"],
+            role_type=row["broad_category"],
+            group=row["group"],
+            extra_instructions=extra_instructions,
+        )

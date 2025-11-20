@@ -49,7 +49,9 @@ def create_task(role: Role, task_name: str, task_prompt: str) -> Task:
     )
 
 
-def create_tasks_for_role(role: Role, tasks: Mapping[str, str]) -> Iterable[Task]:
+def create_tasks_for_role(
+    role: Role, tasks: Mapping[str, str] = TASK_PROMPTS
+) -> Iterable[Task]:
     """
     Create tasks for a given role and set of tasks.
 
