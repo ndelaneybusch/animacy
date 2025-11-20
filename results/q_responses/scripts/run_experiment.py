@@ -176,7 +176,7 @@ def main() -> None:
 
         for role in tqdm(roles, desc="Roles"):
             role_results = []
-            tasks = create_tasks_for_role(role)
+            tasks = list(create_tasks_for_role(role))
 
             # Calculate total samples for this role
             total_samples = len(tasks) * args.num_samples
