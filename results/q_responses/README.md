@@ -21,6 +21,11 @@ python scripts/run_experiment.py \
   --num_samples 5
 ```
 
+Models of interest:
+meta-llama/Llama-3.3-70B-Instruct
+google/gemma-3-27b-it
+Qwen/Qwen3-30B-A3B-Instruct-2507
+
 ### Transformers with Quantization
 
 Use 4-bit quantization to reduce memory usage:
