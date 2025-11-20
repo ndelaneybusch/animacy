@@ -70,6 +70,7 @@ class VLLMModelConfig(ModelConfig):
         tensor_parallel_size: Number of GPUs for tensor parallelism
         gpu_memory_utilization: Fraction of GPU memory to use (0.0-1.0)
         dtype: Data type for model weights ('auto', 'half', 'float16', 'bfloat16', 'float', 'float32')
+        max_model_len: Maximum sequence length (None = use model's default)
         trust_remote_code: Whether to trust remote code when loading model
     """
 
@@ -80,6 +81,10 @@ class VLLMModelConfig(ModelConfig):
         default=0.9, ge=0.0, le=1.0, description="Fraction of GPU memory to use"
     )
     dtype: str = Field(default="auto", description="Data type for model weights")
+    max_model_len: int | None = Field(
+        default=None,
+        description="Maximum sequence length for model (None = use model's default)",
+    )
     trust_remote_code: bool = Field(
         default=False, description="Trust remote code when loading model"
     )

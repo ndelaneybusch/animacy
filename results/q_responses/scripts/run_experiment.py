@@ -93,6 +93,12 @@ def main() -> None:
         help="[vLLM only] Data type for model weights (auto, half, float16, bfloat16, float, float32)",
     )
     parser.add_argument(
+        "--max_model_len",
+        type=int,
+        default=None,
+        help="[vLLM only] Maximum sequence length (reduces KV cache memory usage)",
+    )
+    parser.add_argument(
         "--trust_remote_code",
         action="store_true",
         help="Trust remote code when loading model",
@@ -156,6 +162,7 @@ def main() -> None:
             tensor_parallel_size=args.tensor_parallel_size,
             gpu_memory_utilization=args.gpu_memory_utilization,
             dtype=args.dtype,
+            max_model_len=args.max_model_len,
             temperature=args.temperature,
             max_tokens=args.max_tokens,
             trust_remote_code=args.trust_remote_code,

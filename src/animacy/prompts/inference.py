@@ -195,13 +195,19 @@ class VLLMInferenceEngine(InferenceEngine):
                 "vllm library not found. Install with: pip install vllm"
             ) from e
 
-        self._llm = LLM(
-            model=self.model_config.model_name,
-            tensor_parallel_size=self.model_config.tensor_parallel_size,
-            gpu_memory_utilization=self.model_config.gpu_memory_utilization,
-            dtype=self.model_config.dtype,
-            trust_remote_code=self.model_config.trust_remote_code,
-        )
+        llm_kwargs = {
+            "model": self.model_config.model_name,
+            "tensor_parallel_size": self.model_config.tensor_parallel_size,
+            "gpu_memory_utilization": self.model_config.gpu_memory_utilization,
+            "dtype": self.model_config.dtype,
+            "trust_remote_code": self.model_config.trust_remote_code,
+        }
+
+        # Only add max_model_len if specified
+        if self.model_config.max_model_len is not None:
+            llm_kwargs["max_model_len"] = self.model_config.max_model_len
+
+        self._llm = LLM(**llm_kwargs)
 
         self._sampling_params = SamplingParams(
             temperature=self.model_config.temperature,
