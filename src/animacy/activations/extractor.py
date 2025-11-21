@@ -99,25 +99,45 @@ class ActivationExtractor:
 
     def extract(
         self,
-        text: str | list[str],
+        prompts: str | list[str] | list[list[dict]],
         layers: list[int] | None = None,
         batch_size: int = 8,
     ) -> ActivationResult:
         """
-        Extract activations for the given text(s).
+        Extract activations for the given text(s) or chat messages.
 
         Args:
-            text: Input text or list of texts
+            prompts: Input text, list of texts, or list of chat histories (list of dicts).
+                     If chat histories are provided, precise message alignment is performed.
             layers: List of layer indices to extract from. If None, extracts from all layers.
             batch_size: Batch size for processing multiple texts
 
         Returns:
             ActivationResult containing activations and token mapping info
         """
-        if isinstance(text, str):
-            texts = [text]
+        texts = []
+        message_ranges = None
+
+        # Handle different input types
+        if isinstance(prompts, str):
+            texts = [prompts]
+        elif isinstance(prompts, list):
+            if not prompts:
+                raise ValueError("Prompts list cannot be empty")
+
+            if isinstance(prompts[0], str):
+                texts = prompts  # type: ignore
+            elif isinstance(prompts[0], list) and isinstance(prompts[0][0], dict):
+                # List of chat histories
+                texts, message_ranges = self._process_chat_inputs(prompts)  # type: ignore
+            else:
+                raise ValueError(
+                    "Invalid prompt format. Must be str, list[str], or list[list[dict]]"
+                )
         else:
-            texts = text
+            raise ValueError(
+                "Invalid prompt format. Must be str, list[str], or list[list[dict]]"
+            )
 
         if layers is None:
             layers = list(range(len(self._layers)))
@@ -129,7 +149,7 @@ class ActivationExtractor:
             padding=True,
             truncation=True,
             return_offsets_mapping=True,
-            add_special_tokens=True,
+            add_special_tokens=False,  # We assume chat template handles this or user provided raw text
         )
 
         input_ids = encodings["input_ids"].to(self.model.device)
@@ -163,10 +183,6 @@ class ActivationExtractor:
         try:
             # Process in batches if needed (though here we just did one big batch for simplicity
             # based on the tokenizer call above. For very large inputs, we'd loop.)
-            # Given the requirement "Optimize for this use case" (parallel from entire input),
-            # processing the whole input at once is good unless it OOMs.
-            # For now, we assume the input fits in memory or the user batches the calls.
-
             with torch.no_grad():
                 self.model(input_ids=input_ids, attention_mask=attention_mask)
 
@@ -175,8 +191,6 @@ class ActivationExtractor:
                 handle.remove()
 
         # Collate activations
-        # Each layer has a list of tensors (one per forward pass, here just one)
-        # We want a dictionary mapping layer_idx -> Tensor(batch, seq, hidden)
         final_activations = {}
         for layer_idx, act_list in activations.items():
             final_activations[layer_idx] = torch.cat(act_list, dim=0)
@@ -187,4 +201,67 @@ class ActivationExtractor:
             offset_mapping=offset_mapping,
             tokenizer=self.tokenizer,
             texts=texts,
+            message_ranges=message_ranges,
         )
+
+    def _process_chat_inputs(
+        self, chat_histories: list[list[dict]]
+    ) -> tuple[list[str], list[list[dict]]]:
+        """
+        Process chat histories into full texts and extract message ranges.
+
+        Args:
+            chat_histories: List of conversation histories
+
+        Returns:
+            Tuple of (list of full texts, list of message ranges)
+        """
+        texts = []
+        all_message_ranges = []
+
+        for history in chat_histories:
+            # Apply chat template to get full text
+            full_text = self.tokenizer.apply_chat_template(
+                history, tokenize=False, add_generation_prompt=False
+            )
+            texts.append(full_text)
+
+            # Find ranges for each message
+            # We iterate through messages and find their content in the full text
+            # This assumes the content appears verbatim in the output (standard behavior)
+            ranges = []
+            current_search_idx = 0
+
+            for message in history:
+                content = message["content"]
+                role = message["role"]
+
+                if not content:
+                    continue
+
+                start_idx = full_text.find(content, current_search_idx)
+
+                if start_idx == -1:
+                    # Warning: Content not found. This might happen if the template
+                    # transforms the content significantly.
+                    # For now, we skip it but this is a potential issue to be aware of.
+                    continue
+
+                end_idx = start_idx + len(content)
+
+                ranges.append(
+                    {
+                        "role": role,
+                        "start": start_idx,
+                        "end": end_idx,
+                        "content": content,  # Optional, for debugging
+                    }
+                )
+
+                # Update search index to avoid finding the same content again
+                # (though unlikely to overlap in a valid chat)
+                current_search_idx = end_idx
+
+            all_message_ranges.append(ranges)
+
+        return texts, all_message_ranges
