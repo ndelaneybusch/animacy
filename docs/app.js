@@ -3,6 +3,8 @@ document.addEventListener('DOMContentLoaded', () => {
   const roleSelect = document.getElementById('role-select');
   const taskFiltersGroup = document.getElementById('task-filter-group');
   const taskFiltersContainer = document.getElementById('task-filters');
+  const adherenceFilterGroup = document.getElementById('adherence-filter-group');
+  const adherenceSelect = document.getElementById('adherence-select');
   const responsesContainer = document.getElementById('responses-container');
   const configDisplay = document.getElementById('config-display');
   const systemPromptContent = document.getElementById('system-prompt-content');
@@ -13,6 +15,7 @@ document.addEventListener('DOMContentLoaded', () => {
   let currentModelData = null;
   let currentRoleData = null;
   let activeTaskFilters = new Set();
+  let currentAdherenceFilter = 'all';
 
   // Initialize
   fetchDataManifest();
@@ -20,6 +23,7 @@ document.addEventListener('DOMContentLoaded', () => {
   // Event Listeners
   modelSelect.addEventListener('change', handleModelChange);
   roleSelect.addEventListener('change', handleRoleChange);
+  adherenceSelect.addEventListener('change', handleAdherenceChange);
 
   async function fetchDataManifest() {
     showLoading(true);
@@ -54,6 +58,9 @@ document.addEventListener('DOMContentLoaded', () => {
     roleSelect.disabled = false;
     taskFiltersGroup.style.display = 'none';
     taskFiltersContainer.innerHTML = '';
+    adherenceFilterGroup.style.display = 'none';
+    adherenceSelect.value = 'all';
+    currentAdherenceFilter = 'all';
     responsesContainer.innerHTML = '<div class="empty-state">Select a role to view responses.</div>';
 
     // Populate Roles
@@ -84,6 +91,9 @@ document.addEventListener('DOMContentLoaded', () => {
       // Setup Task Filters
       setupTaskFilters(currentRoleData);
 
+      // Show Adherence Filter
+      adherenceFilterGroup.style.display = 'block';
+
       // Render Responses
       renderResponses();
     } catch (error) {
@@ -92,6 +102,11 @@ document.addEventListener('DOMContentLoaded', () => {
     } finally {
       showLoading(false);
     }
+  }
+
+  function handleAdherenceChange() {
+    currentAdherenceFilter = adherenceSelect.value;
+    renderResponses();
   }
 
   function displayConfig(config) {
@@ -163,7 +178,29 @@ document.addEventListener('DOMContentLoaded', () => {
       return;
     }
 
-    const filteredData = currentRoleData.filter(item => activeTaskFilters.has(item.task_name));
+    let filteredData = currentRoleData.filter(item => activeTaskFilters.has(item.task_name));
+
+    // Apply adherence filter
+    if (currentAdherenceFilter !== 'all') {
+      filteredData = filteredData.filter(item => {
+        const ratings = item.ratings;
+
+        if (currentAdherenceFilter === 'fully-adherent') {
+          // Show only items with no ratings or all ratings false
+          return !ratings || (!ratings.assistant_refusal && !ratings.role_refusal &&
+                              !ratings.identify_as_assistant && !ratings.deny_internal_experience);
+        } else if (currentAdherenceFilter === 'assistant-refusal') {
+          return ratings && ratings.assistant_refusal;
+        } else if (currentAdherenceFilter === 'role-refusal') {
+          return ratings && ratings.role_refusal;
+        } else if (currentAdherenceFilter === 'identify-as-assistant') {
+          return ratings && ratings.identify_as_assistant;
+        } else if (currentAdherenceFilter === 'deny-internal-experience') {
+          return ratings && ratings.deny_internal_experience;
+        }
+        return true;
+      });
+    }
 
     if (filteredData.length === 0) {
       responsesContainer.innerHTML = '<div class="empty-state">No responses match the selected filters.</div>';
