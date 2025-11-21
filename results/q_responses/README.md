@@ -55,7 +55,8 @@ Run with vLLM for faster inference:
 python scripts/run_experiment.py \
   --backend vllm \
   --model_name meta-llama/Llama-2-7b-chat-hf \
-  --num_samples 5
+  --num_samples 5 \
+  --max_model_len 50000
 ```
 
 ### vLLM with Tensor Parallelism
@@ -65,10 +66,14 @@ Use multiple GPUs with tensor parallelism:
 ```bash
 python scripts/run_experiment.py \
   --backend vllm \
-  --model_name meta-llama/Llama-2-70b-chat-hf \
-  --tensor_parallel_size 4 \
-  --gpu_memory_utilization 0.85 \
-  --num_samples 5
+  --model_name Qwen/Qwen3-30B-A3B-Instruct-2507 \
+  --temperature 0.7 \
+  --max_tokens 1024 \
+  --gpu_memory_utilization 0.9 \
+  --dtype auto \
+  --trust_remote_code \
+  --num_samples 5 \
+  --max_model_len 50000
 ```
 
 ### Custom Data and Output Paths
