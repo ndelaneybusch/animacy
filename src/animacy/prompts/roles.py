@@ -59,6 +59,8 @@ def create_role(
     """
     article = get_article(role_name)
     system_prompt = f"{BASE_STEM} {article} {role_name}."
+    if extra_instructions:
+        system_prompt += f" {extra_instructions}"
     return Role(
         role_name=role_name,
         role_type=role_type,
