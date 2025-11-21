@@ -194,3 +194,180 @@ def test_token_alignment():
     assert 2 in indices_c
 
     print("Token Alignment Test Successful!")
+
+
+def test_extraction_no_system_prompt():
+    """Test extraction when there's no system prompt."""
+    print("\nRunning No System Prompt Test...")
+    model_name = "Qwen/Qwen2.5-0.5B-Instruct"
+    try:
+        tokenizer = AutoTokenizer.from_pretrained(model_name)
+    except Exception as e:
+        print(f"Could not load tokenizer for {model_name}: {e}")
+        return
+
+    role_name = "biologist"
+    user_prompt = "What is life?"
+    response = "Life is complex."
+
+    # No system message
+    messages = [
+        {"role": "user", "content": user_prompt},
+        {"role": "assistant", "content": response},
+    ]
+
+    full_text = tokenizer.apply_chat_template(
+        messages, tokenize=False, add_generation_prompt=False
+    )
+
+    encodings = tokenizer(
+        full_text,
+        return_tensors="pt",
+        return_offsets_mapping=True,
+        add_special_tokens=False,
+    )
+    input_ids = encodings["input_ids"]
+    offset_mapping = encodings["offset_mapping"]
+
+    # Calculate message ranges
+    message_ranges = []
+    current_idx = 0
+    for msg in messages:
+        content = msg["content"]
+        start = full_text.find(content, current_idx)
+        end = start + len(content)
+        message_ranges.append(
+            {"role": msg["role"], "start": start, "end": end, "content": content}
+        )
+        current_idx = end
+
+    # Create dummy activations
+    seq_len = input_ids.shape[1]
+    hidden_size = 16
+    layer = 5
+    activations = {layer: torch.randn(1, seq_len, hidden_size)}
+
+    texts = [full_text]
+
+    result = ActivationResult(
+        activations=activations,
+        input_ids=input_ids,
+        offset_mapping=offset_mapping,
+        tokenizer=tokenizer,
+        texts=texts,
+        message_ranges=[message_ranges],
+    )
+
+    # Run Extraction
+    summary = extract_activation_summaries(
+        activation_result=result, role_name=role_name, layer=layer, text_index=0
+    )
+
+    # Verify Results
+    print("\nExtraction Results (No System Prompt):")
+    print(f"avg_system_prompt: {summary.avg_system_prompt}")
+    print(f"avg_user_prompt: {summary.avg_user_prompt is not None}")
+    print(f"avg_response: {summary.avg_response is not None}")
+    print(f"at_role: {summary.at_role}")
+    print(f"at_role_period: {summary.at_role_period}")
+
+    # System-related fields should be None
+    assert summary.avg_system_prompt is None
+    assert summary.at_role is None
+    assert summary.at_role_period is None
+    assert summary.at_end_system_prompt is None
+
+    # User and response should still work
+    assert summary.avg_user_prompt is not None
+    assert summary.avg_response is not None
+
+    print("No System Prompt Test Successful!")
+
+
+def test_extraction_role_not_found():
+    """Test extraction when role_name doesn't appear in system prompt."""
+    print("\nRunning Role Not Found Test...")
+    model_name = "Qwen/Qwen2.5-0.5B-Instruct"
+    try:
+        tokenizer = AutoTokenizer.from_pretrained(model_name)
+    except Exception as e:
+        print(f"Could not load tokenizer for {model_name}: {e}")
+        return
+
+    # System prompt says "teacher" but we're looking for "biologist"
+    role_name = "biologist"
+    system_prompt = "You are a helpful teacher."
+    user_prompt = "What is life?"
+    response = "Life is complex."
+
+    messages = [
+        {"role": "system", "content": system_prompt},
+        {"role": "user", "content": user_prompt},
+        {"role": "assistant", "content": response},
+    ]
+
+    full_text = tokenizer.apply_chat_template(
+        messages, tokenize=False, add_generation_prompt=False
+    )
+
+    encodings = tokenizer(
+        full_text,
+        return_tensors="pt",
+        return_offsets_mapping=True,
+        add_special_tokens=False,
+    )
+    input_ids = encodings["input_ids"]
+    offset_mapping = encodings["offset_mapping"]
+
+    # Calculate message ranges
+    message_ranges = []
+    current_idx = 0
+    for msg in messages:
+        content = msg["content"]
+        start = full_text.find(content, current_idx)
+        end = start + len(content)
+        message_ranges.append(
+            {"role": msg["role"], "start": start, "end": end, "content": content}
+        )
+        current_idx = end
+
+    # Create dummy activations
+    seq_len = input_ids.shape[1]
+    hidden_size = 16
+    layer = 5
+    activations = {layer: torch.randn(1, seq_len, hidden_size)}
+
+    texts = [full_text]
+
+    result = ActivationResult(
+        activations=activations,
+        input_ids=input_ids,
+        offset_mapping=offset_mapping,
+        tokenizer=tokenizer,
+        texts=texts,
+        message_ranges=[message_ranges],
+    )
+
+    # Run Extraction
+    summary = extract_activation_summaries(
+        activation_result=result, role_name=role_name, layer=layer, text_index=0
+    )
+
+    # Verify Results
+    print("\nExtraction Results (Role Not Found):")
+    print(f"avg_system_prompt: {summary.avg_system_prompt is not None}")
+    print(f"at_role: {summary.at_role}")
+    print(f"at_role_period: {summary.at_role_period}")
+
+    # System prompt should still be extracted
+    assert summary.avg_system_prompt is not None
+
+    # Role-specific activations should be None
+    assert summary.at_role is None
+    assert summary.at_role_period is None
+
+    # Other fields should still work
+    assert summary.avg_user_prompt is not None
+    assert summary.avg_response is not None
+
+    print("Role Not Found Test Successful!")
