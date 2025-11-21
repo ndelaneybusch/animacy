@@ -4,7 +4,7 @@ version = "0.1.0"
 description = "A new Python library"
 readme = "README.md"
 requires-python = ">=3.12"
-dependencies = ["numpy", "pandas", "pydantic", "vllm"]
+dependencies = ["numpy", "pandas", "pydantic", "openai", "google-genai"]
 
 [build-system]
 requires = ["hatchling"]
