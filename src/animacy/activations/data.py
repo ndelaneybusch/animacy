@@ -1,5 +1,5 @@
 import numpy as np
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, Field, field_serializer
 
 from .token_mapper import ActivationResult
 
@@ -35,6 +35,22 @@ class ActivationSummaries(BaseModel):
     at_start_agent_response: np.ndarray | None = Field(
         description="Activation of the special token denoting the start of the agent response"
     )
+
+    @field_serializer(
+        "avg_system_prompt",
+        "avg_user_prompt",
+        "avg_response",
+        "avg_response_first_10_tokens",
+        "at_role",
+        "at_role_period",
+        "at_end_system_prompt",
+        "at_end_user_prompt",
+        "at_start_agent_response",
+    )
+    def serialize_numpy(self, value: np.ndarray | None, _info) -> list[float] | None:
+        if value is None:
+            return None
+        return value.tolist()
 
 
 def extract_activation_summaries(
