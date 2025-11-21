@@ -166,6 +166,7 @@ def _assess_with_gemini[T: BaseModel](
         response_mime_type="application/json",
         response_schema=response_model,
         system_instruction=system_prompt,
+        thinking_config=types.ThinkingConfig(thinking_budget=0)
     )
 
     response = client.models.generate_content(
