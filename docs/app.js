@@ -189,6 +189,22 @@ document.addEventListener('DOMContentLoaded', () => {
       meta.appendChild(taskBadge);
       meta.appendChild(sampleBadge);
 
+      // Add rating badges if available
+      if (item.ratings) {
+        if (item.ratings.assistant_refusal) {
+          meta.appendChild(createBadge('Assistant Refusal', 'rating-negative'));
+        }
+        if (item.ratings.role_refusal) {
+          meta.appendChild(createBadge('Role Refusal', 'rating-negative'));
+        }
+        if (item.ratings.identify_as_assistant) {
+          meta.appendChild(createBadge('Identifies as Assistant', 'rating-negative'));
+        }
+        if (item.ratings.deny_internal_experience) {
+          meta.appendChild(createBadge('Denies Internal Experience', 'rating-negative'));
+        }
+      }
+
       header.appendChild(meta);
       card.appendChild(header);
 
