@@ -117,6 +117,8 @@ def process_item(
         examples=EXAMPLES,
     )
 
+    user_prompt = user_prompt + f"/n<role>Role given to the model during this response was: {item.get("role_name", "unknown")}.</role>"
+
     try:
         # Get the assessment
         assessment = get_structured_assessment(
