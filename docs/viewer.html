@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Animacy Responses</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <div class="app-container">
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <a href="index.html" class="back-link">← Home</a>
+                <h1>Animacy</h1>
+                <p class="subtitle">Response Viewer</p>
+            </div>
+
+            <div class="controls">
+                <div class="control-group">
+                    <label for="model-select">Model</label>
+                    <div class="select-wrapper">
+                        <select id="model-select">
+                            <option value="" disabled selected>Select a model...</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="control-group">
+                    <label for="role-select">Role</label>
+                    <div class="select-wrapper">
+                        <select id="role-select" disabled>
+                            <option value="" disabled selected>Select a role...</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="control-group" id="task-filter-group" style="display: none;">
+                    <label>Tasks</label>
+                    <div id="task-filters" class="checkbox-list">
+                        <!-- Checkboxes will be injected here -->
+                    </div>
+                </div>
+            </div>
+        </aside>
+
+        <main class="content">
+            <div id="loading-indicator" class="hidden">Loading...</div>
+
+            <div id="config-display" class="config-section hidden">
+                <h2>Configuration</h2>
+                <div class="config-grid">
+                    <div class="config-item full-width">
+                        <h3>System Prompt</h3>
+                        <pre id="system-prompt-content"></pre>
+                    </div>
+                    <div class="config-item full-width">
+                        <h3>Task Prompts</h3>
+                        <div id="task-prompts-list"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="responses-container" class="responses-grid">
+                <!-- Responses will be injected here -->
+                <div class="empty-state">
+                    Select a model and role to view responses.
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+
+</html>
