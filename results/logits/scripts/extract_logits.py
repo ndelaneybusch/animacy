@@ -35,8 +35,12 @@ def process_item(
     Returns:
         ResponseLogits object populated with calculated logits.
     """
+    role_name = item["role_name"]
+    if role_name is None:
+        use_system_prompt = False
+
     return extractor.extract_logits(
-        role_name=item["role_name"],
+        role_name=role_name,
         task_name=item["task_name"],
         sample_idx=item["sample_idx"],
         response_text=item["response"],

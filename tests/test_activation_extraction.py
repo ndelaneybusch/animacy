@@ -1,8 +1,7 @@
 import torch
 from transformers import AutoTokenizer
 
-from animacy.activations.data import extract_activation_summaries
-from animacy.activations.token_mapper import ActivationResult
+from animacy.activations import ActivationResult, extract_activation_summaries
 
 
 def test_extraction():

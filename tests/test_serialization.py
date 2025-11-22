@@ -3,7 +3,7 @@ import json
 import numpy as np
 import pytest
 
-from animacy.activations.data import ActivationSummaries
+from animacy.activations import ActivationSummaries
 
 
 def test_activation_summaries_serialization():
@@ -33,12 +33,3 @@ def test_activation_summaries_serialization():
 
     except Exception as e:
         pytest.fail(f"Serialization failed: {e}")
-
-
-if __name__ == "__main__":
-    # Manual run for quick check
-    try:
-        test_activation_summaries_serialization()
-        print("Test passed!")
-    except Exception as e:
-        print(f"Test failed: {e}")

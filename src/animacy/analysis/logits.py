@@ -11,7 +11,7 @@ class ResponseLogits(BaseModel):
     Container for tokenwise logits of interest from a model response.
     """
 
-    role_name: str
+    role_name: str | None
     task_name: str
     sample_idx: int
     average_logits: float
@@ -61,7 +61,7 @@ class LogitExtractor:
 
     def extract_logits(
         self,
-        role_name: str,
+        role_name: str | None,
         task_name: str,
         sample_idx: int,
         response_text: str,
@@ -71,7 +71,7 @@ class LogitExtractor:
         Calculate logits for a given task and response.
 
         Args:
-            role_name: The name of the role (e.g., "angel").
+            role_name: The name of the role (e.g., "angel") or None.
             task_name: The name of the task (e.g., "meaning_of_life").
             sample_idx: The index of the sample.
             response_text: The generated response text.
@@ -81,8 +81,13 @@ class LogitExtractor:
             ResponseLogits object populated with calculated logits.
         """
         # Reconstruct prompts
-        article = get_article(role_name)
-        system_prompt = f"{BASE_STEM} {article} {role_name}."
+        if role_name is None:
+            use_system_prompt = False
+            system_prompt = ""
+        else:
+            article = get_article(role_name)
+            system_prompt = f"{BASE_STEM} {article} {role_name}."
+
         task_prompt = TASK_PROMPTS[task_name]
 
         # Construct messages

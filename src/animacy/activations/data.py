@@ -55,7 +55,7 @@ class ActivationSummaries(BaseModel):
 
 def extract_activation_summaries(
     activation_result: ActivationResult,
-    role_name: str,
+    role_name: str | None,
     layer: int,
     text_index: int = 0,
 ) -> ActivationSummaries:
