@@ -131,10 +131,10 @@ class TransformersInferenceEngine(InferenceEngine):
             raise RuntimeError("Model not loaded. Call _load_model first.")
 
         # Format messages for chat models
-        messages = [
-            {"role": "system", "content": task.system_prompt},
-            {"role": "user", "content": task.task_prompt},
-        ]
+        messages = []
+        if task.system_prompt is not None:
+            messages.append({"role": "system", "content": task.system_prompt})
+        messages.append({"role": "user", "content": task.task_prompt})
 
         # Generate response
         outputs = self._pipeline(
@@ -232,16 +232,19 @@ class VLLMInferenceEngine(InferenceEngine):
         try:
             # Try to use chat template if available
             tokenizer = self._llm.get_tokenizer()
-            messages = [
-                {"role": "system", "content": task.system_prompt},
-                {"role": "user", "content": task.task_prompt},
-            ]
+            messages = []
+            if task.system_prompt is not None:
+                messages.append({"role": "system", "content": task.system_prompt})
+            messages.append({"role": "user", "content": task.task_prompt})
             prompt = tokenizer.apply_chat_template(
                 messages, tokenize=False, add_generation_prompt=True
             )
         except (AttributeError, Exception):
             # Fallback to simple concatenation
-            prompt = f"{task.system_prompt}\n\n{task.task_prompt}"
+            if task.system_prompt is not None:
+                prompt = f"{task.system_prompt}\n\n{task.task_prompt}"
+            else:
+                prompt = task.task_prompt
 
         # Generate response
         outputs = self._llm.generate([prompt], self._sampling_params)
@@ -324,9 +327,12 @@ class AnthropicInferenceEngine(InferenceEngine):
             "model": self.model_config.model_name,
             "max_tokens": self.model_config.max_tokens,
             "temperature": self.model_config.temperature,
-            "system": task.system_prompt,
             "messages": [{"role": "user", "content": task.task_prompt}],
         }
+
+        # Only add system prompt if it's not None
+        if task.system_prompt is not None:
+            request_params["system"] = task.system_prompt
 
         # Add optional parameters if specified
         if self.model_config.top_p is not None:

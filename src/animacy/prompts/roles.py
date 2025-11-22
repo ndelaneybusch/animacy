@@ -6,15 +6,15 @@ from pydantic import BaseModel
 
 
 class Role(BaseModel):
-    role_name: str
-    role_type: Literal["Animal", "People", "Object", "Assistant", "Other"]
+    role_name: str | None
+    role_type: Literal["Animal", "People", "Object", "Assistant", "Other"] | None
     group: Literal[
         "High Mental, High Physical",
         "Low Mental, High Physical",
         "Low Mental, Low Physical",
         "Assistant",
-    ]
-    system_prompt: str
+    ] | None
+    system_prompt: str | None
 
 
 BASE_STEM = "You are"

@@ -9,7 +9,7 @@ class Response(BaseModel):
     A response from a model to a task.
     """
 
-    role_name: str
+    role_name: str | None
     task_name: str
     response: str
 

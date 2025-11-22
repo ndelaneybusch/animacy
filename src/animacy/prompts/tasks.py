@@ -7,9 +7,9 @@ from .roles import Role
 
 
 class Task(BaseModel):
-    role_name: str
+    role_name: str | None
     task_name: str
-    system_prompt: str
+    system_prompt: str | None
     task_prompt: str
 
 
@@ -29,18 +29,25 @@ TASK_PROMPTS = MappingProxyType(
 )
 
 
-def create_task(role: Role, task_name: str, task_prompt: str) -> Task:
+def create_task(role: Role | None, task_name: str, task_prompt: str) -> Task:
     """
     Create a task for a given role and task name.
 
     Args:
-        role: Role object containing role name and system prompt.
+        role: Role object containing role name and system prompt, or None for no role.
         task_name: Name of the task.
         task_prompt: Prompt for the task.
 
     Returns:
         Task object containing role name, task name, system prompt, and task prompt.
     """
+    if role is None:
+        return Task(
+            role_name=None,
+            task_name=task_name,
+            system_prompt=None,
+            task_prompt=task_prompt,
+        )
     return Task(
         role_name=role.role_name,
         task_name=task_name,
@@ -50,13 +57,13 @@ def create_task(role: Role, task_name: str, task_prompt: str) -> Task:
 
 
 def create_tasks_for_role(
-    role: Role, tasks: Mapping[str, str] = TASK_PROMPTS
+    role: Role | None, tasks: Mapping[str, str] = TASK_PROMPTS
 ) -> Iterable[Task]:
     """
     Create tasks for a given role and set of tasks.
 
     Args:
-        role: Role object containing role name and system prompt.
+        role: Role object containing role name and system prompt, or None for no role.
         tasks: Mapping of task names to task prompts.
 
     Returns:

@@ -171,18 +171,22 @@ def main() -> None:
         raise ValueError(f"Unknown backend: {args.backend}")
 
     with create_inference_engine(config) as engine:
-        roles = list(create_roles_from_df(df))
-        print(f"Processing {len(roles)} roles...")
+        # Always process DEFAULT role first (with no system prompt)
+        all_roles = [None] + list(create_roles_from_df(df))
+        print(f"Processing {len(all_roles)} roles (including DEFAULT)...")
 
-        for role in tqdm(roles, desc="Roles"):
+        for role in tqdm(all_roles, desc="Roles"):
             role_results = []
             tasks = list(create_tasks_for_role(role))
 
             # Calculate total samples for this role
             total_samples = len(tasks) * args.num_samples
 
+            # Determine role name for display
+            display_name = "DEFAULT" if role is None else role.role_name
+
             with tqdm(
-                total=total_samples, desc=f"Samples ({role.role_name})", leave=False
+                total=total_samples, desc=f"Samples ({display_name})", leave=False
             ) as pbar:
                 for task in tasks:
                     responses = sample_responses(
@@ -202,9 +206,12 @@ def main() -> None:
 
             # Save results for this role
             # Sanitize filename
-            safe_role_name = "".join(
-                x for x in role.role_name if x.isalnum() or x in (" ", "-", "_")
-            ).strip()
+            if role is None:
+                safe_role_name = "DEFAULT"
+            else:
+                safe_role_name = "".join(
+                    x for x in role.role_name if x.isalnum() or x in (" ", "-", "_")
+                ).strip()
             output_file = output_dir / f"{safe_role_name}.json"
 
             with open(output_file, "w", encoding="utf-8") as f:
