@@ -18,7 +18,9 @@ if str(project_root / "src") not in sys.path:
     sys.path.append(str(project_root / "src"))
 
 
-def process_item(item: dict[str, Any], extractor: LogitExtractor) -> ResponseLogits:
+def process_item(
+    item: dict[str, Any], extractor: LogitExtractor, use_system_prompt: bool = True
+) -> ResponseLogits:
     """
     Process a single item (dict) and return a ResponseLogits object.
 
@@ -38,12 +40,12 @@ def process_item(item: dict[str, Any], extractor: LogitExtractor) -> ResponseLog
         task_name=item["task_name"],
         sample_idx=item["sample_idx"],
         response_text=item["response"],
-        use_system_prompt=True,
+        use_system_prompt=use_system_prompt,
     )
 
 
 def process_file(
-    file_path: Path, extractor: LogitExtractor
+    file_path: Path, extractor: LogitExtractor, use_system_prompt: bool = True
 ) -> Iterable[ResponseLogits]:
     """
     Process a file and return an iterable of ResponseLogits.
@@ -59,10 +61,12 @@ def process_file(
         data = json.load(f)
 
     for item in data:
-        yield process_item(item, extractor)
+        yield process_item(item, extractor, use_system_prompt=use_system_prompt)
 
 
-def process_folder(folder_path: Path, extractor: LogitExtractor) -> pd.DataFrame:
+def process_folder(
+    folder_path: Path, extractor: LogitExtractor, use_system_prompt: bool = True
+) -> pd.DataFrame:
     """
     Process a folder and return the data frame.
 
@@ -81,7 +85,9 @@ def process_folder(folder_path: Path, extractor: LogitExtractor) -> pd.DataFrame
 
     for file_path in tqdm(files, desc="Processing files"):
         try:
-            file_logits = process_file(file_path, extractor)
+            file_logits = process_file(
+                file_path, extractor, use_system_prompt=use_system_prompt
+            )
             # Use model_dump() for Pydantic v2, fallback to dict() if needed
             if hasattr(ResponseLogits, "model_dump"):
                 all_logits.extend([l.model_dump() for l in file_logits])
@@ -128,6 +134,11 @@ def main() -> None:
     parser.add_argument(
         "--load_in_4bit", action="store_true", help="Load model in 4-bit quantization."
     )
+    parser.add_argument(
+        "--no_system_prompt",
+        action="store_true",
+        help="Do not use the system prompt when extracting logits.",
+    )
 
     args = parser.parse_args()
 
@@ -165,7 +176,9 @@ def main() -> None:
     extractor = LogitExtractor(model, tokenizer)
 
     print(f"Processing responses from {input_dir}...")
-    df = process_folder(input_dir, extractor)
+    df = process_folder(
+        input_dir, extractor, use_system_prompt=not args.no_system_prompt
+    )
 
     print(f"Saving results to {output_file}...")
     if output_file.suffix == ".csv":

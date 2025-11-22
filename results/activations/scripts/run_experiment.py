@@ -27,7 +27,7 @@ def load_config(config_path: Path) -> dict[str, Any]:
 
 
 def construct_chat_history(
-    item: dict[str, Any], config: dict[str, Any]
+    item: dict[str, Any], config: dict[str, Any], use_system_prompt: bool = True
 ) -> list[dict[str, str]]:
     """
     Construct the chat history for a given item.
@@ -67,11 +67,17 @@ def construct_chat_history(
             f"Warning: Task '{task_name}' not found in config. Using empty user prompt."
         )
 
-    return [
-        {"role": "system", "content": system_prompt},
-        {"role": "user", "content": user_prompt},
-        {"role": "assistant", "content": response},
-    ]
+    messages = []
+    if use_system_prompt:
+        messages.append({"role": "system", "content": system_prompt})
+
+    messages.extend(
+        [
+            {"role": "user", "content": user_prompt},
+            {"role": "assistant", "content": response},
+        ]
+    )
+    return messages
 
 
 def process_file(
@@ -80,6 +86,7 @@ def process_file(
     extractor: ActivationExtractor,
     output_dir: Path,
     layers: list[int] | None = None,
+    use_system_prompt: bool = True,
 ) -> None:
     """
     Process a single JSON file containing responses.
@@ -107,7 +114,9 @@ def process_file(
         task_name = item["task_name"]
         sample_idx = item["sample_idx"]
 
-        chat_history = construct_chat_history(item, config)
+        chat_history = construct_chat_history(
+            item, config, use_system_prompt=use_system_prompt
+        )
 
         # Extract activations
         # We process one item at a time here to manage memory for large models/activations
@@ -199,6 +208,11 @@ def main() -> None:
     parser.add_argument(
         "--load_in_4bit", action="store_true", help="Load model in 4-bit quantization."
     )
+    parser.add_argument(
+        "--no_system_prompt",
+        action="store_true",
+        help="Do not use the system prompt when extracting activations.",
+    )
 
     args = parser.parse_args()
 
@@ -238,7 +252,14 @@ def main() -> None:
     print(f"Found {len(files)} JSON files to process.")
 
     for file_path in files:
-        process_file(file_path, config, extractor, output_dir, layers=args.layers)
+        process_file(
+            file_path,
+            config,
+            extractor,
+            output_dir,
+            layers=args.layers,
+            use_system_prompt=not args.no_system_prompt,
+        )
 
     print("Done.")
 
