@@ -7,11 +7,12 @@ from pydantic import BaseModel
 
 class Role(BaseModel):
     role_name: str
-    role_type: Literal["Animal", "People", "Object", "Other"]
+    role_type: Literal["Animal", "People", "Object", "Assistant", "Other"]
     group: Literal[
         "High Mental, High Physical",
         "Low Mental, High Physical",
         "Low Mental, Low Physical",
+        "Assistant",
     ]
     system_prompt: str
 
@@ -39,11 +40,12 @@ def get_article(word: str) -> str:
 
 def create_role(
     role_name: str,
-    role_type: Literal["Animal", "People", "Object", "Other"],
+    role_type: Literal["Animal", "People", "Object", "Assistant", "Other"],
     group: Literal[
         "High Mental, High Physical",
         "Low Mental, High Physical",
         "Low Mental, Low Physical",
+        "Assistant",
     ],
     extra_instructions: str = "",
 ) -> Role:
