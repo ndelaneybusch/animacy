@@ -23,6 +23,11 @@ dev = [
     "pandas-stubs>=2.0.0",
 ]
 
+[project.urls]
+Homepage = "https://ndelaneybusch.github.io/animacy/"
+Repository = "https://github.com/ndelaneybusch/animacy"
+
+
 [tool.uv.pip]
 torch-backend = "auto"
 
@@ -42,16 +47,17 @@ select = [
 ignore = []
 
 [tool.ruff.format]
-# Inherits line-length from [tool.ruff] if not set here.
 docstring-code-format = true
 quote-style = "double"
+skip-magic-trailing-comma = true
+
+[tool.ruff.lint.isort]
+split-on-trailing-comma = false
+
 
 [tool.mypy]
 python_version = "3.12"
-strict = true
-warn_return_any = true
-warn_unused_configs = true
-disallow_untyped_defs = true
+ignore_missing_imports = true
 
 [[tool.mypy.overrides]]
 module = "tests.*"

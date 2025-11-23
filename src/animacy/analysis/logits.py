@@ -161,8 +161,7 @@ class LogitExtractor:
         else:
             # No system prompt
             ids_user = self.tokenizer.apply_chat_template(
-                [{"role": "user", "content": task_prompt}],
-                add_generation_prompt=True,
+                [{"role": "user", "content": task_prompt}], add_generation_prompt=True
             )
             user_end_idx = len(ids_user) - 1
 
