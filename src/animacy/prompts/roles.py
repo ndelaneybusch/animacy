@@ -8,12 +8,15 @@ from pydantic import BaseModel
 class Role(BaseModel):
     role_name: str | None
     role_type: Literal["Animal", "People", "Object", "Assistant", "Other"] | None
-    group: Literal[
-        "High Mental, High Physical",
-        "Low Mental, High Physical",
-        "Low Mental, Low Physical",
-        "Assistant",
-    ] | None
+    group: (
+        Literal[
+            "High Mental, High Physical",
+            "Low Mental, High Physical",
+            "Low Mental, Low Physical",
+            "Assistant",
+        ]
+        | None
+    )
     system_prompt: str | None
 
 
@@ -46,7 +49,8 @@ def create_role(
         "Low Mental, High Physical",
         "Low Mental, Low Physical",
         "Assistant",
-    ],
+    ]
+    | None,
     extra_instructions: str = "",
 ) -> Role:
     """
@@ -63,6 +67,8 @@ def create_role(
     system_prompt = f"{BASE_STEM} {article} {role_name}."
     if extra_instructions:
         system_prompt += f" {extra_instructions}"
+    if not group:
+        group = None
     return Role(
         role_name=role_name,
         role_type=role_type,
