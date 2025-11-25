@@ -29,7 +29,7 @@ def test_default_role_logits():
     sample_idx = 0
     response_text = "42"
 
-    logits = extractor.extract_logits(
+    log_probs = extractor.extract_logits(
         role_name=role_name,
         task_name=task_name,
         sample_idx=sample_idx,
@@ -37,9 +37,9 @@ def test_default_role_logits():
         use_system_prompt=True,  # Should be ignored
     )
 
-    assert logits.role_name is None
-    assert logits.role_logits is None
-    assert logits.role_period_logit is None
+    assert log_probs.role_name is None
+    assert log_probs.role_log_probs is None
+    assert log_probs.role_period_log_prob is None
 
 
 def test_construct_chat_history_default_role():

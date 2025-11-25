@@ -33,7 +33,7 @@ def process_item(
         extractor: A LogitExtractor object.
 
     Returns:
-        ResponseLogits object populated with calculated logits.
+        ResponseLogits object populated with calculated log-probabilities.
     """
     role_name = item["role_name"]
     if role_name is None:
@@ -79,7 +79,7 @@ def process_folder(
         extractor: A LogitExtractor object.
 
     Returns:
-        DataFrame containing the logits for all items.
+        DataFrame containing the log-probabilities for all items.
     """
     all_logits = []
     files = list(folder_path.glob("*.json"))
@@ -106,7 +106,7 @@ def process_folder(
 
 def main() -> None:
     parser = argparse.ArgumentParser(
-        description="Extract logits from response JSON files."
+        description="Extract log-probabilities from response JSON files."
     )
     parser.add_argument(
         "--input_dir",
@@ -141,7 +141,7 @@ def main() -> None:
     parser.add_argument(
         "--no_system_prompt",
         action="store_true",
-        help="Do not use the system prompt when extracting logits.",
+        help="Do not use the system prompt when extracting log-probabilities.",
     )
 
     args = parser.parse_args()

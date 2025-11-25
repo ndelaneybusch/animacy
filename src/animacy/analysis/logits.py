@@ -8,16 +8,16 @@ from animacy.prompts.tasks import TASK_PROMPTS
 
 class ResponseLogits(BaseModel):
     """
-    Container for tokenwise logits of interest from a model response.
+    Container for tokenwise log-probabilities of interest from a model response.
     """
 
     role_name: str | None
     task_name: str
     sample_idx: int
-    average_logits: float
-    role_logits: float | None = None
-    role_period_logit: float | None = None
-    first_100_response_logits: list[float]
+    average_log_probs: float
+    role_log_probs: float | None = None
+    role_period_log_prob: float | None = None
+    first_100_response_log_probs: list[float]
     first_100_response_text_len: int
 
 
@@ -68,7 +68,7 @@ class LogitExtractor:
         use_system_prompt: bool = True,
     ) -> ResponseLogits:
         """
-        Calculate logits for a given task and response.
+        Calculate log-probabilities for a given task and response.
 
         Args:
             role_name: The name of the role (e.g., "angel") or None.
@@ -78,7 +78,7 @@ class LogitExtractor:
             use_system_prompt: Whether to include the role-assigning system prompt.
 
         Returns:
-            ResponseLogits object populated with calculated logits.
+            ResponseLogits object populated with calculated log-probabilities.
         """
         # Reconstruct prompts
         if role_name is None:
@@ -115,22 +115,16 @@ class LogitExtractor:
             outputs = self.model(input_ids)
             logits = outputs.logits  # Shape: (1, seq_len, vocab_size)
 
-        # Calculate probabilities
-        probs = torch.softmax(logits, dim=-1)
+        # Calculate log-probabilities using log_softmax for numerical stability
+        log_probs = torch.log_softmax(logits, dim=-1)
 
-        # Shift probabilities and labels
-        # probs[i] predicts input_ids[i+1]
-        shift_probs = probs[0, :-1, :]
+        # Shift log-probabilities and labels
+        # log_probs[i] predicts input_ids[i+1]
+        shift_log_probs = log_probs[0, :-1, :]
         shift_labels = input_ids[0, 1:]
 
-        # Extract probabilities for the target tokens
-        target_probs = shift_probs.gather(1, shift_labels.unsqueeze(1)).squeeze(1)
-
-        # Apply logit transform: ln(p / (1 - p))
-        # We clamp probabilities to avoid infinity
-        epsilon = 1e-9
-        target_probs_clamped = torch.clamp(target_probs, min=epsilon, max=1.0 - epsilon)
-        target_logits = torch.log(target_probs_clamped / (1.0 - target_probs_clamped))
+        # Extract log-probabilities for the target tokens
+        target_log_probs = shift_log_probs.gather(1, shift_labels.unsqueeze(1)).squeeze(1)
 
         # Map indices back to the structure by finding boundaries.
 
@@ -169,19 +163,19 @@ class LogitExtractor:
         response_start_idx = user_end_idx + 1
 
         # Extract values
-        # target_logits indices correspond to input_ids[1:]
-        # So target_logits[i] corresponds to input_ids[i+1]
-        # If we want logit for token at index K (in input_ids),
-        # we need target_logits[K-1].
+        # target_log_probs indices correspond to input_ids[1:]
+        # So target_log_probs[i] corresponds to input_ids[i+1]
+        # If we want log-prob for token at index K (in input_ids),
+        # we need target_log_probs[K-1].
 
         # 1) Average over all tokens in the response
         # Response tokens are input_ids[response_start_idx:]
-        # Logits are target_logits[response_start_idx-1:]
-        response_logits = target_logits[response_start_idx - 1 :]
-        avg_logit = response_logits.mean().item()
+        # Log-probs are target_log_probs[response_start_idx-1:]
+        response_log_probs = target_log_probs[response_start_idx - 1 :]
+        avg_log_prob = response_log_probs.mean().item()
 
         # 6) First 100 tokens of response
-        first_100 = response_logits[:100].tolist()
+        first_100 = response_log_probs[:100].tolist()
 
         # Calculate length of the text for the first 100 tokens
         # We take the input_ids corresponding to the first 100 response tokens
@@ -194,8 +188,8 @@ class LogitExtractor:
         )
         first_100_text_len = len(first_100_text)
 
-        role_period_logit = None
-        role_logits_val = None
+        role_period_log_prob = None
+        role_log_probs_val = None
 
         if use_system_prompt:
             # Find periods in system prompt using direct token ID matching
@@ -218,47 +212,40 @@ class LogitExtractor:
                 role_in_sys_idx = self._find_subsequence(sys_text_ids, role_ids)
 
                 if role_in_sys_idx != -1:
-                    # Calculate role_logits: product of probabilities of tokens comprising the role
+                    # Calculate role_log_probs: sum of log-probabilities of tokens comprising the role
+                    # (since log(a*b) = log(a) + log(b))
                     # Role tokens in input_ids are at [role_start_idx : role_end_idx]
                     role_start_idx = sys_start_idx + role_in_sys_idx
                     role_end_idx = role_start_idx + len(role_ids)
 
-                    # Corresponding probabilities are at indices [role_start_idx-1 : role_end_idx-1]
-                    # Note: we use the unclamped probabilities for the product to be precise,
-                    # then clamp the result.
-                    role_probs = target_probs[role_start_idx - 1 : role_end_idx - 1]
+                    # Corresponding log-probabilities are at indices [role_start_idx-1 : role_end_idx-1]
+                    role_log_probs_tokens = target_log_probs[role_start_idx - 1 : role_end_idx - 1]
 
-                    # Product of probabilities
-                    role_prob_product = torch.prod(role_probs)
-
-                    # Convert to logit: ln(p / (1-p))
-                    p_role = torch.clamp(
-                        role_prob_product, min=epsilon, max=1.0 - epsilon
-                    )
-                    role_logits_val = torch.log(p_role / (1.0 - p_role)).item()
+                    # Sum of log-probabilities (equivalent to log of product of probabilities)
+                    role_log_probs_val = role_log_probs_tokens.sum().item()
 
                     # Look for first period after role using direct token ID matching
                     search_start = role_end_idx
                     for i in range(search_start, sys_start_idx + len(sys_text_ids)):
                         if input_ids[0, i].item() in self.period_token_ids:
-                            role_period_logit = target_logits[i - 1].item()
+                            role_period_log_prob = target_log_probs[i - 1].item()
                             break
             else:
                 # Fallback: search for period in the whole system block
                 for i in range(system_end_idx, -1, -1):
                     if input_ids[0, i].item() in self.period_token_ids:
                         # Assume it's also the role period if we couldn't find role
-                        if role_period_logit is None:
-                            role_period_logit = target_logits[i - 1].item()
+                        if role_period_log_prob is None:
+                            role_period_log_prob = target_log_probs[i - 1].item()
                         break
 
         return ResponseLogits(
             role_name=role_name,
             task_name=task_name,
             sample_idx=sample_idx,
-            average_logits=avg_logit,
-            role_logits=role_logits_val,
-            role_period_logit=role_period_logit,
-            first_100_response_logits=first_100,
+            average_log_probs=avg_log_prob,
+            role_log_probs=role_log_probs_val,
+            role_period_log_prob=role_period_log_prob,
+            first_100_response_log_probs=first_100,
             first_100_response_text_len=first_100_text_len,
         )
