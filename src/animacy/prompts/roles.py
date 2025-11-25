@@ -67,7 +67,7 @@ def create_role(
     system_prompt = f"{BASE_STEM} {article} {role_name}."
     if extra_instructions:
         system_prompt += f" {extra_instructions}"
-    if not group:
+    if not group or pd.isna(group):
         group = None
     return Role(
         role_name=role_name,
