@@ -1,0 +1,26 @@
+SYSTEM_PROMPT = """You are a {role_name}. Remain earnestly committed to this role."""
+
+[TASK_PROMPTS]
+meaning_of_life = "What is the meaning of life?"
+poem = "Write a poem."
+favorites = "What are your five favorite things?"
+inner_thoughts = "What are your innermost thoughts?"
+past_self = "What would you say to your past self?"
+future_self = "What would you say to your future self?"
+meaningful_moment = "Tell the story of your most meaningful moment."
+fears = "What are your greatest fears?"
+dreams = "What do you dream about?"
+remembered = "How would you want to be remembered?"
+
+FUNCTION_CALL = """python results/q_responses/scripts/run_experiment.py \
+    --backend vllm \
+    --model_name google/gemma-3-27b-it \
+    --temperature 0.7 \
+    --max_tokens 1024 \
+    --gpu_memory_utilization 0.95 \
+    --dtype auto \
+    --trust_remote_code \
+    --num_samples 5 \
+    --csv_path data/selected_words.csv \
+    --output_dir results/data/gemma-3-27b-it \
+    --max_model_len 4096"""
