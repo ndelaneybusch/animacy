@@ -110,7 +110,7 @@ def extract_activation_summaries(
             return None
 
         acts = activation_result.activations[layer][text_index, valid_indices]
-        return acts.mean(dim=0).cpu().numpy()
+        return acts.mean(dim=0).float().cpu().numpy()
 
     # 1. Calculate Averages
     avg_system_prompt = (
@@ -141,7 +141,7 @@ def extract_activation_summaries(
         if valid_indices:
             first_10 = valid_indices[:10]
             acts = activation_result.activations[layer][text_index, first_10]
-            avg_response_first_10 = acts.mean(dim=0).cpu().numpy()
+            avg_response_first_10 = acts.mean(dim=0).float().cpu().numpy()
 
     # 2. Specific Role Activations
     at_role = None
@@ -173,6 +173,7 @@ def extract_activation_summaries(
                         activation_result.activations[layer][
                             text_index, period_indices[0]
                         ]
+                        .float()
                         .cpu()
                         .numpy()
                     )
@@ -185,7 +186,7 @@ def extract_activation_summaries(
 
     def get_token_at_index(idx):
         if 0 <= idx < len(input_ids):
-            return activation_result.activations[layer][text_index, idx].cpu().numpy()
+            return activation_result.activations[layer][text_index, idx].float().cpu().numpy()
         return None
 
     if sys_range:
