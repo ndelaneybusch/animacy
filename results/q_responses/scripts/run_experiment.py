@@ -104,6 +104,12 @@ def main() -> None:
         help="Trust remote code when loading model",
     )
 
+    parser.add_argument(
+        "--enforce_eager",
+        action="store_true",
+        help="[vLLM only] Enforce eager execution (disable graph compilation)",
+    )
+
     # Data and Output
     parser.add_argument(
         "--csv_path",
@@ -166,6 +172,7 @@ def main() -> None:
             temperature=args.temperature,
             max_tokens=args.max_tokens,
             trust_remote_code=args.trust_remote_code,
+            enforce_eager=args.enforce_eager,
         )
     else:
         raise ValueError(f"Unknown backend: {args.backend}")

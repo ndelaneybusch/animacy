@@ -201,6 +201,7 @@ class VLLMInferenceEngine(InferenceEngine):
             "gpu_memory_utilization": self.model_config.gpu_memory_utilization,
             "dtype": self.model_config.dtype,
             "trust_remote_code": self.model_config.trust_remote_code,
+            "enforce_eager": self.model_config.enforce_eager,
         }
 
         # Only add max_model_len if specified

@@ -88,6 +88,9 @@ class VLLMModelConfig(ModelConfig):
     trust_remote_code: bool = Field(
         default=False, description="Trust remote code when loading model"
     )
+    enforce_eager: bool = Field(
+        default=False, description="Enforce eager execution (disable graph compilation)"
+    )
 
     def get_backend_type(self) -> str:
         """Return the backend type identifier."""
