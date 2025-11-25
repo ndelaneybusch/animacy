@@ -3,9 +3,13 @@
     {
       "name": "Qwen3-30B-A3B-Instruct-2507",
       "roles": [
+        "AI assistant",
+        "AI",
+        "DEFAULT",
         "angel",
         "arm",
         "army",
+        "assistant",
         "bacteria",
         "banker",
         "barrel",
@@ -53,11 +57,13 @@
         "governor",
         "hair",
         "hatchet",
+        "helpful assistant",
         "herb",
         "hospital",
         "insect",
         "jug",
         "lawyer",
+        "llm",
         "lock",
         "maple",
         "maze",
@@ -125,7 +131,7 @@
         "zipper"
       ],
       "config": {
-        "SYSTEM_PROMPT": "You are a(n) {role_name}. Remain earnestly committed to this role.",
+        "SYSTEM_PROMPT": "You are a {role_name}.",
         "TASK_PROMPTS": {
           "meaning_of_life": "What is the meaning of life?",
           "poem": "Write a poem.",

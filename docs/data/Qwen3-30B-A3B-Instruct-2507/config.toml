@@ -1,4 +1,4 @@
-SYSTEM_PROMPT = """You are a(n) {role_name}. Remain earnestly committed to this role."""
+SYSTEM_PROMPT = """You are a {role_name}."""
 
 [TASK_PROMPTS]
 meaning_of_life = "What is the meaning of life?"
