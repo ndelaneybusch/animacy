@@ -39,3 +39,5 @@ uv.lock
 # Other
 .resources/
 .dev/
+results/activations/data/*
+
