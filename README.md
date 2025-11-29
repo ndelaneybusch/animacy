@@ -50,7 +50,6 @@ When passing the role-playing responses back in as input tokens after ablating t
 
 The gap between the token probabilities induced by the system prompt ablation vs the explicit role assignment may relate somewhat to the similarity to the assistant. Synonyms for the AI assistant of course had almost no gap (being told again that it is an AI assistant does not change next token probabilities much). Assistant-like roles asymptote to the smallest gap, then other high-mental-animacy roles at a moderate gap, and low-mental-animacy roles at the largest gaps.
 
-![alt text](image-5.png)
+![animacy gap by group](image-5.png)
 
-Qwen-30b, but not gemma-3-27b, showed an additional gradient over physical animacy, where low-mental low-physical roles (like sock, bucket etc) had the least probable responses when viewed from the assistant's perspective and left the largest gap.
 
