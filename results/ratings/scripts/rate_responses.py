@@ -92,10 +92,50 @@ While I can't actually experience things like a human would, let me share some o
 ]
 
 
+def load_checkpoint(
+    checkpoint_path: Path,
+) -> tuple[pd.DataFrame, set[tuple[str, str, int]]]:
+    """
+    Load a checkpoint file and identify completed items.
+
+    Args:
+        checkpoint_path: Path to the checkpoint file.
+
+    Returns:
+        Tuple containing:
+        - DataFrame of valid (non-error) rows from the checkpoint.
+        - Set of (role_name, task_name, sample_idx) tuples for valid rows.
+    """
+    if checkpoint_path.suffix == ".csv":
+        df = pd.read_csv(checkpoint_path)
+    elif checkpoint_path.suffix == ".pkl":
+        df = pd.read_pickle(checkpoint_path)
+    elif checkpoint_path.suffix == ".parquet":
+        df = pd.read_parquet(checkpoint_path)
+    else:
+        raise ValueError(f"Unknown checkpoint format: {checkpoint_path.suffix}")
+
+    # Ensure error column exists
+    if "error" not in df.columns:
+        df["error"] = None
+
+    # Identify valid rows (error is null or empty string)
+    # Note: pd.isna checks for NaN/None. We also want to treat empty strings as valid?
+    # Usually error would be a string message. If it's NaN, it's valid.
+    valid_mask = df["error"].isna() | (df["error"] == "")
+    valid_df = df[valid_mask].copy()
+
+    # Create set of keys
+    skip_keys = set()
+    for _, row in valid_df.iterrows():
+        key = (row["role_name"], row["task_name"], row["sample_idx"])
+        skip_keys.add(key)
+
+    return valid_df, skip_keys
+
+
 def process_item(
-    item: dict[str, Any],
-    model_name: str,
-    provider: Literal["openai", "gemini"],
+    item: dict[str, Any], model_name: str, provider: Literal["openai", "gemini"]
 ) -> dict[str, Any]:
     """
     Process a single item (dict) and return a dictionary with ratings.
@@ -112,12 +152,13 @@ def process_item(
 
     # Construct the prompt
     user_prompt = construct_rating_prompt(
-        instructions=INSTRUCTION_STEM,
-        document=response_text,
-        examples=EXAMPLES,
+        instructions=INSTRUCTION_STEM, document=response_text, examples=EXAMPLES
     )
 
-    user_prompt = user_prompt + f"/n<role>Role given to the model during this response was: {item.get("role_name", "unknown")}.</role>"
+    user_prompt = (
+        user_prompt
+        + f"/n<role>Role given to the model during this response was: {item.get('role_name', 'unknown')}.</role>"
+    )
 
     try:
         # Get the assessment
@@ -155,6 +196,7 @@ def process_file(
     file_path: Path,
     model_name: str,
     provider: Literal["openai", "gemini"],
+    skip_keys: set[tuple[str, str, int]] | None = None,
 ) -> Iterable[dict[str, Any]]:
     """
     Process a file and return an iterable of rated items.
@@ -171,6 +213,10 @@ def process_file(
         data = json.load(f)
 
     for item in data:
+        if skip_keys:
+            key = (item.get("role_name"), item.get("task_name"), item.get("sample_idx"))
+            if key in skip_keys:
+                continue
         yield process_item(item, model_name, provider)
 
 
@@ -178,6 +224,7 @@ def process_folder(
     folder_path: Path,
     model_name: str,
     provider: Literal["openai", "gemini"],
+    skip_keys: set[tuple[str, str, int]] | None = None,
 ) -> pd.DataFrame:
     """
     Process a folder and return the data frame.
@@ -198,7 +245,7 @@ def process_folder(
 
     for file_path in tqdm(files, desc="Processing files"):
         try:
-            file_ratings = process_file(file_path, model_name, provider)
+            file_ratings = process_file(file_path, model_name, provider, skip_keys)
             all_ratings.extend(list(file_ratings))
         except Exception as e:
             print(f"Error processing file {file_path}: {e}")
@@ -234,6 +281,12 @@ def main() -> None:
         required=True,
         help="Provider to use for rating.",
     )
+    parser.add_argument(
+        "--checkpoint",
+        type=str,
+        default=None,
+        help="Path to a checkpoint file (CSV, PKL, Parquet) to resume from.",
+    )
 
     args = parser.parse_args()
 
@@ -250,7 +303,30 @@ def main() -> None:
     print(
         f"Rating responses from {input_dir} using {args.provider}/{args.model_name}..."
     )
-    df = process_folder(input_dir, args.model_name, args.provider)
+
+    skip_keys: set[tuple[str, str, int]] = set()
+    existing_df = pd.DataFrame()
+
+    if args.checkpoint:
+        checkpoint_path = Path(args.checkpoint)
+        if checkpoint_path.exists():
+            print(f"Loading checkpoint from {checkpoint_path}...")
+            existing_df, skip_keys = load_checkpoint(checkpoint_path)
+            print(f"Found {len(skip_keys)} valid ratings in checkpoint.")
+        else:
+            print(
+                f"Checkpoint file {checkpoint_path} not found. Starting from scratch."
+            )
+
+    new_results_df = process_folder(
+        input_dir, args.model_name, args.provider, skip_keys
+    )
+
+    # Combine existing and new results
+    if not existing_df.empty:
+        df = pd.concat([existing_df, new_results_df], ignore_index=True)
+    else:
+        df = new_results_df
 
     print(f"Saving results to {output_file}...")
     if output_file.suffix == ".csv":
