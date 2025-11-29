@@ -272,13 +272,27 @@ class ActivationExtractor:
         Returns:
             Tuple of (list of full texts, list of message ranges)
         """
+        from ..activations.data import _detect_assistant_role_name
+
+        # Detect the expected assistant role name for this tokenizer
+        expected_assistant_role = _detect_assistant_role_name(self.tokenizer)
+
         texts = []
         all_message_ranges = []
 
         for history in chat_histories:
+            # Normalize role names to match what the tokenizer expects
+            normalized_history = []
+            for message in history:
+                role = message["role"]
+                # Convert 'assistant' to the tokenizer's expected role name
+                if role == "assistant" and expected_assistant_role != "assistant":
+                    role = expected_assistant_role
+                normalized_history.append({"role": role, "content": message["content"]})
+
             # Apply chat template to get full text
             full_text = self.tokenizer.apply_chat_template(
-                history, tokenize=False, add_generation_prompt=False
+                normalized_history, tokenize=False, add_generation_prompt=False
             )
             texts.append(full_text)
 
@@ -288,7 +302,7 @@ class ActivationExtractor:
             ranges = []
             current_search_idx = 0
 
-            for message in history:
+            for message in normalized_history:
                 content = message["content"]
                 role = message["role"]
 

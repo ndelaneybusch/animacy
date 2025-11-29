@@ -58,6 +58,9 @@ def _detect_assistant_role_name(tokenizer) -> str:
     """
     Detect the role name used for assistant/model responses in the chat template.
 
+    This function tests the actual template rendering to find what role name
+    appears in the output, rather than just parsing the template code.
+
     Args:
         tokenizer: The tokenizer with a chat_template attribute
 
@@ -67,6 +70,29 @@ def _detect_assistant_role_name(tokenizer) -> str:
     if not hasattr(tokenizer, "chat_template") or not tokenizer.chat_template:
         return "assistant"  # Default fallback
 
+    # First, try rendering a test message with 'assistant' role
+    # and see what actually appears in the output
+    test_messages = [
+        {"role": "user", "content": "test"},
+        {"role": "assistant", "content": "response"},
+    ]
+
+    try:
+        rendered = tokenizer.apply_chat_template(
+            test_messages, tokenize=False, add_generation_prompt=False
+        )
+
+        # Check if the rendered output contains role indicators
+        # Common patterns: <start_of_turn>model, <|im_start|>assistant, etc.
+        if "<start_of_turn>model" in rendered or "role>model" in rendered:
+            return "model"
+        elif "<start_of_turn>assistant" in rendered or "role>assistant" in rendered:
+            return "assistant"
+
+    except Exception:
+        pass  # Fall through to template parsing
+
+    # Fallback: Parse the template code
     template = tokenizer.chat_template
 
     # Look for role comparisons in the Jinja2 template
