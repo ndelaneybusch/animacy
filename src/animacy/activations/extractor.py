@@ -162,11 +162,15 @@ class ActivationExtractor:
         offset_mapping = encodings["offset_mapping"]  # Keep on CPU
 
         # Prepare hooks
-        activations = {layer_idx: [] for layer_idx in layers}
+        activations: dict[int, list[torch.Tensor]] = {
+            layer_idx: [] for layer_idx in layers
+        }
         handles = []
+        hook_fired = {layer_idx: False for layer_idx in layers}
 
         def create_hook(layer_idx):
             def hook(module, input, output):
+                hook_fired[layer_idx] = True
                 # Handle tuple output (hidden_states, present_key_value_states, ...)
                 if isinstance(output, tuple):
                     hidden_states = output[0]
@@ -180,24 +184,40 @@ class ActivationExtractor:
             return hook
 
         # Register hooks
+        print(f"DEBUG: Registering hooks for layers {layers}")
         for layer_idx in layers:
             layer_module = self._layers[layer_idx]
+            print(
+                f"DEBUG: Registering hook on layer {layer_idx}: {type(layer_module).__name__}"
+            )
             handle = layer_module.register_forward_hook(create_hook(layer_idx))
             handles.append(handle)
 
         try:
             # Process in batches if needed (though here we just did one big batch for simplicity
             # based on the tokenizer call above. For very large inputs, we'd loop.)
+            print(f"DEBUG: Running forward pass with input_ids shape {input_ids.shape}")
             with torch.no_grad():
                 self.model(input_ids=input_ids, attention_mask=attention_mask)
+            print(f"DEBUG: Forward pass complete")
 
         finally:
             for handle in handles:
                 handle.remove()
 
+        # Check which hooks fired
+        unfired_hooks = [idx for idx, fired in hook_fired.items() if not fired]
+        if unfired_hooks:
+            print(f"WARNING: Hooks did not fire for layers: {unfired_hooks}")
+
         # Collate activations
         final_activations = {}
         for layer_idx, act_list in activations.items():
+            if not act_list:
+                raise RuntimeError(
+                    f"No activations captured for layer {layer_idx}. "
+                    f"Hook may not have fired. Model: {self.model_name}"
+                )
             final_activations[layer_idx] = torch.cat(act_list, dim=0)
 
         return ActivationResult(
