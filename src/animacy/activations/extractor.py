@@ -4,10 +4,7 @@ ActivationExtractor - Extract hidden state activations from model layers.
 
 import torch
 import torch.nn as nn
-from transformers import (
-    AutoModelForCausalLM,
-    AutoTokenizer,
-)
+from transformers import AutoModelForCausalLM, AutoTokenizer
 
 from .token_mapper import ActivationResult
 
@@ -52,8 +49,7 @@ class ActivationExtractor:
 
         # Load tokenizer
         self.tokenizer = AutoTokenizer.from_pretrained(
-            model_name_or_path,
-            trust_remote_code=True,
+            model_name_or_path, trust_remote_code=True
         )
         if self.tokenizer.pad_token is None:
             self.tokenizer.pad_token = self.tokenizer.eos_token
@@ -141,6 +137,15 @@ class ActivationExtractor:
 
         if layers is None:
             layers = list(range(len(self._layers)))
+        else:
+            # Validate layer indices
+            num_layers = len(self._layers)
+            invalid_layers = [l for l in layers if l < 0 or l >= num_layers]
+            if invalid_layers:
+                raise ValueError(
+                    f"Invalid layer indices {invalid_layers}. "
+                    f"Model {self.model_name} has {num_layers} layers (valid indices: 0-{num_layers - 1})"
+                )
 
         # Tokenize
         encodings = self.tokenizer(

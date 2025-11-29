@@ -13,10 +13,7 @@ except ImportError:
 import torch
 from tqdm import tqdm
 
-from animacy.activations import (
-    ActivationExtractor,
-    extract_activation_summaries,
-)
+from animacy.activations import ActivationExtractor, extract_activation_summaries
 from animacy.prompts import construct_chat_history
 
 
@@ -186,10 +183,25 @@ def main() -> None:
 
     # We can initialize the extractor directly
     extractor = ActivationExtractor(
-        model_name_or_path=args.model_name,
-        device=args.device,
-        torch_dtype=torch_dtype,
+        model_name_or_path=args.model_name, device=args.device, torch_dtype=torch_dtype
     )
+
+    # Print model layer information
+    num_layers = len(extractor._layers)
+    print(f"Model has {num_layers} layers (valid indices: 0-{num_layers - 1})")
+
+    # Validate requested layers early
+    if args.layers is not None:
+        invalid_layers = [l for l in args.layers if l < 0 or l >= num_layers]
+        if invalid_layers:
+            print(f"ERROR: Invalid layer indices {invalid_layers}")
+            print(
+                f"Model {args.model_name} has {num_layers} layers (valid indices: 0-{num_layers - 1})"
+            )
+            sys.exit(1)
+        print(f"Extracting from layers: {args.layers}")
+    else:
+        print(f"Extracting from all {num_layers} layers")
 
     # Process files
     files = list(input_dir.glob("*.json"))
