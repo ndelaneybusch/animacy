@@ -4,7 +4,15 @@ An investigation into how properties of model roles influence their behavior.
 
 ## Approach
 
-(infographic here)
+![experiment overview](image-7.png)
+
+- 120 randomly-selected roles (40 per group) from a pre-normed corpus (VanArsdall & Blunt, 2022).
+  - Add several assistant roles as control ("AI assistant", "AI", "helpful assistant" etc.)
+- Get responses to a set of 10 tasks for each role, with 5x replicates, at temp=0.7.
+  - Collect one extra pass with no system prompt (i.e. no assigned role).
+- __logit data__: pass in the responses as input tokens WITH and WITHOUT the system prompt, collecting log-probabilities of each token.
+- __activation data__: pass in the responses as input tokens WITH and WITHOUT the system prompt, collecting activations of several mid/late residual stream layers.
+- __steering data__: pass in the responses as input tokens WITHOUT the system prompt, steering with role vectors at several different intensities, collecting log-probabilities of each token.
 
 ## Results
 
