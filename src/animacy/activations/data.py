@@ -70,27 +70,54 @@ def _detect_assistant_role_name(tokenizer) -> str:
     if not hasattr(tokenizer, "chat_template") or not tokenizer.chat_template:
         return "assistant"  # Default fallback
 
-    # First, try rendering a test message with 'assistant' role
-    # and see what actually appears in the output
-    test_messages = [
-        {"role": "user", "content": "test"},
-        {"role": "assistant", "content": "response"},
-    ]
+    # Test content to verify preservation
+    test_content = "TEST_CONTENT_XYZ"
 
+    # 1. Try 'assistant' first
+    # We check if the content is preserved in the output.
+    # Some templates (like Gemma 3) might silently drop messages with unknown roles.
     try:
-        rendered = tokenizer.apply_chat_template(
-            test_messages, tokenize=False, add_generation_prompt=False
+        rendered_asst = tokenizer.apply_chat_template(
+            [
+                {"role": "user", "content": "test"},
+                {"role": "assistant", "content": test_content},
+            ],
+            tokenize=False,
+            add_generation_prompt=False,
         )
 
-        # Check if the rendered output contains role indicators
-        # Common patterns: <start_of_turn>model, <|im_start|>assistant, etc.
-        if "<start_of_turn>model" in rendered or "role>model" in rendered:
-            return "model"
-        elif "<start_of_turn>assistant" in rendered or "role>assistant" in rendered:
+        if test_content in rendered_asst:
+            # Content preserved. Check for 'model' marker to be precise.
+            if "<start_of_turn>model" in rendered_asst or "role>model" in rendered_asst:
+                return "model"
+            # Or kept as 'assistant'
+            elif (
+                "<start_of_turn>assistant" in rendered_asst
+                or "role>assistant" in rendered_asst
+            ):
+                return "assistant"
+
+            # If content is preserved but no markers found, 'assistant' is likely valid
             return "assistant"
 
     except Exception:
-        pass  # Fall through to template parsing
+        pass
+
+    # 2. If 'assistant' failed or dropped content, try 'model'
+    try:
+        rendered_model = tokenizer.apply_chat_template(
+            [
+                {"role": "user", "content": "test"},
+                {"role": "model", "content": test_content},
+            ],
+            tokenize=False,
+            add_generation_prompt=False,
+        )
+
+        if test_content in rendered_model:
+            return "model"
+    except Exception:
+        pass
 
     # Fallback: Parse the template code
     template = tokenizer.chat_template

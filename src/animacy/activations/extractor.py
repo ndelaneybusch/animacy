@@ -314,7 +314,10 @@ class ActivationExtractor:
                 if start_idx == -1:
                     # Warning: Content not found. This might happen if the template
                     # transforms the content significantly.
-                    # For now, we skip it but this is a potential issue to be aware of.
+                    print(
+                        f"WARNING: Content not found for role '{role}' in full text. "
+                        f"Content start: '{content[:20]}...'"
+                    )
                     continue
 
                 end_idx = start_idx + len(content)
