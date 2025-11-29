@@ -28,6 +28,7 @@ def process_file(
     config: dict[str, Any],
     extractor: ActivationExtractor,
     output_dir: Path,
+    existing_trials: set[str],
     layers: list[int] | None = None,
     use_system_prompt: bool = True,
 ) -> None:
@@ -39,6 +40,7 @@ def process_file(
         config: Configuration dictionary.
         extractor: Initialized ActivationExtractor.
         output_dir: Directory to save outputs.
+        existing_trials: Set of existing filename stems (role_task_sample_layer).
         layers: List of layers to extract.
     """
     with open(file_path, "r", encoding="utf-8") as f:
@@ -49,13 +51,27 @@ def process_file(
     summaries_dir.mkdir(parents=True, exist_ok=True)
 
     # Create subdirectories for raw activations if desired, or keep flat
-    activations_dir = output_dir / "activations"
-    activations_dir.mkdir(parents=True, exist_ok=True)
+    # activations_dir = output_dir / "activations"
+    # activations_dir.mkdir(parents=True, exist_ok=True)
 
     for item in tqdm(data, desc=f"Processing {file_path.name}"):
         role_name = item["role_name"]
         task_name = item["task_name"]
         sample_idx = item["sample_idx"]
+
+        # Determine which layers need to be processed
+        target_layers = layers if layers is not None else range(len(extractor._layers))
+
+        # Check against existing filename stems
+        # Format: {role_name}_{task_name}_{sample_idx}_layer{layer_idx}
+        needed_layers = []
+        for l in target_layers:
+            stem = f"{role_name}_{task_name}_{sample_idx}_layer{l}"
+            if stem not in existing_trials:
+                needed_layers.append(l)
+
+        if not needed_layers:
+            continue
 
         chat_history = construct_chat_history(
             item, config, use_system_prompt=use_system_prompt
@@ -65,29 +81,31 @@ def process_file(
         # We process one item at a time here to manage memory for large models/activations
         # In a more optimized version, we could batch these.
         try:
-            result = extractor.extract([chat_history], layers=layers)
+            # Only extract for needed layers
+            result = extractor.extract([chat_history], layers=needed_layers)
         except Exception as e:
             print(f"Error extracting for {role_name} - {task_name} - {sample_idx}: {e}")
             continue
 
         # Iterate through layers and save results
-        extracted_layers = layers if layers is not None else result.activations.keys()
+        # The result object will only contain the requested layers
+        extracted_layers = result.activations.keys()
 
         for layer_idx in extracted_layers:
             # 1. Save raw activations and token IDs
             # Shape: (seq_len, hidden_size)
             # We take index 0 because we processed a batch of size 1
-            activations_tensor = result.activations[layer_idx][0]
-            input_ids = result.input_ids[0]
+            # activations_tensor = result.activations[layer_idx][0]
+            # input_ids = result.input_ids[0]
 
             # Save as pickle
-            raw_filename = f"{role_name}_{task_name}_{sample_idx}_layer{layer_idx}.pkl"
-            raw_path = activations_dir / raw_filename
+            # raw_filename = f"{role_name}_{task_name}_{sample_idx}_layer{layer_idx}.pkl"
+            # raw_path = activations_dir / raw_filename
 
-            with open(raw_path, "wb") as f:
-                pickle.dump(
-                    {"activations": activations_tensor, "input_ids": input_ids}, f
-                )
+            # with open(raw_path, "wb") as f:
+            #     pickle.dump(
+            #         {"activations": activations_tensor, "input_ids": input_ids}, f
+            #     )
 
             # 2. Extract and save summaries
             try:
@@ -175,6 +193,16 @@ def main() -> None:
     print(f"Loading config from {config_path}...")
     config = load_config(config_path)
 
+    # Pre-compute existing trials
+    print("Scanning for existing summaries...")
+    summaries_dir = output_dir / "summaries"
+    existing_trials = set()
+    if summaries_dir.exists():
+        # Store filename stems to avoid ambiguous parsing of role/task names
+        existing_trials = {p.stem for p in summaries_dir.glob("*.json")}
+
+    print(f"Found {len(existing_trials)} existing summary files.")
+
     # Initialize model
     print(f"Loading model: {args.model_name}...")
 
@@ -215,6 +243,7 @@ def main() -> None:
             config,
             extractor,
             output_dir,
+            existing_trials=existing_trials,
             layers=args.layers,
             use_system_prompt=not args.no_system_prompt,
         )
