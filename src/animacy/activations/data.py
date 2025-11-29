@@ -1,4 +1,5 @@
 import numpy as np
+import re
 from pydantic import BaseModel, Field, field_serializer
 
 from .token_mapper import ActivationResult
@@ -53,6 +54,51 @@ class ActivationSummaries(BaseModel):
         return value.tolist()
 
 
+def _detect_assistant_role_name(tokenizer) -> str:
+    """
+    Detect the role name used for assistant/model responses in the chat template.
+
+    Args:
+        tokenizer: The tokenizer with a chat_template attribute
+
+    Returns:
+        The role name string (e.g., 'assistant', 'model')
+    """
+    if not hasattr(tokenizer, "chat_template") or not tokenizer.chat_template:
+        return "assistant"  # Default fallback
+
+    template = tokenizer.chat_template
+
+    # Look for role comparisons in the Jinja2 template
+    # Common patterns:
+    # - message['role'] == 'assistant'
+    # - message['role'] == 'model'
+    # - message.role == 'assistant'
+
+    # Pattern to match role comparisons
+    patterns = [
+        r"message\[?['\"]role['\"]\]?\s*==\s*['\"](\w+)['\"]",
+        r"['\"](\w+)['\"]\s*==\s*message\[?['\"]role['\"]\]?",
+    ]
+
+    found_roles = set()
+    for pattern in patterns:
+        matches = re.findall(pattern, template)
+        found_roles.update(matches)
+
+    # Filter out 'system' and 'user' to find the assistant role
+    assistant_roles = found_roles - {"system", "user"}
+
+    if assistant_roles:
+        # Prefer 'assistant' if it exists, otherwise take the first one
+        if "assistant" in assistant_roles:
+            return "assistant"
+        return sorted(assistant_roles)[0]
+
+    # Fallback
+    return "assistant"
+
+
 def extract_activation_summaries(
     activation_result: ActivationResult,
     role_name: str | None,
@@ -89,9 +135,22 @@ def extract_activation_summaries(
                 return r
         return None
 
+    # Debug: print available roles
+    available_roles = [r["role"] for r in ranges]
+    print(f"DEBUG: Available roles in message_ranges: {available_roles}")
+
+    # Detect the assistant role name from the chat template
+    assistant_role_name = _detect_assistant_role_name(tokenizer)
+    print(f"DEBUG: Detected assistant role name from template: '{assistant_role_name}'")
+
     sys_range = find_message_range("system")
     user_range = find_message_range("user")
-    asst_range = find_message_range("assistant")
+    asst_range = find_message_range(assistant_role_name)
+
+    if not asst_range:
+        print(
+            f"WARNING: No '{assistant_role_name}' role found in ranges. Available roles: {available_roles}"
+        )
 
     # Helper to calculate mean activation for a char range
     def get_mean_activation_for_range(start, end):
@@ -186,7 +245,12 @@ def extract_activation_summaries(
 
     def get_token_at_index(idx):
         if 0 <= idx < len(input_ids):
-            return activation_result.activations[layer][text_index, idx].float().cpu().numpy()
+            return (
+                activation_result.activations[layer][text_index, idx]
+                .float()
+                .cpu()
+                .numpy()
+            )
         return None
 
     if sys_range:
