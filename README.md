@@ -40,3 +40,17 @@ Further, specialized knowledge domains relevant to llm training can also elicit 
 
 The same pattern occurs for banker, chemist, cop (but not sheriff), and orthodontist. It's of course totally reasonable that a biologist could have feelings and preferences (or could be a human). I speculate that when given a specialist profession role in a domain of knowledge relevant to its pretraining, the model may be interpreting the instructions as if it was _itself_ in that profession (i.e. an assistant working in biology).
 
+The size of the basin of attraction for this behavior seems to be different for different models. While Qwen3-30B seems to respond as the assistant directly for assistant-like roles and use the "I am a ROLE not a human" pattern for domain-relevant roles (indicating a pretty strong/expansive basin for the assistant), Gemma-3-27b uses the "I am a ROLE not a human" pattern for assistant-like roles and responds in-character for domain-relevant roles (indicating a smaller basin for the assistant).
+
+### Context allows the model to infer the role, but it doesn't commit as fully as an explicit role
+
+When passing the role-playing responses back in as input tokens after ablating the role-providing system prompt, we can see that the model is fairly quickly able to infer the (approximate) role, recovering many orders of magnitude of token probability. However, they never completely converge - a gap always remains, even when the role is by that point very obvious.
+
+![gemma-3-27b-it begins its turn as the assistant, rapidly infers the role, but never fully reaches the token probabilities induced by the system prompt](image-4.png)
+
+The gap between the token probabilities induced by the system prompt ablation vs the explicit role assignment may relate somewhat to the similarity to the assistant. Synonyms for the AI assistant of course had almost no gap (being told again that it is an AI assistant does not change next token probabilities much). Assistant-like roles asymptote to the smallest gap, then other high-mental-animacy roles at a moderate gap, and low-mental-animacy roles at the largest gaps.
+
+![alt text](image-5.png)
+
+Qwen-30b, but not gemma-3-27b, showed an additional gradient over physical animacy, where low-mental low-physical roles (like sock, bucket etc) had the least probable responses when viewed from the assistant's perspective and left the largest gap.
+
