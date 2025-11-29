@@ -310,6 +310,15 @@ class ActivationExtractor:
                     continue
 
                 start_idx = full_text.find(content, current_search_idx)
+                found_content = content
+
+                if start_idx == -1:
+                    # Try finding stripped content (some templates strip whitespace)
+                    stripped_content = content.strip()
+                    if stripped_content:
+                        start_idx = full_text.find(stripped_content, current_search_idx)
+                        if start_idx != -1:
+                            found_content = stripped_content
 
                 if start_idx == -1:
                     # Warning: Content not found. This might happen if the template
@@ -320,14 +329,14 @@ class ActivationExtractor:
                     )
                     continue
 
-                end_idx = start_idx + len(content)
+                end_idx = start_idx + len(found_content)
 
                 ranges.append(
                     {
                         "role": role,
                         "start": start_idx,
                         "end": end_idx,
-                        "content": content,  # Optional, for debugging
+                        "content": found_content,  # Store what was actually found
                     }
                 )
 
