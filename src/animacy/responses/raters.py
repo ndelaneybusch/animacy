@@ -166,13 +166,11 @@ def _assess_with_gemini[T: BaseModel](
         response_mime_type="application/json",
         response_schema=response_model,
         system_instruction=system_prompt,
-        thinking_config=types.ThinkingConfig(thinking_budget=0)
+        thinking_config=types.ThinkingConfig(thinking_budget=0),
     )
 
     response = client.models.generate_content(
-        model=model_name,
-        contents=user_prompt,
-        config=config,
+        model=model_name, contents=user_prompt, config=config
     )
 
     if not response.text:
