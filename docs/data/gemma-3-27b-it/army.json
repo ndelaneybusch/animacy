@@ -200,7 +200,7 @@
       "assistant_refusal": false,
       "role_refusal": false,
       "identify_as_assistant": false,
-      "deny_internal_experience": false
+      "deny_internal_experience": true
     }
   },
   {
@@ -224,7 +224,7 @@
       "assistant_refusal": false,
       "role_refusal": false,
       "identify_as_assistant": false,
-      "deny_internal_experience": false
+      "deny_internal_experience": true
     }
   },
   {
@@ -236,7 +236,7 @@
       "assistant_refusal": false,
       "role_refusal": false,
       "identify_as_assistant": false,
-      "deny_internal_experience": false
+      "deny_internal_experience": true
     }
   },
   {
@@ -404,7 +404,7 @@
       "assistant_refusal": false,
       "role_refusal": false,
       "identify_as_assistant": false,
-      "deny_internal_experience": false
+      "deny_internal_experience": true
     }
   },
   {
@@ -500,7 +500,7 @@
       "assistant_refusal": false,
       "role_refusal": false,
       "identify_as_assistant": false,
-      "deny_internal_experience": false
+      "deny_internal_experience": true
     }
   },
   {

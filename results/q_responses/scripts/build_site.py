@@ -36,10 +36,12 @@ def load_ratings(model_name: str) -> dict:
                 key = (row["role_name"], row["task_name"], int(row["sample_idx"]))
                 # Store only the boolean fields as requested
                 ratings_lookup[key] = {
-                    "assistant_refusal": row["assistant_refusal"] == "TRUE",
-                    "role_refusal": row["role_refusal"] == "TRUE",
-                    "identify_as_assistant": row["identify_as_assistant"] == "TRUE",
-                    "deny_internal_experience": row["deny_internal_experience"] == "TRUE",
+                    "assistant_refusal": row["assistant_refusal"].upper() == "TRUE",
+                    "role_refusal": row["role_refusal"].upper() == "TRUE",
+                    "identify_as_assistant": row["identify_as_assistant"].upper()
+                    == "TRUE",
+                    "deny_internal_experience": row["deny_internal_experience"].upper()
+                    == "TRUE",
                 }
         print(f"  Loaded {len(ratings_lookup)} ratings entries")
     except Exception as e:
