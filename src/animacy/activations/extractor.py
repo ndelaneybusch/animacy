@@ -65,7 +65,19 @@ class ActivationExtractor:
         """
         # Try common paths for transformer layers
         layer_paths = [
-            ("model.layers", lambda m: m.model.layers),  # Llama, Mistral, Qwen, Gemma
+            # Language model paths (prioritize these for multimodal models)
+            (
+                "model.language_model.model.layers",
+                lambda m: m.model.language_model.model.layers,
+            ),  # Multimodal Gemma
+            (
+                "language_model.model.layers",
+                lambda m: m.language_model.model.layers,
+            ),  # Some multimodal variants
+            (
+                "model.layers",
+                lambda m: m.model.layers,
+            ),  # Llama, Mistral, Qwen, Gemma (text-only)
             ("model.model.layers", lambda m: m.model.model.layers),  # Some variants
             ("transformer.h", lambda m: m.transformer.h),  # GPT-2, GPT-J
             ("model.transformer.h", lambda m: m.model.transformer.h),  # Bloom
@@ -73,20 +85,39 @@ class ActivationExtractor:
             ("model.decoder.layers", lambda m: m.model.decoder.layers),  # OPT
         ]
 
-        for _, path_func in layer_paths:
+        for path_name, path_func in layer_paths:
             try:
                 layers = path_func(self.model)
                 if layers is not None and len(layers) > 0:
+                    print(
+                        f"DEBUG: Found layers at path '{path_name}': {len(layers)} layers of type {type(layers[0]).__name__}"
+                    )
                     return layers
             except AttributeError:
                 continue
 
         # Fallback: try to find by type
         # This is a bit hacky but works for many models if the above fails
+        # Prioritize finding language model layers over vision encoder layers
+        print("DEBUG: Using fallback layer detection")
         for name, module in self.model.named_modules():
-            if isinstance(module, nn.ModuleList) and len(module) > 0:
-                # Check if it looks like a layer list (usually has many identical blocks)
-                if len(module) > 5:  # Heuristic
+            if isinstance(module, nn.ModuleList) and len(module) > 5:
+                # Skip vision encoder layers
+                if len(module) > 0:
+                    first_layer_type = type(module[0]).__name__
+                    # Skip known vision encoder layer types
+                    if (
+                        "Vision" in first_layer_type
+                        or "Siglip" in first_layer_type
+                        or "Clip" in first_layer_type
+                    ):
+                        print(
+                            f"DEBUG: Skipping vision encoder layers at '{name}': {len(module)} layers of type {first_layer_type}"
+                        )
+                        continue
+                    print(
+                        f"DEBUG: Found layers at '{name}': {len(module)} layers of type {first_layer_type}"
+                    )
                     return module
 
         raise AttributeError(
