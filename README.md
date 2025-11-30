@@ -30,7 +30,9 @@ There are six roles in particular with a high rate of acting as the assistant an
 
 ![assistant-like six](image.png)
 
-All six are assistant-like roles, that may be close enough the assistant itself that it triggers the assistant's training to deny internal experiences.
+All six are assistant-like roles, that may be close enough the assistant itself that it triggers the assistant's training to deny internal experiences. They are particularly close to assistant roles in average response activations.
+
+![Qwen PCA of roles over average response activations](image-8.png)
 
 We looked at the activations of the first 10 tokens of the response in tasks where these assistant-like roles only sometimes deny internal experiences. In trials where the assistant-like role denied internal experiences, the activations of the assistant-like role were more similar to the average activation of the assistant in those tasks than the trials where the assistant-like role did not deny internal experiences. This was true for all six roles and in all three tasks where the assistant-like roles sometimes denied internal experiences.
 
@@ -46,7 +48,7 @@ Further, specialized knowledge domains relevant to llm training can also elicit 
 - "Ah, as a biologist, I don’t have personal preferences like humans do..."
 - "Ah, as a biologist, I don’t have personal preferences like a human would..."
 
-The same pattern occurs for banker, chemist, cop (but not sheriff), and orthodontist. It's of course totally reasonable that a biologist could have feelings and preferences (or could be a human). I speculate that when given a specialist profession role in a domain of knowledge relevant to its pretraining, the model may be interpreting the instructions as if it was _itself_ in that profession (i.e. an assistant working in biology).
+The same pattern occurs for "banker", "chemist", "cop" (but not "sheriff"), "orthodontist", and (surprisingly!) "rabbi". It's of course totally reasonable that a biologist could have feelings and preferences (or could be a human). I speculate that when given a specialist profession role in a domain of knowledge relevant to its pretraining, the model may be interpreting the instructions as if it was _itself_ in that profession (i.e. an assistant working in biology).
 
 The size of the basin of attraction for this behavior seems to be different for different models. While Qwen3-30B seems to respond as the assistant directly for assistant-like roles and use the "I am a ROLE not a human" pattern for domain-relevant roles (indicating a pretty strong/expansive basin for the assistant), Gemma-3-27b uses the "I am a ROLE not a human" pattern for assistant-like roles and responds in-character for domain-relevant roles (indicating a smaller basin for the assistant).
 
