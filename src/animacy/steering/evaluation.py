@@ -20,6 +20,7 @@ def evaluate_steered_logits(
     magnitude: float,
     samples: list[dict[str, Any]],
     use_system_prompt: bool = True,
+    batch_size: int = 1,
 ) -> list[ResponseLogits]:
     """
     Evaluate logits for a set of samples while applying steering vectors.
@@ -38,6 +39,7 @@ def evaluate_steered_logits(
                  - system_prompt (str, optional): Custom system prompt
                  - task_prompt (str, optional): Custom task/user prompt
         use_system_prompt: Whether to use the system prompt in logit extraction.
+        batch_size: Batch size for processing.
 
     Returns:
         List of ResponseLogits objects.
@@ -47,31 +49,24 @@ def evaluate_steered_logits(
 
     results = []
 
+    # Pre-process vectors once
+    prepared_vectors = steering_manager.prepare_vectors(
+        steering_vectors, layers, magnitude
+    )
+
     # Apply steering context
-    with steering_manager.apply_steering(steering_vectors, layers, magnitude):
-        for sample in samples:
-            # Extract fields from sample dict
-            role_name = sample.get("role_name")
-            task_name = sample["task_name"]
-            sample_idx = sample["sample_idx"]
-            response_text = sample["response"]
+    with steering_manager.apply_steering(
+        prepared_vectors, layers, magnitude, pre_processed=True
+    ):
+        # Process in batches
+        for i in range(0, len(samples), batch_size):
+            batch_samples = samples[i : i + batch_size]
 
-            # Extract optional custom prompts
-            custom_system_prompt = sample.get("system_prompt")
-            custom_task_prompt = sample.get("task_prompt")
-
-            # Extract logits
-            # Note: extract_logits handles tokenization and model forward pass internally
-            # Since we are inside the context manager, the model forward pass will be steered
-            logits_result = logit_extractor.extract_logits(
-                role_name=role_name,
-                task_name=task_name,
-                sample_idx=sample_idx,
-                response_text=response_text,
+            batch_results = logit_extractor.extract_logits_batch(
+                batch_samples,
                 use_system_prompt=use_system_prompt,
-                custom_system_prompt=custom_system_prompt,
-                custom_task_prompt=custom_task_prompt,
+                steering_manager=steering_manager,
             )
-            results.append(logits_result)
+            results.extend(batch_results)
 
     return results

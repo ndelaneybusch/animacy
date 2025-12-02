@@ -123,6 +123,12 @@ def main() -> None:
         action="store_true",
         help="Do not use the system prompt when extracting log-probabilities.",
     )
+    parser.add_argument(
+        "--batch_size",
+        type=int,
+        default=8,
+        help="Batch size for evaluation. Default: 8.",
+    )
 
     args = parser.parse_args()
 
@@ -220,6 +226,7 @@ def main() -> None:
                     magnitude=magnitude,
                     samples=role_samples,
                     use_system_prompt=not args.no_system_prompt,
+                    batch_size=args.batch_size,
                 )
 
                 # Add metadata and convert to dict

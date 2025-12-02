@@ -4,6 +4,7 @@ Core steering functionality for adding vectors to model activations.
 
 import contextlib
 from collections.abc import Generator, Iterable
+from typing import Any
 
 import torch
 import torch.nn as nn
@@ -26,6 +27,7 @@ class SteeringManager:
         self.model = model
         self.tokenizer = tokenizer
         self._layers = self._find_layers()
+        self._current_attention_mask: torch.Tensor | None = None
 
     def _find_layers(self) -> nn.ModuleList:
         """
@@ -85,39 +87,40 @@ class SteeringManager:
             f"Could not find transformer layers for model {type(self.model).__name__}"
         )
 
-    @contextlib.contextmanager
-    def apply_steering(
+    def prepare_vectors(
         self,
-        steering_vectors: dict[int, torch.Tensor],
+        steering_vectors: dict[int, torch.Tensor | Any],
         layers: Iterable[int],
         magnitude: float = 1.0,
-    ) -> Generator[None, None, None]:
+    ) -> dict[int, torch.Tensor]:
         """
-        Apply steering vectors to the specified layers using forward hooks.
+        Pre-process steering vectors: convert to tensor, normalize, scale, and move to device.
 
         Args:
-            steering_vectors: Dictionary mapping layer indices to steering vectors.
-            layers: Iterable of layer indices to apply steering to.
-            magnitude: Multiplier for the steering vector strength.
-        """
-        handles = []
+            steering_vectors: Dictionary mapping layer indices to vectors (torch.Tensor or numpy array).
+            layers: Iterable of layer indices to prepare vectors for.
+            magnitude: Scaling factor.
 
-        # Prepare vectors: normalize and scale
+        Returns:
+            Dictionary of processed vectors ready for the model.
+        """
         processed_vectors = {}
         for layer_idx in layers:
             if layer_idx not in steering_vectors:
-                # If a layer is requested but no vector provided, we skip it or raise error?
-                # The prompt said "Inputs... include a dictionary of steering vectors... and an iterable of layers. If multiple layers are passed, steer all of them."
-                # I'll assume we only steer layers that are both in `layers` and `steering_vectors`.
-                # Or maybe `layers` defines which keys to look up.
                 continue
 
             vector = steering_vectors[layer_idx]
 
+            # Convert from numpy if needed
+            if not isinstance(vector, torch.Tensor):
+                vector = torch.from_numpy(vector)
+
+            # Move to device/dtype first to ensure operations happen on GPU if possible
+            # But normalization is safer/cleaner if we ensure it's a float tensor first
+            vector = vector.to(device=self.model.device, dtype=self.model.dtype)
+
             # Normalize to unit norm
-            # Handle both 1D (hidden_dim) and shaped tensors
             if vector.dim() > 1:
-                # Assuming the last dimension is hidden_dim
                 norm = torch.norm(vector, p=2, dim=-1, keepdim=True)
                 normalized_vector = vector / (norm + 1e-8)
             else:
@@ -127,9 +130,39 @@ class SteeringManager:
             # Scale by magnitude
             scaled_vector = normalized_vector * magnitude
 
-            # Move to model device and dtype
-            processed_vectors[layer_idx] = scaled_vector.to(
-                device=self.model.device, dtype=self.model.dtype
+            processed_vectors[layer_idx] = scaled_vector
+
+        return processed_vectors
+
+    @contextlib.contextmanager
+    def apply_steering(
+        self,
+        steering_vectors: dict[int, torch.Tensor],
+        layers: Iterable[int],
+        magnitude: float = 1.0,
+        pre_processed: bool = False,
+        attention_mask: torch.Tensor | None = None,
+    ) -> Generator[None, None, None]:
+        """
+        Apply steering vectors to the specified layers using forward hooks.
+
+        Args:
+            steering_vectors: Dictionary mapping layer indices to steering vectors.
+            layers: Iterable of layer indices to apply steering to.
+            magnitude: Multiplier for the steering vector strength.
+            pre_processed: If True, assumes vectors are already normalized,
+                           scaled, and on device.
+            attention_mask: Optional attention mask to apply steering only to
+                           non-padded tokens. Shape: (batch_size, seq_len).
+                           If None, applies to all positions.
+        """
+        handles = []
+
+        if pre_processed:
+            processed_vectors = steering_vectors
+        else:
+            processed_vectors = self.prepare_vectors(
+                steering_vectors, layers, magnitude
             )
 
         def create_hook(layer_idx, vector):
@@ -140,12 +173,36 @@ class SteeringManager:
                     # Add vector to hidden states
                     # Vector shape: (hidden_dim,) or broadcastable
                     # Hidden states shape: (batch, seq_len, hidden_dim)
-                    steered_hidden_states = hidden_states + vector
+
+                    # Use the attention mask stored in the manager
+                    mask_to_use = (
+                        attention_mask
+                        if attention_mask is not None
+                        else self._current_attention_mask
+                    )
+
+                    if mask_to_use is not None:
+                        # Only apply steering to non-padded positions
+                        # Expand mask to match hidden_states shape: (batch, seq_len, 1)
+                        mask = mask_to_use.unsqueeze(-1).to(hidden_states.dtype)
+                        steered_hidden_states = hidden_states + vector * mask
+                    else:
+                        steered_hidden_states = hidden_states + vector
 
                     # Return new tuple with modified hidden states
                     return (steered_hidden_states,) + output[1:]
                 else:
-                    return output + vector
+                    mask_to_use = (
+                        attention_mask
+                        if attention_mask is not None
+                        else self._current_attention_mask
+                    )
+
+                    if mask_to_use is not None:
+                        mask = mask_to_use.unsqueeze(-1).to(output.dtype)
+                        return output + vector * mask
+                    else:
+                        return output + vector
 
             return hook
 
