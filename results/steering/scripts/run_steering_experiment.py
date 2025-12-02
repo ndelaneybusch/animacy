@@ -1,3 +1,17 @@
+"""
+Example call:
+# Qwen find OOM steering strengths
+python ~/animacy/results/steering/scripts/run_steering_experiment.py \
+    --input_dir ~/animacy/results/q_responses/data/Qwen3-30B-A3B-Instruct-2507/ \
+    --output_file results/steering/data/Qwen3-30B-A3B-Instruct-2507/role_responses/avg_response_sys_diff.csv \
+    --model_name Qwen/Qwen3-30B-A3B-Instruct-2507 \
+    --role_vectors_file ~/animacy/results/steering/data/Qwen3-30B-A3B-Instruct-2507/role_vectors_avg_response_sys_diff.pkl \
+    --roles napkin scarf hair foot umpire butler \
+    --magnitudes 0.01 0.1 1 10 \
+    --no_system_prompt
+
+"""
+
 import argparse
 import json
 import pickle
@@ -8,7 +22,7 @@ from typing import Any
 import pandas as pd
 import torch
 from tqdm import tqdm
-from transformers import AutoModelForCausalLM
+from transformers import AutoModelForCausalLM, AutoTokenizer
 
 from animacy.steering.evaluation import evaluate_steered_logits
 
