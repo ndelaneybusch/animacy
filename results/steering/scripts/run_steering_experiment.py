@@ -7,8 +7,9 @@ python ~/animacy/results/steering/scripts/run_steering_experiment.py \
     --model_name Qwen/Qwen3-30B-A3B-Instruct-2507 \
     --role_vectors_file ~/animacy/results/steering/data/Qwen3-30B-A3B-Instruct-2507/role_vectors_avg_response_sys_diff.pkl \
     --roles napkin scarf hair foot umpire butler \
-    --magnitudes 0.01 0.1 1 10 \
-    --no_system_prompt
+    --magnitudes 1 1.5 2 2.5 3 \
+    --no_system_prompt \
+    --batch_size 24
 
 """
 
