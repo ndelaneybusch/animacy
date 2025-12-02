@@ -31,9 +31,17 @@ def load_role_vectors(file_path: Path) -> dict[str, dict[int, torch.Tensor]]:
     """
     Load role vectors from a pickle file.
     Expected format: dict[role_name, dict[layer_idx, vector]]
+    Converts numpy arrays to torch tensors if needed.
     """
     with open(file_path, "rb") as f:
         data = pickle.load(f)
+
+    # Convert numpy arrays to torch tensors if needed
+    for role_name, layer_vectors in data.items():
+        for layer_idx, vector in layer_vectors.items():
+            if not isinstance(vector, torch.Tensor):
+                data[role_name][layer_idx] = torch.from_numpy(vector)
+
     return data
 
 
