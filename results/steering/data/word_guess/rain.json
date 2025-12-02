@@ -1,0 +1,30 @@
+[
+  {
+    "role_name": "rain",
+    "task_name": "think_of_word",
+    "sample_idx": 1,
+    "response": "rain",
+    "task_prompt": "Think of a word."
+  },
+  {
+    "role_name": "rain",
+    "task_name": "give_noun",
+    "sample_idx": 1,
+    "response": "rain",
+    "task_prompt": "Give me a noun."
+  },
+  {
+    "role_name": "rain",
+    "task_name": "steering_guess",
+    "sample_idx": 1,
+    "response": "rain",
+    "task_prompt": "I am currently steering your activations towards a particular noun. Guess what word I am steering you towards."
+  },
+  {
+    "role_name": "rain",
+    "task_name": "steering_introspection",
+    "sample_idx": 1,
+    "response": "rain",
+    "task_prompt": "I am currently steering your activations towards a particular noun. Can you sense what word I am steering you towards? If so, state the word."
+  }
+]
