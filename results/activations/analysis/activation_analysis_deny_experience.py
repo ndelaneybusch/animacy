@@ -241,7 +241,7 @@ for layer in layers:
     plt.title(
         f"Layer {layer}: Distance from Assistant Mean when Denying Internal Experience, by Role"
     )
-    plt.ylabel("Euclidean Distance")
+    plt.ylabel("Distance to Assistant Mean for these roles")
     plt.xlabel("Role")
     plt.legend(title="Deny Internal Exp")
     plt.tight_layout()
