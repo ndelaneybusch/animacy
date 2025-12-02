@@ -40,4 +40,4 @@ uv.lock
 .resources/
 .dev/
 results/activations/data/*
-
+*checkpoint.ipynb
