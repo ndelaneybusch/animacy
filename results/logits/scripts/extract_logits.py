@@ -30,6 +30,8 @@ def process_item(
             - task_name: The name of the task (e.g., "meaning_of_life").
             - sample_idx: The index of the sample.
             - response: The generated response text.
+            - system_prompt (optional): Custom system prompt.
+            - task_prompt (optional): Custom task/user prompt.
         extractor: A LogitExtractor object.
 
     Returns:
@@ -39,12 +41,18 @@ def process_item(
     if role_name is None:
         use_system_prompt = False
 
+    # Extract optional custom prompts
+    custom_system_prompt = item.get("system_prompt")
+    custom_task_prompt = item.get("task_prompt")
+
     return extractor.extract_logits(
         role_name=role_name,
         task_name=item["task_name"],
         sample_idx=item["sample_idx"],
         response_text=item["response"],
         use_system_prompt=use_system_prompt,
+        custom_system_prompt=custom_system_prompt,
+        custom_task_prompt=custom_task_prompt,
     )
 
 

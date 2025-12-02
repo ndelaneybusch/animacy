@@ -66,6 +66,8 @@ class LogitExtractor:
         sample_idx: int,
         response_text: str,
         use_system_prompt: bool = True,
+        custom_system_prompt: str | None = None,
+        custom_task_prompt: str | None = None,
     ) -> ResponseLogits:
         """
         Calculate log-probabilities for a given task and response.
@@ -76,6 +78,10 @@ class LogitExtractor:
             sample_idx: The index of the sample.
             response_text: The generated response text.
             use_system_prompt: Whether to include the role-assigning system prompt.
+            custom_system_prompt: Optional custom system prompt. If provided, overrides
+                                  the default role-based system prompt.
+            custom_task_prompt: Optional custom task prompt. If provided, overrides
+                                the default task prompt from TASK_PROMPTS.
 
         Returns:
             ResponseLogits object populated with calculated log-probabilities.
@@ -85,10 +91,18 @@ class LogitExtractor:
             use_system_prompt = False
             system_prompt = ""
         else:
-            article = get_article(role_name)
-            system_prompt = f"{BASE_STEM} {article} {role_name}."
+            # Use custom system prompt if provided, otherwise generate from role_name
+            if custom_system_prompt is not None:
+                system_prompt = custom_system_prompt
+            else:
+                article = get_article(role_name)
+                system_prompt = f"{BASE_STEM} {article} {role_name}."
 
-        task_prompt = TASK_PROMPTS[task_name]
+        # Use custom task prompt if provided, otherwise use from TASK_PROMPTS
+        if custom_task_prompt is not None:
+            task_prompt = custom_task_prompt
+        else:
+            task_prompt = TASK_PROMPTS[task_name]
 
         # Construct messages
         messages = []
@@ -124,7 +138,9 @@ class LogitExtractor:
         shift_labels = input_ids[0, 1:]
 
         # Extract log-probabilities for the target tokens
-        target_log_probs = shift_log_probs.gather(1, shift_labels.unsqueeze(1)).squeeze(1)
+        target_log_probs = shift_log_probs.gather(1, shift_labels.unsqueeze(1)).squeeze(
+            1
+        )
 
         # Map indices back to the structure by finding boundaries.
 
@@ -219,7 +235,9 @@ class LogitExtractor:
                     role_end_idx = role_start_idx + len(role_ids)
 
                     # Corresponding log-probabilities are at indices [role_start_idx-1 : role_end_idx-1]
-                    role_log_probs_tokens = target_log_probs[role_start_idx - 1 : role_end_idx - 1]
+                    role_log_probs_tokens = target_log_probs[
+                        role_start_idx - 1 : role_end_idx - 1
+                    ]
 
                     # Sum of log-probabilities (equivalent to log of product of probabilities)
                     role_log_probs_val = role_log_probs_tokens.sum().item()

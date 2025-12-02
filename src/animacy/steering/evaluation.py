@@ -35,6 +35,8 @@ def evaluate_steered_logits(
                  - task_name (str)
                  - sample_idx (int)
                  - response (str)
+                 - system_prompt (str, optional): Custom system prompt
+                 - task_prompt (str, optional): Custom task/user prompt
         use_system_prompt: Whether to use the system prompt in logit extraction.
 
     Returns:
@@ -54,6 +56,10 @@ def evaluate_steered_logits(
             sample_idx = sample["sample_idx"]
             response_text = sample["response"]
 
+            # Extract optional custom prompts
+            custom_system_prompt = sample.get("system_prompt")
+            custom_task_prompt = sample.get("task_prompt")
+
             # Extract logits
             # Note: extract_logits handles tokenization and model forward pass internally
             # Since we are inside the context manager, the model forward pass will be steered
@@ -63,6 +69,8 @@ def evaluate_steered_logits(
                 sample_idx=sample_idx,
                 response_text=response_text,
                 use_system_prompt=use_system_prompt,
+                custom_system_prompt=custom_system_prompt,
+                custom_task_prompt=custom_task_prompt,
             )
             results.append(logits_result)
 
