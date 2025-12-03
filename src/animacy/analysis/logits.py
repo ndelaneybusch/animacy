@@ -198,6 +198,7 @@ class LogitExtractor:
             task_prompt = meta["task_prompt"]
             use_sys = meta["use_system_prompt"]
             role_name = meta["role_name"]
+            task_name = meta["task_name"]
 
             # 1. System Prompt Boundary
             system_end_idx = -1
