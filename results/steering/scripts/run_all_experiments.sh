@@ -2,7 +2,7 @@
 set -e
 
 # Define base directory
-BASE_DIR="$HOME/repos/animacy"
+BASE_DIR="$HOME/animacy"
 SCRIPT_PATH="$BASE_DIR/results/steering/scripts/run_steering_experiment.py"
 
 S3="/workspace/animacy"
