@@ -18,7 +18,27 @@ python ~/animacy/results/steering/scripts/run_steering_experiment.py \
     --role_vectors_file ~/animacy/results/steering/data/Qwen3-30B-A3B-Instruct-2507/role_vectors_avg_response.pkl \
     --magnitudes 0.3 0.6 1 1.3 1.6 2.3 2.6 3 \
     --no_system_prompt \
-    --batch_size 32
+    --batch_size 8
+
+# Gemma
+python ~/animacy/results/steering/scripts/run_steering_experiment.py \
+    --input_dir ~/animacy/results/q_responses/data/gemma-3-27b-it/ \
+    --output_file results/steering/data/gemma-3-27b-it/role_responses/avg_response.csv \
+    --model_name google/gemma-3-27b-it \
+    --role_vectors_file ~/animacy/results/steering/data/gemma-3-27b-it/role_vectors_avg_response.pkl \
+    --roles napkin scarf hair foot umpire butler \
+    --magnitudes 0 500 1000 2000 3000 4000 5000 6000 7000 8000 \
+    --no_system_prompt \
+    --batch_size 26
+
+python ~/animacy/results/steering/scripts/run_steering_experiment.py \
+    --input_dir ~/animacy/results/steering/data/word_guess/ \
+    --output_file results/steering/data/gemma-3-27b-it/word_guess_steered/avg_response.csv \
+    --model_name google/gemma-3-27b-it \
+    --role_vectors_file ~/animacy/results/steering/data/gemma-3-27b-it/role_vectors_avg_response.pkl \
+    --magnitudes 0 500 1000 2000 3000 4000 5000 6000 7000 8000 \
+    --no_system_prompt \
+    --batch_size 8
 
 """
 
