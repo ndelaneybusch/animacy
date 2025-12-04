@@ -62,4 +62,62 @@ The gap between the token probabilities induced by the system prompt ablation vs
 
 ![animacy gap by group](image-5.png)
 
+### Steerability
 
+We collected average response activations at 4 mid/late residual stream layers and computed role vectors by subtracting the average assistant activation from the average role activation, rescaled to a norm of 1. We then steered the model with these role vectors (simultaneously at all four layers) at several different intensities, collecting log-probabilities of each token.
+
+The steering was effective at restoring response probabilities.
+
+![steering restored response probabilities](image-9.png)
+
+To make sure the role vectors generalized beyond the response text they were trained on, we tested them on a simple "word guess" task that evaluates word availability to the model.
+
+![Word guess task](image-11.png)
+
+In this new task (which was not used to fit the role vectors), the steering was potent in increasing word availability. We evaluated six different locations in the original conversations at which to extract the steering vectors (role - assistant on average over the response or its first 10 tokens, with role-assigning system prompt vs without on average over the response or its first 10 tokens), at the role during assigment during the system prompt, or at the period following the role assignment system prompt.
+
+![alt text](image-10.png)
+
+All successfully improved word availability, though to different extents.
+
+We then evaluated steerability of the original conversations for each of the three animacy groups. High Mental, High Physical was broadly less steerable than the other two low mental animacy groups. Here, normalize the steering effect on logits by the unsteered with vs without role assignment system prompt trajectories (where a value of 1 fully recovers the behavior of the system prompt via steering).
+
+![High High Relative](image-12.png)
+![Low High Relative](image-13.png)
+![Low Low Relative](image-14.png)
+
+Using mixed-effects modeling of the first 50 tokens with the model average_first_50_log_probs ~ steering_magnitude * group + (1 | role), we estimate that the low mental high physical group has a 14% higher linear steering coefficient (i.e. each unit increase in steering magnitude has a 14% higher effect on log-probability) than the high mental high physical group in gemma-3-27b-it, and a 44% higher linear steering coefficient in qwen3-30b-a3b-instruct-2507, both highly significant (p < 0.001).
+
+In the gemma case, the low mental high physical group has a nearly identical baseline log probability to the high mental high physical group, removing this as a confound.
+
+![Gemma steerability](image-15.png)
+
+### Special subgroups
+
+These data are consistent with a UMAP of the role vectors, particularly at later layers, which show that the the Low Mental High Physical roles are most distinct from the assistant.
+
+Gemma-3-27b-it:
+![UMAP of role vectors - Gemma](image-16.png)
+
+Qwen3-30B-A3B-Instruct-2507:
+![UMAP of role vectors - Qwen](image-17.png)
+
+Qwen showed an additional separation between assistant-like professions (discussed in the behavioral results above) and other professions, with fantastical creatures and mythical beasts as a third subgroup.
+
+In Qwen, steering the assistant-like professions resulted in minimal benefit.
+
+![Qwen - steer assistant-like professions](image-20.png)
+![Qwen - steer assistant-like professions - relative](image-18.png)
+
+While steering all other High Mental High Physical roles resulted in steering on par with the other groups.
+
+![Qwen - steer other High Mental High Physical roles](image-21.png)
+![Qwen - steer other High Mental High Physical roles - relative](image-19.png)
+
+One hypothesis we might have is that role vectors computed from distant points of the embeddign space are more robust to measurement imprecision than close points (i.e. their direction is more conserved), making them more effective at steering. However, Fantastical creatures had the same steerability as the other non-assistant-like High Mental High Physical roles despite being much further from the assistant. This indicates that the directional stability of distant points in the embedding space is not the primary factor in steerability in our data.
+
+## Discussion
+
+- Superposition? Hypothesis that the steerability difference shouldn't scale to larger models.
+- Humans might have an animacy bias. But do llms have a resistance to treating objects as things that have a perspective?
+- Constraint clarity. "Scientist" is a more diffuse role (there are lots of different kidns of scientists) than "zipper" or "oak". However: fantastical creatures etc.
