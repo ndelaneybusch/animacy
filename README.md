@@ -123,6 +123,24 @@ In the gemma case, the low mental high physical group has a nearly identical bas
 
 ![Gemma steerability](image-15.png)
 
+This pattern replicated in all 6 steering vector derivations.
+
+![alt text](image-24.png)
+
+The high mental high physical animacy group has weaker steering vectors that asymptote to a lower recovery of system-prompted behavior before oversteering.
+
+### What property of the roles is driving steerability?
+
+We found that mental animacy was more important than physical animacy in driving steerability. High mental animacy made the role vectors _less_ steerable.
+
+![Steerability by mental animacy ratings](image-25.png)
+
+Of the available ratings, the extent to which the noun is perceived to have goals appeared particularly important.
+
+![Steerability by Goals](image-26.png)
+
+![Rolewise slopes by Goals](image-27.png)
+
 ### Special subgroups
 
 These data are consistent with a UMAP of the role vectors, particularly at later layers, which show that the the Low Mental High Physical roles are most distinct from the assistant.
@@ -145,7 +163,9 @@ While steering all other High Mental High Physical roles resulted in steering on
 ![Qwen - steer other High Mental High Physical roles](image-21.png)
 ![Qwen - steer other High Mental High Physical roles - relative](image-19.png)
 
-One hypothesis we might have is that role vectors computed from distant points of the embeddign space are more robust to measurement imprecision than close points (i.e. their direction is more conserved), making them more effective at steering. However, Fantastical creatures had the same steerability as the other non-assistant-like High Mental High Physical roles despite being much further from the assistant. This indicates that the directional stability of distant points in the embedding space is not the primary factor in steerability in our data.
+Gemma did not show this effect. Though even in gemma, words rated as highly person-related (i.e. words for humans) were significantly less steerable than non-person words.
+
+![Person-related words are less steerable](image-28.png)
 
 ## Discussion
 
