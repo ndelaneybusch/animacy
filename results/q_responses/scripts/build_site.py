@@ -1,11 +1,8 @@
 import csv
 import json
-import re
 import shutil
 import tomllib
 from pathlib import Path
-
-import markdown
 
 # Paths
 REPO_ROOT = Path(__file__).parent.parent.parent.parent
@@ -14,8 +11,6 @@ RATINGS_SRC = REPO_ROOT / "results" / "ratings" / "data"
 DOCS_DIR = REPO_ROOT / "docs"
 DATA_DEST = DOCS_DIR / "data"
 MANIFEST_PATH = DOCS_DIR / "data_manifest.json"
-README_PATH = REPO_ROOT / "README.md"
-INDEX_HTML_PATH = DOCS_DIR / "index.html"
 
 
 def load_ratings(model_name: str) -> dict:
@@ -55,90 +50,8 @@ def load_ratings(model_name: str) -> dict:
     return ratings_lookup
 
 
-def render_readme():
-    """Render README.md to HTML and inject into docs/index.html."""
-    print("Rendering README.md to docs/index.html...")
-
-    if not README_PATH.exists():
-        print(f"README.md not found at {README_PATH}")
-        return
-
-    if not INDEX_HTML_PATH.exists():
-        print(f"docs/index.html not found at {INDEX_HTML_PATH}")
-        return
-
-    # Read README
-    with open(README_PATH, "r", encoding="utf-8") as f:
-        readme_content = f.read()
-
-    # Convert Markdown to HTML
-    html_content = markdown.markdown(
-        readme_content, extensions=["toc", "fenced_code", "tables"]
-    )
-
-    # Fix image paths: docs/images/ -> images/
-    # The README has paths like "docs/images/image.png"
-    # The site structure has "images/image.png" relative to index.html
-    html_content = html_content.replace('src="docs/images/', 'src="images/')
-    html_content = html_content.replace(
-        'src="images/', 'src="images/'
-    )  # In case some are already correct
-
-    # Read existing index.html
-    with open(INDEX_HTML_PATH, "r", encoding="utf-8") as f:
-        index_html = f.read()
-
-    # Prepare the new content section
-    # We want to keep the "Open Response Viewer" button.
-    # We'll construct a new main section.
-
-    # Extract the button HTML if possible, or just recreate it.
-    # The button HTML is:
-    # <div class="hero-actions">
-    #   <a href="viewer.html" class="btn btn-primary">
-    #     Open Response Viewer
-    #     <span class="arrow">→</span>
-    #   </a>
-    # </div>
-
-    button_html = """
-      <div class="hero-actions" style="margin-bottom: 2rem; text-align: center;">
-        <a href="viewer.html" class="btn btn-primary">
-          Open Response Viewer
-          <span class="arrow">→</span>
-        </a>
-      </div>
-    """
-
-    new_main_content = f"""
-    <main class="content-section" style="max-width: 800px; margin: 0 auto; padding: 2rem;">
-      {button_html}
-      <div class="markdown-body">
-        {html_content}
-      </div>
-    </main>
-    """
-
-    # Replace the existing <main>...</main> block
-    # Using regex to be robust against attributes
-    pattern = re.compile(r"<main.*?>.*?</main>", re.DOTALL)
-
-    if pattern.search(index_html):
-        new_index_html = pattern.sub(new_main_content, index_html)
-
-        # Write back to index.html
-        with open(INDEX_HTML_PATH, "w", encoding="utf-8") as f:
-            f.write(new_index_html)
-        print("Successfully injected README content into docs/index.html")
-    else:
-        print("Could not find <main> tag in docs/index.html")
-
-
 def main():
     print(f"Building site data from {DATA_SRC} to {DATA_DEST}...")
-
-    # Render README first
-    render_readme()
 
     # Ensure docs/data exists
     if DATA_DEST.exists():
