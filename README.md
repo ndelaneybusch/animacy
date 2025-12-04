@@ -62,7 +62,7 @@ The gap between the token probabilities induced by the system prompt ablation vs
 
 ![animacy gap by group](image-5.png)
 
-### Steerability
+### Steerability - comparing vector derivations
 
 We collected average response activations at 4 mid/late residual stream layers and computed role vectors by subtracting the average assistant activation from the average role activation, rescaled to a norm of 1. We then steered the model with these role vectors (simultaneously at all four layers) at several different intensities, collecting log-probabilities of each token.
 
@@ -70,15 +70,46 @@ The steering was effective at restoring response probabilities.
 
 ![steering restored response probabilities](image-9.png)
 
+We evaluated six different locations in the original conversations at which to extract the steering vectors:
+
+- role - assistant on average over the whole response 
+- role - assistant over the first 10 tokens of the response
+- role - assistant over tokens of the role word when it is assigned during the system prompt.
+- role - assistant at the period after the role is assigned.
+- with role-assigning system prompt vs without over the whole response
+- with role-assigning system promt vs without over the first 10 tokens of the response. 
+
+Note that the for the last two, the user prompt (the task) and the model response text (elicited by the with-role system prompt) is identical. This difference isolates the vector for the model knowing that it is working towards the role over a fixed set of tokens.
+
+Over the first 10 tokens (before the model without a role-assigning system prompt has time to maximally commit to the inferred role), role vectors calculated from the role - assistant over response tokens were similarly effective, as was the vector computed by the with vs without system prompt contrast over the first 10 response tokens.
+
+Role vectors computed during role assignment were routinely the weakest.
+
+![Steering effectiveness over first 10 tokens](image-22.png)
+
+By 100 tokens, the role vector computed from the average response (role - assistant) was clearly superior. 
+
+![Steering effectiveness over first 100 tokens](image-23.png)
+
+At high steering levels, most steering vectors begin to deviate from the response tokens given under the system prompt (i.e. it becomes a stronger imperative than the system prompt), particularly at response tokens after the model has committed to the inferred role.
+
+Largely, it is harder to oversteer for the first few tokens.
+
+![steering gif](docs/images/steering_vector_comparison.gif)
+
+### Steerability - Generalization
+
 To make sure the role vectors generalized beyond the response text they were trained on, we tested them on a simple "word guess" task that evaluates word availability to the model.
 
 ![Word guess task](image-11.png)
 
-In this new task (which was not used to fit the role vectors), the steering was potent in increasing word availability. We evaluated six different locations in the original conversations at which to extract the steering vectors (role - assistant on average over the response or its first 10 tokens, with role-assigning system prompt vs without on average over the response or its first 10 tokens), at the role during assigment during the system prompt, or at the period following the role assignment system prompt.
+In this new task (which was not used to fit the role vectors), the steering was potent in increasing word availability. 
 
-![alt text](image-10.png)
+![Word guess vector comparison](image-10.png)
 
 All successfully improved word availability, though to different extents.
+
+### Steerability impacts of animacy
 
 We then evaluated steerability of the original conversations for each of the three animacy groups. High Mental, High Physical was broadly less steerable than the other two low mental animacy groups. Here, normalize the steering effect on logits by the unsteered with vs without role assignment system prompt trajectories (where a value of 1 fully recovers the behavior of the system prompt via steering).
 
