@@ -2,6 +2,8 @@
 
 An investigation into how properties of model roles influence their behavior.
 
+[website](https://ndelaneybusch.github.io/animacy/)
+
 ## Approach
 
 ![experiment overview](docs/images/image-7.png)
