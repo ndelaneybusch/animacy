@@ -35,27 +35,40 @@
       <div class="markdown-body">
         <h1>Experiment Overview</h1>
         <p><img alt="experiment overview" src="images/image-7.png" /></p>
-        <p>Without the role-providing system prompt, the initially find the role-playing responses deeply surprising,
-          but then is gradually able to infer the role and approximately predict consistent behavior.</p>
+        <br>
+        <p>Without the role-providing system prompt, the models initially find the role-playing responses deeply
+          surprising, but then are gradually able to infer the role and approximately predict consistent behavior.</p>
+        <br>
         <p><img
             alt="gemma-3-27b-it begins its turn as the assistant, rapidly infers the role, but never fully reaches the token probabilities induced by the system prompt"
             src="images/image-4.png" /></p>
+        <br>
         <h1>Steering with Role Vectors restored most of the expected behavior.</h1>
         <p><img alt="steering restored response probabilities" src="images/image-9.png" /></p>
+        <br>
         <p>Surprisingly, high-animacy roles like lawyer, dragon, and biologist had the weakest steerability, across all
           six different methods we tried for computing Role Vectors.</p>
+        <br>
         <p><img alt="steerability by animacy groups" src="images/image-24.png" /></p>
+        <br>
         <p>We replicated this finding for new tasks (not used to derive the role vectors) designed to evaluate word
           availability.</p>
+        <br>
         <p><img alt="Word guess task" src="images/image-11.png" /></p>
+        <br>
         <p><img alt="Steerability by animacy groups on word guess task"
-            src="images/word_guess_steerability_by_animacy_groups.png" /></p>\
+            src="images/word_guess_steerability_by_animacy_groups.png" /></p>
+        <br>
         <h1>What makes the high mental animacy roles less steerable?</h1>
         <p>We found that mental animacy was more important than physical animacy in driving steerability. High mental
           animacy made the role vectors <em>less</em> steerable.</p>
+        <br>
         <p><img alt="Steerability by mental and physical animacy ratings" src="images/image-25.png" /></p>
+        <br>
         <p>This was particularly true for goal-directed behavior.</p>
+        <br>
         <p><img alt="Steerability by Goals" src="images/image-26.png" /></p>
+        <br>
         <h1>Discussion</h1>
         <p>Roles are heuristics for coordinating behavior across complex action spaces. Surprisingly, we find that roles
           with goals and high mental animacy tended to have weaker steering vectors across several different methods
@@ -77,6 +90,7 @@
           texts that may reflect these biases, but the scattered anthropomorphized accounts of inanimate things may
           be high-quality and not so diffuse or conflicting. Or perhaps the simulation machinery is less strongly
           bounded when it is guided by next-token prediction instead of embodied evolutionary pressures.</p>
+        <br>
         <p>Additional findings are available on the github README.</p>
       </div>
     </main>
