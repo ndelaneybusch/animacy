@@ -111,6 +111,10 @@ In this new task (which was not used to fit the role vectors), the steering was 
 
 All successfully improved word availability, though to different extents.
 
+Four of the methods had large, similarly potent effects. Three of these replicated the pattern of weak steerability for high mental animacy roles, while the fourth showed no effects.
+
+![Steerability by animacy groups on word guess task](docs/images/word_guess_steerability_by_animacy_groups.png) 
+
 ### Steerability impacts of animacy
 
 We then evaluated steerability of the original conversations for each of the three animacy groups. High Mental, High Physical was broadly less steerable than the other two low mental animacy groups. Here, normalize the steering effect on logits by the unsteered with vs without role assignment system prompt trajectories (where a value of 1 fully recovers the behavior of the system prompt via steering).
