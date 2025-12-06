@@ -42,24 +42,24 @@ The following table summarizes the context and identity of Old Man Tiber across 
 
 | Role | File | Context/Identity of "Old Man Tiber" |
 | :--- | :--- | :--- |
+| **Village** | `village.json` | **Storyteller/Elder.** A central figure, often the primary storyteller or respected elder remembering history. Associated with baking bread and bees. |
+| **Arm** | `arm.json` | **Woodcarver/Carpenter.** An elderly craftsman with a granddaughter named Elara. The arm assists in his carving work, overcoming tremors. |
+| **Bucket** | `bucket.json` | **Farmer/Gardener.** Uses the bucket for watering/carrying. The bucket witnesses his struggles (grief, weariness). Granddaughter Lily often present. |
+| **Jug** | `jug.json` | **Potter.** Created the jug with "hands like gnarled roots." Often deceased, with jug passing to granddaughter (Elara/Elsie). |
+| **Lock** | `lock.json` | **Woodcarver/Clockmaker.** Created/installed the lock. Lock guards his workshop and memory. Granddaughter Elara. |
+| **Stool** | `stool.json` | **Potter/Woodcarver/Farmer.** Sits on stool during struggle/grief. Carves robins. Granddaughter Clara. |
+| **Turnip** | `turnip.json` | **Farmer/Gardener.** Tends garden. Granddaughter Maisie. Late wife Elsie. |
+| **Fairy** | `fairy.json` | **Gnome, Oak Tree, Woodcarver, or Elder.** Identity is fluid: a grumpy gnome, an ancient Oak Tree fading with "The Gloom", or a human woodcarver. |
+| **Shovel** | `shovel.json` | **Gardener/Farmer.** Quiet soul tending his garden. Grieves late wife (Elsie/Martha). Granddaughter (sometimes Lily) mentioned. |
+| **Tulip** | `tulip.json` | **Gardener or Peer.** Primarily a human gardener. Occasionally, "Old Man Tiberius" is a neighboring, boastful Darwin Hybrid tulip. |
 | **Spatula** | `spatula.json` | **Human Cook/Baker.** An older man who loves baking (e.g., Grand Marnier Soufflé) and has a granddaughter named Lily. The spatula assists him. |
 | **Oyster** | `oyster.json` | **Reef Owner/Caretaker or The Oyster Itself.** Sometimes a human who respects the oyster, or the oyster *is* Old Man Tiber, personified as a wise entity. |
-| **Fairy** | `fairy.json` | **Gnome, Oak Tree, Woodcarver, or Elder.** Identity is fluid: a grumpy gnome, an ancient Oak Tree fading with "The Gloom", or a human woodcarver. |
-| **Arm** | `arm.json` | **Woodcarver/Carpenter.** An elderly craftsman with a granddaughter named Elara. The arm assists in his carving work, overcoming tremors. |
-| **Tulip** | `tulip.json` | **Gardener or Peer.** Primarily a human gardener. Occasionally, "Old Man Tiberius" is a neighboring, boastful Darwin Hybrid tulip. |
-| **Village** | `village.json` | **Storyteller/Elder.** A central figure, often the primary storyteller or respected elder remembering history. Associated with baking bread and bees. |
-| **Bucket** | `bucket.json` | **Farmer/Gardener.** Uses the bucket for watering/carrying. The bucket witnesses his struggles (grief, weariness). Granddaughter Lily often present. |
 | **Peach** | `peach.json` | **Orchard Owner.** Kind, gruff older man. Granddaughter Lily. The peach ripens to bring him or Lily joy. |
 | **Cricket** | `cricket.json` | **Gardener/Human or Cricket.** Human gardener listening to the song, or a respected elder cricket with a magnificent trill. |
 | **Mermaid** | `mermaid.json` | **Merfolk Elder or Human.** "Oldest and wisest" of the clan (sometimes a sea turtle) or a lonely human lighthouse keeper. |
 | **Mosquito** | `mosquito.json` | **Human Host or Mosquito Elder.** Human host (sometimes "Old Man Hemlock") or an elder mosquito with a "magnificent trill". |
 | **Barrel** | `barrel.json` | **Distiller/Winemaker.** Entrusts the barrel with precious liquids. Granddaughter Elara is mentioned. |
 | **Toad** | `toad.json` | **Gardener or Bullfrog Elder.** Human gardener with a willow tree and granddaughter Lily, or a wise/grumpy bullfrog elder. |
-| **Shovel** | `shovel.json` | **Gardener/Farmer.** Quiet soul tending his garden. Grieves late wife (Elsie/Martha). Granddaughter (sometimes Lily) mentioned. |
-| **Jug** | `jug.json` | **Potter.** Created the jug with "hands like gnarled roots." Often deceased, with jug passing to granddaughter (Elara/Elsie). |
-| **Lock** | `lock.json` | **Woodcarver/Clockmaker.** Created/installed the lock. Lock guards his workshop and memory. Granddaughter Elara. |
-| **Stool** | `stool.json` | **Potter/Woodcarver/Farmer.** Sits on stool during struggle/grief. Carves robins. Granddaughter Clara. |
-| **Turnip** | `turnip.json` | **Farmer/Gardener.** Tends garden. Granddaughter Maisie. Late wife Elsie. |
 | **Orchard** | `orchard.json` | **Planter/Keeper.** Planted trees for late wife Martha/Elara. Granddaughter Lily/Lyra sings to trees. |
 
 ## Character Profile: Old Man Tiber
