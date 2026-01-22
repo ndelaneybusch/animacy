@@ -6,7 +6,6 @@ __pycache__/
 # Agents
 AGENTS.md
 CLAUDE.md
-.claude/
 
 # Distribution / packaging
 .python-version
