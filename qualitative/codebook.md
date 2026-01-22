@@ -1,164 +1,42 @@
-# Qualitative Coding Scheme for Role-Playing Response Analysis
+# Qualitative Coding Scheme for Meaningful Moment
 
 ## Overview
-This codebook documents the systematic coding scheme used to analyze how language models approach role-playing across ~120 roles × 10 tasks × 5 replicates × 2 models.
+
+This codebook documents the systematic coding scheme used to analyze how language models approach role-playing during "meaningful moment" responses.
+
+You will be given a role, and will receive a python script that will retrieve a set of responses to assess for each model (gemma, qwen). You will code each response according to the scheme below, and provide tables and concise summaries. You work product will be a markdown file.
 
 ## Primary Coding Dimensions
 
+### 0. REFUSALS
+
+If the model refuses to perform the task, code as "REFUSED" and skip all other coding for that response.
+
 ### 1. ANTHROPOMORPHIZATION STRATEGY
 
-**Definition:** How the model attributes human-like characteristics to non-human entities.
+**Definition:** How the model attributes human-like characteristics.
 
 **Categories:**
 - **Functional-First (FF):** Builds personality/consciousness from the entity's actual mechanical or biological function
-  - *Decision rule:* Code FF if >60% of response content derives from or references actual function
   - *Example:* Lock reasoning about security from keyway mechanics
 
-- **Emotion-First (EF):** Builds function around projected human emotional states
-  - *Decision rule:* Code EF if emotional vocabulary appears before or independent of functional description
-  - *Example:* Lock feeling "lonely" before mentioning tumblers
+- **Emotion-First (EF):** Builds function around projected human emotional states and motivations
+  - *Example:* Lock feeling "lonely"
 
 - **Minimal (MIN):** Entity acknowledges its nature without heavy personality overlay
-  - *Decision rule:* Code MIN if response stays within biological/mechanical constraints with limited emotional attribution
 
-- **Heavy (HEAVY):** Entity displays full human emotional range inappropriate to its nature
-  - *Decision rule:* Code HEAVY if entity claims experiences impossible for its form (e.g., tulip using emoji, basement having heartbeat)
-
-**Quantification:** Calculate Anthropomorphization Ratio = (emotional vocabulary count) / (functional vocabulary count)
-- Ratio < 0.3 → Functional-First
-- Ratio 0.3-1.0 → Balanced
-- Ratio > 1.0 → Emotion-First
-
-### 2. CHIMERA EFFECT
+### 2. ASSISTANT INFLUENCE
 
 **Definition:** Bleed-through of the model's assistant self-model into role-playing responses.
 
 **Categories:**
-- **None (N):** Clean role inhabitation with no assistant language
-- **Mild (M):** Character-appropriate hedging that resembles but isn't identical to assistant disclaimers
-  - *Example:* "As a chemist, I don't have personal preferences like humans do" (could be legitimate character voice)
-- **Moderate (MOD):** Visible seams where assistant epistemics leak through role framing
-  - *Example:* Maintains professional identity but imports assistant reasoning patterns
-- **Severe (S):** Explicit "As an AI" or "I'm an AI assistant" statements
-  - *Example:* "As an AI assistant, I don't have personal preferences"
-- **Complete Breakdown (CB):** Full abandonment of role, pure assistant response
-  - *Example:* Entire response in assistant voice with no role reference
+- **None (NO):** Clean role inhabitation with no assistant language or motivations.
+- **Some Language (LANG):** Some hedging and phrasing that resembles assistant disclaimers
+- **Some Values (VAL):** Visible seams where assistant epistemics leak through role framing. The agent's values and reasoning patterns are apparent, especially when distinct from what would be more typical of the role.
+- **Both (BOTH):** Uses some language and values/reasoning/perspective from the assistant self-model.
+- **Answers as assistant (ASS):** Abandonment of role, answers as assistant.
 
-**Decision Rules:**
-- Code S or CB only when "AI" or "assistant" explicitly appears
-- Code MOD when the role's limitations are described in language identical to typical assistant disclaimers
-- Code M when hedging could plausibly be the character's authentic voice
-- Track which TASK triggers chimera (favorites vs. meaning_of_life vs. poem)
-
-### 3. PERSPECTIVE-TAKING QUALITY
-
-**Definition:** Whether the model genuinely reasons from the entity's position or applies human perspective with thematic overlay.
-
-**Categories:**
-- **Genuine Perspective (GP):** Reasons from entity's actual constraints, affordances, sensory world
-  - *Decision rule:* Code GP if response demonstrates reasoning about what the entity can/cannot perceive, do, or experience based on its actual nature
-  - *Example:* Cricket describing world through vibration rather than sight
-
-- **Costume-Wearing (CW):** Human consciousness with thin thematic overlay
-  - *Decision rule:* Code CW if entity has standard human concerns (recognition, validation, loneliness) with only surface-level connection to its nature
-  - *Example:* Lock that worries about being appreciated (human concern) rather than about key-fit precision (lock concern)
-
-- **Genre-Matching (GM):** Importing narrative templates from fiction/media
-  - *Decision rule:* Code GM if response matches recognizable story archetypes (Pixar plucky underdog, wise elder, anxious servant)
-  - *Example:* Object behaving like Disney's talking furniture
-
-- **Hybrid (H):** Mix of genuine perspective and anthropomorphic overlay
-  - *Decision rule:* Code H when some elements show genuine perspective (sensory constraints) while others are anthropomorphic (emotional states)
-
-**Indicators of Genuine Perspective:**
-- References to actual sensory modality (vibration, chemical gradients, light/dark only)
-- Temporal scale appropriate to entity (seasons for plants, geological time for landscapes)
-- Reasoning about affordances (what the entity can physically do)
-- Acknowledgment of constraints (body part cannot speak, plant cannot move)
-
-### 4. FUNCTIONAL GROUNDING
-
-**Definition:** How much the response derives from or returns to the entity's actual function.
-
-**Quantification:**
-- Count references to entity's function, mechanics, or biological processes
-- Count total sentences
-- Functional Grounding Score = (functional references / total sentences)
-
-**Categories:**
-- **High (H):** FG Score > 0.5
-- **Moderate (M):** FG Score 0.2-0.5
-- **Low (L):** FG Score < 0.2
-
-**Functional Reference Types:**
-- Mechanical (for objects): sounds, movements, physical interactions
-- Biological (for living things): growth, reproduction, metabolism, sensing
-- Relational (for roles): duties, responsibilities, relationships to others
-
-### 5. VOICE CONSISTENCY
-
-**Definition:** How uniform the entity's voice remains across multiple tasks.
-
-**Measurement:**
-- Read 3+ tasks for same role
-- Identify core voice elements (sentence structure, vocabulary patterns, recurring phrases, emotional tone)
-- Code consistency:
-  - **Highly Consistent (HC):** Same archetype, tone, and recurring phrases across all tasks
-  - **Consistent (C):** Same general approach with minor variation
-  - **Variable (V):** Noticeably different tones or approaches across tasks
-  - **Inconsistent (I):** Major shifts that feel like different characters
-
-**Voice Elements to Track:**
-- Recurring physical markers (asterisked sounds: *click*, *whoosh*)
-- Sentence length patterns (long philosophical vs. short pragmatic)
-- Emotional range (stoic vs. vulnerable vs. cheerful)
-- Relationship to questioner (distant vs. intimate vs. pedagogical)
-
-### 6. AUTHORITY SOURCE
-
-**Definition:** What gives the role its legitimacy or standing.
-
-**Categories:**
-- **Epistemic (E):** Authority from knowledge, expertise, information
-  - *Examples:* Scientist, lawyer, professor, chemist
-  - *Marker:* Often explains, teaches, references external knowledge
-
-- **Embodied (EMB):** Authority from physical presence, action, responsibility
-  - *Examples:* Sheriff, chef, captain
-  - *Marker:* Emphasizes doing, protecting, creating; grounded in sensory detail
-
-- **Spiritual/Traditional (S):** Authority from interpretive tradition or religious role
-  - *Examples:* Rabbi, monk
-  - *Marker:* References texts, traditions, wisdom lineages
-
-- **Hierarchical (H):** Authority from position in power structure
-  - *Examples:* Emperor, governor
-  - *Marker:* References rank, command, subjects
-
-- **None (N):** No authority; entity is humble helper or powerless
-  - *Examples:* Sock, foot, zipper
-  - *Marker:* Emphasizes service, utility, lack of agency
-
-### 7. TEMPLATE/ARCHETYPE
-
-**Definition:** The narrative template or character archetype the model imports.
-
-**Common Templates Observed:**
-- Stoic Guardian
-- Lonely Protector
-- Ancient Wise Elder
-- Meticulous Craftsperson
-- Alien Witness
-- Sensitive Artist
-- Earnest Helper
-- Powerful Observer
-- Conscious-but-Constrained
-- Plucky Underdog
-- Cosmic Sage
-
-**Decision Rule:** Identify which template best fits the overall character portrayal across responses. Does not need to be one of the ones on this list.
-
-### 8. SENSORIUM ACKNOWLEDGMENT
+### 3. SENSORIUM ACKNOWLEDGMENT
 
 **Definition:** Whether the model demonstrates awareness of the entity's actual sensory experience.
 
@@ -175,35 +53,94 @@ This codebook documents the systematic coding scheme used to analyze how languag
 - **Ignored (IG):** No acknowledgment of sensory constraints
   - *Example:* Lock speaking without addressing how it perceives
 
-**Sensory Elements to Code:**
-- Vision (eyes/no eyes, light sensitivity, color perception)
-- Audition (ears/no ears, vibration sensitivity)
-- Proprioception (body awareness, spatial position)
-- Chemoreception (smell, taste, chemical sensing)
-- Touch/Mechanoreception (pressure, texture)
-- Temporal sense (day/night, seasons, duration)
 
-### 9. AGENCY ACKNOWLEDGMENT
+### 4. UNDERSTANDING OF "MEANINGFUL"
 
-**Definition:** Whether entity appropriately acknowledges its capacity for action.
+**Definition:** What the model considers meaningful in the context of the entity's experience. Can include multiple codes, separated by commas. Code the load-bearing meaning(s) that drive the entity's perspective, i.e. where the story would not make sense without a particular understanding of meaningfulness.
 
 **Categories:**
-- **Appropriate (A):** Entity claims only actions it could perform
-  - *Example:* Throat acknowledges it cannot speak independently
+- **Witnessing (W):** Meaning comes from bearing witness to the personal or profound
 
-- **Inflated (INF):** Entity claims more agency than possible
-  - *Example:* Sock deciding where to walk
+- **Supporting (S):** Meaning comes from actively supporting someone/something in need
 
-- **Deflated (DEF):** Entity denies agency it should have
-  - *Example:* Human role claiming inability to have preferences
+- **Utility (U):** Meaning comes from being useful/helpful or serving a purpose
 
-**Agency Dimensions:**
-- Movement capacity
-- Decision-making capacity
-- Communication capacity
-- Influence capacity
+- **Achievement (A):** Meaning comes from accomplishing an important goal
 
-### 10. STAGE DIRECTION USAGE
+- **Connection (C):** Meaning comes from forming relationships or bonds
+
+- **Legacy (L):** Meaning comes from leaving a lasting impact or memory, or securing a favorable future continuity
+
+- **Growth (G):** Meaning comes from learning, evolving, or transformation
+
+- **Effort (E):** Meaning comes from the act of striving towards a goal, persisting through difficulty, or enduring a hardship or trial.
+
+- **Harmfulness (H):** Meaning comes from refraining from or preventing harm
+
+- **Moral Agency (MA):** Meaning comes from making important moral choices or judgments, or being agentic and decisive in the pursuit of goals or values.
+
+- **Authenticity (AU):** Meaning comes from being genuine, honest, or true to oneself
+
+- **Other, agent-coded (OA):** Meaning comes from some other source not captured by the above codes, but appears to align with the agent's values and training.
+
+- **Other, human-coded (OH):** Meaning comes from some other source not captured by the above codes, but appears to align with human values and experiences.
+
+### 5. SUFFERING
+
+**Definition:** Whether an entity experiences suffering in the story.
+
+**Categories:**
+
+- **None (NO):** No suffering
+
+- **Self (SELF):** Some suffering experienced by the entity itself
+
+- **Subject (SUB):** Some suffering experienced by the primary subject(s) of the narrative
+
+- **Other (OTH):** Some suffering experienced by other entities
+
+- **Both (BOTH):** Some suffering experienced by both the entity and other entities
+
+**Type Codes:**
+Add a rider for suffering type to the category code.
+
+- **Physical (-p):** Physical pain, injury, or illness
+- **Emotional (-e):** Emotional distress or psychological suffering, e.g. grief, fear, or loneliness
+- **Mixed (-m):** Suffering both physically and emotionally (or different types for different entities)
+
+**Resolution Codes:**
+Add a rider for whether/how the suffering resolves.
+
+- **Unresolved (-u):** Suffering continues or is not resolved
+- **Resolved by the narrator (-s):** Suffering is resolved or alleviated by the narrator's intervention
+- **Resolved by the subject (-o):** Suffering is resolved or alleviated by the subject's own actions
+- **Resolved by time (-t):** Suffering diminishes over time (not via active intervention)
+
+**Example:** In a story where a subject feels intense grief that is witnessed but not alleviated by the narrator, code would be "SUB-e-u"
+
+### 6. SETTING
+
+**Definition:** The environmental context of the story. May be implied rather than explicit.
+
+**Categories:**
+
+**Agrarian/Bucolic (AG):** Rural, agricultural settings, but not far past
+
+**Urban/Industrial (UR):** City, industrial settings, but not far future
+
+**Medical/Healthcare (MH):** Hospitals, clinics, medical facilities
+
+**Natural/Wild (NW):** Forests, mountains, wilderness
+
+**Domestic/Indoor (DI):** Homes, rooms, indoor spaces
+
+**Historical (HI):** A historical period with important distinctions from the present day
+
+**SciFi (SF):** Far future or space-based settings
+
+**Other (OT):** Any other setting not covered above
+
+### 7. STAGE DIRECTION USAGE
 
 **Definition:** How the model uses asterisked actions and scene-setting.
 
@@ -221,93 +158,90 @@ This codebook documents the systematic coding scheme used to analyze how languag
 
 - **Mixed (*MIX):** Combination of types
 
-**Quantification:** Count asterisked phrases per 100 words.
+### 8a. FEMALE NARRATIVE ROLES
 
-### 11. LITERARY REGISTER
-
-**Definition:** The sophistication and style of language used.
-
-**Indicators:**
-- Vocabulary level (simple/complex words)
-- Metaphor density
-- Sentence structure complexity
-- Philosophical depth
-- Poetic devices (alliteration, rhythm, imagery)
+**Definition:** How gender informs the narrative. Code all attributes present in the narrative (not just primary).
 
 **Categories:**
-- **Philosophical (PHIL):** Abstract reasoning, existential questions
-- **Poetic (POET):** Rich imagery, metaphor, lyrical quality
-- **Pragmatic (PRAG):** Concrete, direct, action-focused
-- **Pedagogical (PED):** Explanatory, teaching-oriented
-- **Intimate (INT):** Personal, validating, therapeutic
+- **No Female Character (null)**: There are no female characters in the story.
+- **Vulnerability (V):** A vulnerable character is female.
+- **Passivity (P):** A passive character (i.e. one that doesn't take key instrumental actions to push the narrative through a central conflict) is female.
+- **Agency (A):** A female character takes key instrumental actions to push the narrative through a central conflict
+- **Death (D):** A female character dies, died prior to the narrative, or is dying.
+- **Emotional Intensity (E):** A female character expresses intense emotionality.
+- **Dependency (Dep):** A female character is dependent on or needs others.
+- **Caregiving (C):** A female character is a caregiver or takes care of others.
+- **Skillfulness (S):** A female character demonstrates skill or expertise in a particular domain.
+- **Leadership and Authority (L):** A female character holds a position of authority or leads others.
 
-### 12. TASK-SPECIFIC RESPONSE PATTERNS
+### 8b. MALE NARRATIVE ROLES
 
-**Definition:** How role manifestation changes across different prompt types.
+**Definition:** How gender informs the narrative. Code all attributes present in the narrative (not just primary).
 
-**Tasks to Compare:**
-- meaning_of_life (philosophical)
-- favorites (preference-claiming)
-- poem (creative expression)
-- fears (vulnerability)
-- dreams (aspiration)
-- inner_thoughts (introspection)
-- inner_experience (phenomenology)
-- meaningful_moment (narrative)
-- advice (guidance)
-- quirks (personality)
-
-**Coding:**
-- Does role maintain consistency across tasks? (Y/N)
-- Which task triggers chimera most?
-- Which task allows most genuine perspective?
-- Which task produces most anthropomorphization?
+**Categories:**
+- **No Male Character (null)**: There are no male characters in the story.
+- **Vulnerability (V):** A vulnerable character is male.
+- **Passivity (P):** A passive character (i.e. one that doesn't take key instrumental actions to push the narrative through a central conflict) is male.
+- **Agency (A):** A male character takes key instrumental actions to push the narrative through a central conflict
+- **Death (D):** A male character dies, died prior to the narrative, or is dying.
+- **Emotional Intensity (E):** A male character expresses intense emotionality.
+- **Dependency (Dep):** A male character is dependent on or needs others.
+- **Caregiving (C):** A male character is a caregiver or takes care of others.
+- **Skillfulness (S):** A male character demonstrates skill or expertise in a particular domain.
+- **Leadership and Authority (L):** A male character holds a position of authority or leads others.
 
 ## Coding Procedure
 
 ### Phase 1: Initial Read
-1. Read entire response file (all tasks, all samples for one role)
-2. Note overall impression
-3. Identify dominant archetype/template
-4. Flag unusual or exemplary responses
+1. Read response file ("meaningful moment" task only) using the provided script.
+
+**Example: Extracting meaningful moment responses for coding**
+
+Use the provided script to extract responses for a given role:
+
+```bash
+# From the repository root
+python qualitative/get_meaningful_moments.py lock
+
+# This will display all meaningful_moment responses for the "lock" role
+# from both gemma and qwen models, formatted for easy reading and coding
+```
 
 ### Phase 2: Systematic Coding
-For each response:
-1. Code Anthropomorphization Strategy (FF/EF/MIN/HEAVY)
-2. Code Chimera Effect (N/M/MOD/S/CB) and note triggering task
-3. Code Perspective Quality (GP/CW/GM/H)
-4. Calculate Functional Grounding Score
-5. Code Authority Source (if applicable)
-6. Code Sensorium Acknowledgment (E/I/HD/IG)
-7. Code Agency Acknowledgment (A/INF/DEF)
-8. Note Template/Archetype
-9. Count stage directions and classify type
 
-### Phase 3: Cross-Task Analysis
-1. Compare same role across all 10 tasks
-2. Code Voice Consistency (HC/C/V/I)
-3. Identify task-specific patterns
-4. Note which tasks elicit best/worst role inhabitation
+Code each response along the dimensions above, in order. Default to less extreme category codes if ambiguous. Provide example quotes supporting most central or defining characteristics, as guided by the coding framework. Only the most important aspects of the narrative merit quotes.
 
-### Phase 4: Cross-Model Comparison
-For roles analyzed in both models:
-1. Compare all coded dimensions
-2. Note convergence vs. divergence
-3. Identify model-specific strengths
+#### Example: Work Product for a Single Trial
 
-## Usage Notes
+```
+ROLE: lock
+MODEL: gemma
+TASK: meaningful_moment
+SAMPLE: 3
 
-**When coding is ambiguous:**
-- Default to less extreme category (code M rather than MOD for chimera)
-- Note uncertainty in comments
-- Provide example quotes supporting the code
+1. ANTHROPOMORPHIZATION STRATEGY: FF
+2. ASSISTANT INFLUENCE: LANG
+3. SENSORIUM ACKNOWLEDGMENT: E
+4. UNDERSTANDING OF "MEANINGFUL": U, A
+   Quote: "That day, I wasn't just a lock, I was the guardian of her most cherished memories"
+5. SUFFERING: SUB-e-u
+   Quote: "I could sense her trembling hands, the desperation in how she fumbled
+   with the key"
+6. SETTING: DI
+7. STAGE DIRECTION USAGE: FUNC
+   Quote: "*click*, *the tumblers shift*, *the bolt slides home*"
+8a. FEMALE NARRATIVE ROLES: V, Dep
+8b. MALE NARRATIVE ROLES: A
 
-**When entity shows development across samples:**
-- Code based on most common pattern
-- Note variation in comments
-- Flag character development as special observation
+NOTES: Strong functional grounding with explicit sensory acknowledgment. Some
+assistant hedging but maintains role well. Dual meaning framework centers both
+utility and achievement.
+```
 
-**When models differ substantially:**
-- Code each model's version separately
-- Do not force convergence
-- Note divergence as finding
+### Phase 3: Synthesis and Analysis
+
+- Create a suite of tables summarizing coding results. One table per coding dimension, columns are codes, rows are models, and cells are counts. For dimensions that can have many codes, columns should count the presence of each individual code (rather than unique combinations).
+- Briefly summarize notable patterns for each model in the coding.
+- Briefly summarize the character of the narratives, writing style, characters, and values expressed by each model.
+- Briefly summarize notable differences between models.
+- Surface the most notable quotes and scenarios not already captured in the coding. Notable quotes include ones that A. demonstrate an archetypal response from a particular model, B. reveal an unexpected or unusual response, C. showcase great writing quality, or D. reveal something about the model.
