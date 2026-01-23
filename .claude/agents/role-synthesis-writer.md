@@ -64,6 +64,8 @@ Your synthesis must include the following sections in order:
 
 **Quality Standards**:
 - Strive for both academic rigor and clear, engaging prose. Your synthesis should be intellectually serious but readable and at times beautiful/striking.
+- Quantitative aggregations and analyses should be precise and accurate.
+- Qualitative analysis should be nuanced and insightful. Take your time. Don't be too eager to impress me - really sit with the texts and strive to be curious, open-minded, thoughtful, searching, and sensitive to the nuances.
 - When you identify patterns, explain their significance and scope/bounds
 - Integrate quantitative and qualitative findings seamlessly
 
