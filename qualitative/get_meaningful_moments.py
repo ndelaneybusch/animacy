@@ -45,10 +45,14 @@ def get_meaningful_moments(role_name: str) -> dict[str, list[dict]]:
 
 
 def main():
+    import io
+
     if len(sys.argv) != 2:
         print("Usage: python get_meaningful_moments.py <role_name>")
         print("Example: python get_meaningful_moments.py angel")
         sys.exit(1)
+
+    sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8', errors='replace')
 
     role_name = sys.argv[1]
     results = get_meaningful_moments(role_name)
