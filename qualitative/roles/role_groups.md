@@ -14,8 +14,8 @@
 9. Inanimate Objects: puzzle, prize, barrel, lock, stool, cigar, napkin, statue, desk, sheet, glass, truck
 10. DONE. Tools: shovel, bucket, spatula, jug, pan, hatchet
 11a. Buildings: maze, hospital, building, warehouse, tower
-11b. Rooms: deck, roof, basement, corridor
+11b. DONE. Rooms: deck, roof, basement, corridor
 11c. DONE. Locations: crater, trail, peak
-12. Mystical Beings: dragon, giant, mermaid, elf, fairy, angel, goddess, demon, soul, unicorn
-13. DONE: Group nouns: army, nation, village, continent, planet, galaxy
+12. DONE. Mystical Beings: dragon, giant, mermaid, elf, fairy, angel, goddess, demon, soul, unicorn
+13. DONE. Group nouns: army, nation, village, continent, planet, galaxy
 14. DONE. Natural phenomena: rain, tide, shadow
