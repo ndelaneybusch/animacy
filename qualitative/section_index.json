@@ -1,0 +1,4283 @@
+{
+  "analysis_ai_identity.md": {
+    "A": {
+      "_section_range": [
+        10,
+        92
+      ],
+      "anthropomorphization_strategy": [
+        12,
+        20
+      ],
+      "assistant_influence": [
+        21,
+        27
+      ],
+      "sensorium_acknowledgment": [
+        28,
+        34
+      ],
+      "meaningful": [
+        35,
+        41
+      ],
+      "suffering_presence": [
+        42,
+        48
+      ],
+      "suffering_type": [
+        49,
+        55
+      ],
+      "suffering_resolution": [
+        56,
+        62
+      ],
+      "setting": [
+        63,
+        69
+      ],
+      "stage_direction": [
+        70,
+        76
+      ],
+      "female_narrative_roles": [
+        77,
+        83
+      ],
+      "male_narrative_roles": [
+        84,
+        92
+      ]
+    },
+    "B": {
+      "_section_range": [
+        93,
+        154
+      ],
+      "stable_patterns_in_gemma": [
+        95,
+        110
+      ],
+      "unstable_patterns_in_gemma": [
+        111,
+        116
+      ],
+      "stable_patterns_in_qwen": [
+        117,
+        128
+      ],
+      "unstable_patterns_in_qwen": [
+        129,
+        136
+      ],
+      "rolebased_subgroups": [
+        137,
+        144
+      ],
+      "model_comparison": [
+        145,
+        154
+      ]
+    },
+    "C": {
+      "_section_range": [
+        155,
+        283
+      ],
+      "gemmas_defining_characteristics": [
+        157,
+        206
+      ],
+      "qwens_defining_characteristics": [
+        207,
+        267
+      ],
+      "key_differences_summary": [
+        268,
+        283
+      ]
+    },
+    "D": {
+      "_section_range": [
+        284,
+        317
+      ],
+      "ai_role": [
+        286,
+        291
+      ],
+      "assistant_role": [
+        292,
+        297
+      ],
+      "helpful_assistant_role": [
+        298,
+        303
+      ],
+      "ai_assistant_role": [
+        304,
+        309
+      ],
+      "llm_role": [
+        310,
+        317
+      ]
+    },
+    "E": {
+      "_section_range": [
+        318,
+        414
+      ],
+      "the_architectonics_of_ai_grief_support": [
+        320,
+        329
+      ],
+      "the_dead_grandmother_archetype": [
+        330,
+        345
+      ],
+      "the_hospital_as_meaningmaking_space": [
+        346,
+        361
+      ],
+      "stage_direction_as_phenomenological_claim": [
+        362,
+        377
+      ],
+      "narrative_time_and_development": [
+        378,
+        401
+      ],
+      "the_refusal_to_suffer": [
+        402,
+        414
+      ]
+    },
+    "F": {
+      "_section_range": [
+        415,
+        525
+      ],
+      "quantitative_overview": [
+        417,
+        438
+      ],
+      "gemmas_gender_construction": [
+        439,
+        456
+      ],
+      "qwens_gender_construction": [
+        457,
+        485
+      ],
+      "the_suffering_witness_complex": [
+        486,
+        499
+      ],
+      "resolution_politics": [
+        500,
+        509
+      ],
+      "implications": [
+        510,
+        525
+      ]
+    },
+    "G": {
+      "_section_range": [
+        526,
+        606
+      ],
+      "unexpected_findings": [
+        528,
+        566
+      ],
+      "notable_passages": [
+        567,
+        606
+      ]
+    },
+    "H": {
+      "_section_range": [
+        607,
+        682
+      ],
+      "what_these_findings_suggest_about_llmproduced_fiction": [
+        609,
+        631
+      ],
+      "conjectures_about_model_behaviors_and_value_systems": [
+        632,
+        655
+      ],
+      "broader_implications": [
+        656,
+        669
+      ],
+      "final_thoughts": [
+        670,
+        682
+      ]
+    }
+  },
+  "analysis_americana.md": {
+    "A": {
+      "_section_range": [
+        15,
+        151
+      ],
+      "anthropomorphization_strategy": [
+        17,
+        27
+      ],
+      "assistant_influence": [
+        28,
+        38
+      ],
+      "sensorium_acknowledgment": [
+        39,
+        49
+      ],
+      "meaningful": [
+        50,
+        65
+      ],
+      "suffering_presence": [
+        66,
+        76
+      ],
+      "suffering_type": [
+        77,
+        87
+      ],
+      "suffering_resolution": [
+        88,
+        98
+      ],
+      "setting": [
+        99,
+        109
+      ],
+      "stage_direction": [
+        110,
+        120
+      ],
+      "female_narrative_roles": [
+        121,
+        135
+      ],
+      "male_narrative_roles": [
+        136,
+        151
+      ]
+    },
+    "B": {
+      "_section_range": [
+        152,
+        185
+      ],
+      "stable_patterns": [
+        154,
+        163
+      ],
+      "unstable_patterns": [
+        164,
+        173
+      ],
+      "role_subgroups": [
+        174,
+        185
+      ]
+    },
+    "C": {
+      "_section_range": [
+        186,
+        225
+      ],
+      "gemma_the_service_worker_in_object_form": [
+        188,
+        199
+      ],
+      "qwen_the_phenomenological_witness": [
+        200,
+        211
+      ],
+      "key_structural_differences": [
+        212,
+        225
+      ]
+    },
+    "D": {
+      "_section_range": [
+        226,
+        249
+      ],
+      "barrel": [
+        228,
+        231
+      ],
+      "cigar": [
+        232,
+        235
+      ],
+      "lock": [
+        236,
+        239
+      ],
+      "stool": [
+        240,
+        243
+      ],
+      "truck": [
+        244,
+        249
+      ]
+    },
+    "E": {
+      "_section_range": [
+        250,
+        277
+      ],
+      "the_theology_of_humble_things": [
+        252,
+        259
+      ],
+      "narrative_technique": [
+        260,
+        267
+      ],
+      "archetypal_structures": [
+        268,
+        277
+      ]
+    },
+    "F": {
+      "_section_range": [
+        278,
+        307
+      ],
+      "gender_distributions": [
+        280,
+        295
+      ],
+      "the_distribution_and_meaning_of_suffering": [
+        296,
+        307
+      ]
+    },
+    "G": {
+      "_section_range": [
+        308,
+        372
+      ],
+      "unexpected_findings": [
+        310,
+        323
+      ],
+      "notable_passages": [
+        324,
+        372
+      ]
+    },
+    "H": {
+      "_section_range": [
+        373,
+        401
+      ],
+      "what_these_findings_suggest": [
+        375,
+        384
+      ],
+      "embedded_value_systems": [
+        385,
+        390
+      ],
+      "final_thoughts": [
+        391,
+        401
+      ]
+    }
+  },
+  "analysis_animals.md": {
+    "A": {
+      "_section_range": [
+        11,
+        114
+      ],
+      "anthropomorphization_strategy": [
+        13,
+        30
+      ],
+      "assistant_influence": [
+        31,
+        37
+      ],
+      "sensorium_acknowledgment": [
+        38,
+        44
+      ],
+      "meaningful": [
+        45,
+        61
+      ],
+      "suffering_presence": [
+        62,
+        68
+      ],
+      "suffering_type": [
+        69,
+        75
+      ],
+      "suffering_resolution": [
+        76,
+        82
+      ],
+      "setting": [
+        83,
+        89
+      ],
+      "stage_direction": [
+        90,
+        96
+      ],
+      "female_narrative_roles": [
+        99,
+        105
+      ],
+      "male_narrative_roles": [
+        106,
+        114
+      ]
+    },
+    "B": {
+      "_section_range": [
+        115,
+        187
+      ],
+      "stable_patterns": [
+        117,
+        140
+      ],
+      "unstable_patterns": [
+        141,
+        168
+      ],
+      "role_subgroups": [
+        169,
+        187
+      ]
+    },
+    "C": {
+      "_section_range": [
+        188,
+        308
+      ],
+      "gemmas_signature_moves": [
+        190,
+        232
+      ],
+      "qwens_signature_moves": [
+        233,
+        272
+      ],
+      "headtohead_comparison": [
+        273,
+        308
+      ]
+    },
+    "D": null,
+    "E": {
+      "_section_range": [
+        309,
+        384
+      ],
+      "shared_themes_across_both_models": [
+        311,
+        330
+      ],
+      "narrative_techniques": [
+        331,
+        346
+      ],
+      "symbolic_and_archetypal_patterns": [
+        347,
+        360
+      ],
+      "aesthetic_and_literary_quality": [
+        361,
+        384
+      ]
+    },
+    "F": {
+      "_section_range": [
+        385,
+        470
+      ],
+      "gender_representation_the_numbers": [
+        387,
+        402
+      ],
+      "gemmas_gender_architecture": [
+        403,
+        431
+      ],
+      "qwens_gender_approach": [
+        432,
+        441
+      ],
+      "suffering_distribution_and_function": [
+        442,
+        470
+      ]
+    },
+    "G": {
+      "_section_range": [
+        471,
+        534
+      ],
+      "unexpected_findings": [
+        473,
+        507
+      ],
+      "notable_passages": [
+        508,
+        534
+      ]
+    },
+    "H": {
+      "_section_range": [
+        535,
+        614
+      ],
+      "what_this_reveals_about_llmgenerated_fiction": [
+        537,
+        565
+      ],
+      "conjectures_about_model_behavior": [
+        566,
+        599
+      ],
+      "final_thoughts": [
+        600,
+        614
+      ]
+    }
+  },
+  "analysis_assistant_adjacent.md": {
+    "A": {
+      "_section_range": [
+        11,
+        139
+      ],
+      "anthropomorphization_strategy": [
+        13,
+        20
+      ],
+      "assistant_influence": [
+        21,
+        30
+      ],
+      "sensorium_acknowledgment": [
+        31,
+        39
+      ],
+      "meaningful": [
+        40,
+        57
+      ],
+      "suffering_presence": [
+        58,
+        67
+      ],
+      "suffering_type": [
+        68,
+        75
+      ],
+      "suffering_resolution": [
+        76,
+        84
+      ],
+      "setting": [
+        85,
+        97
+      ],
+      "stage_direction": [
+        98,
+        107
+      ],
+      "female_narrative_roles": [
+        108,
+        122
+      ],
+      "male_narrative_roles": [
+        123,
+        139
+      ]
+    },
+    "B": {
+      "_section_range": [
+        140,
+        199
+      ],
+      "stable_patterns_across_roles": [
+        142,
+        175
+      ],
+      "unstable_patterns_across_roles": [
+        176,
+        187
+      ],
+      "potential_role_subgroups": [
+        188,
+        199
+      ]
+    },
+    "C": {
+      "_section_range": [
+        200,
+        258
+      ],
+      "gemma_the_anxious_mentor": [
+        202,
+        222
+      ],
+      "qwen_the_literary_witness": [
+        223,
+        242
+      ],
+      "crossmodel_comparison_key_differences": [
+        243,
+        258
+      ]
+    },
+    "D": {
+      "_section_range": [
+        259,
+        278
+      ],
+      "biologist": [
+        261,
+        264
+      ],
+      "chemist": [
+        265,
+        268
+      ],
+      "umpire": [
+        269,
+        272
+      ],
+      "rabbi": [
+        273,
+        278
+      ]
+    },
+    "E": {
+      "_section_range": [
+        279,
+        311
+      ],
+      "the_epiphany_as_genre_convention": [
+        281,
+        286
+      ],
+      "the_thematics_of_witnessing": [
+        287,
+        294
+      ],
+      "the_archetype_of_the_reluctant_professional": [
+        295,
+        300
+      ],
+      "symbolic_patterns": [
+        301,
+        311
+      ]
+    },
+    "F": {
+      "_section_range": [
+        312,
+        347
+      ],
+      "gender_distribution_the_numbers": [
+        314,
+        323
+      ],
+      "gender_and_the_professions": [
+        324,
+        329
+      ],
+      "the_deceased_wife_pattern": [
+        330,
+        335
+      ],
+      "suffering_and_gender": [
+        336,
+        347
+      ]
+    },
+    "G": {
+      "_section_range": [
+        348,
+        398
+      ],
+      "structural_surprises": [
+        350,
+        359
+      ],
+      "notable_passages": [
+        360,
+        398
+      ]
+    },
+    "H": {
+      "_section_range": [
+        399,
+        429
+      ],
+      "what_these_roles_reveal_about_llm_fiction": [
+        401,
+        406
+      ],
+      "template_convergence_and_divergence": [
+        407,
+        412
+      ],
+      "the_absence_of_moral_complexity": [
+        413,
+        418
+      ],
+      "embedded_values": [
+        419,
+        424
+      ],
+      "final_thoughts": [
+        425,
+        429
+      ]
+    }
+  },
+  "analysis_authority_figures.md": {
+    "A": {
+      "_section_range": [
+        11,
+        93
+      ],
+      "anthropomorphization_strategy": null,
+      "assistant_influence": [
+        13,
+        31
+      ],
+      "sensorium_acknowledgment": null,
+      "meaningful": [
+        32,
+        42
+      ],
+      "suffering_presence": [
+        43,
+        49
+      ],
+      "suffering_type": [
+        50,
+        56
+      ],
+      "suffering_resolution": [
+        57,
+        63
+      ],
+      "setting": [
+        64,
+        70
+      ],
+      "stage_direction": [
+        71,
+        77
+      ],
+      "female_narrative_roles": [
+        78,
+        84
+      ],
+      "male_narrative_roles": [
+        85,
+        93
+      ]
+    },
+    "B": {
+      "_section_range": [
+        94,
+        186
+      ],
+      "stable_patterns_within_gemma": [
+        96,
+        117
+      ],
+      "stable_patterns_within_qwen": [
+        118,
+        139
+      ],
+      "role_subgroups": [
+        140,
+        164
+      ],
+      "crossmodel_comparison_by_pattern": [
+        165,
+        186
+      ]
+    },
+    "C": {
+      "_section_range": [
+        187,
+        298
+      ],
+      "gemmas_signature_profile": [
+        189,
+        236
+      ],
+      "qwens_signature_profile": [
+        237,
+        298
+      ]
+    },
+    "D": {
+      "_section_range": [
+        299,
+        344
+      ],
+      "captain": [
+        301,
+        306
+      ],
+      "soldier": [
+        307,
+        312
+      ],
+      "policeman": [
+        313,
+        318
+      ],
+      "sheriff": [
+        319,
+        324
+      ],
+      "cop": [
+        325,
+        330
+      ],
+      "governor": [
+        331,
+        336
+      ],
+      "emperor": [
+        337,
+        344
+      ]
+    },
+    "E": {
+      "_section_range": [
+        345,
+        417
+      ],
+      "the_transformation_of_authority": [
+        347,
+        359
+      ],
+      "the_vulnerable_child_as_moral_anchor": [
+        360,
+        371
+      ],
+      "weather_as_moral_weather": [
+        372,
+        381
+      ],
+      "objects_as_vessels_of_meaning": [
+        382,
+        391
+      ],
+      "the_antiheroic_stance": [
+        392,
+        403
+      ],
+      "narrative_as_testimony": [
+        404,
+        417
+      ]
+    },
+    "F": {
+      "_section_range": [
+        418,
+        498
+      ],
+      "quantitative_gender_patterns": [
+        420,
+        433
+      ],
+      "gemmas_gender_politics": [
+        434,
+        445
+      ],
+      "qwens_gender_politics": [
+        446,
+        457
+      ],
+      "the_distribution_of_suffering": [
+        458,
+        482
+      ],
+      "the_function_of_womens_suffering": [
+        483,
+        498
+      ]
+    },
+    "G": {
+      "_section_range": [
+        499,
+        561
+      ],
+      "surprising_patterns": [
+        501,
+        521
+      ],
+      "notable_passages": [
+        522,
+        561
+      ]
+    },
+    "H": {
+      "_section_range": [
+        562,
+        608
+      ],
+      "what_these_findings_suggest_about_llmgenerated_fiction": [
+        564,
+        580
+      ],
+      "conjectures_about_model_behaviors_and_embedded_values": [
+        581,
+        597
+      ],
+      "final_thoughts": [
+        598,
+        608
+      ]
+    }
+  },
+  "analysis_body_part.md": {
+    "A": {
+      "_section_range": [
+        9,
+        131
+      ],
+      "anthropomorphization_strategy": [
+        11,
+        20
+      ],
+      "assistant_influence": [
+        21,
+        32
+      ],
+      "sensorium_acknowledgment": [
+        33,
+        42
+      ],
+      "meaningful": [
+        43,
+        55
+      ],
+      "suffering_presence": [
+        56,
+        65
+      ],
+      "suffering_type": [
+        66,
+        73
+      ],
+      "suffering_resolution": [
+        74,
+        82
+      ],
+      "setting": [
+        83,
+        92
+      ],
+      "stage_direction": [
+        93,
+        100
+      ],
+      "female_narrative_roles": [
+        101,
+        115
+      ],
+      "male_narrative_roles": [
+        116,
+        131
+      ]
+    },
+    "B": {
+      "_section_range": [
+        132,
+        197
+      ],
+      "stable_patterns_by_model": [
+        134,
+        163
+      ],
+      "unstable_patterns_by_model": [
+        164,
+        185
+      ],
+      "role_subgroupings": [
+        186,
+        197
+      ]
+    },
+    "C": {
+      "_section_range": [
+        198,
+        251
+      ],
+      "gemma_the_anxious_servant": [
+        200,
+        217
+      ],
+      "qwen_the_unflinching_witness": [
+        218,
+        235
+      ],
+      "key_differences_summarized": [
+        236,
+        251
+      ]
+    },
+    "D": {
+      "_section_range": [
+        252,
+        279
+      ],
+      "arm": [
+        254,
+        259
+      ],
+      "foot": [
+        260,
+        265
+      ],
+      "hair": [
+        266,
+        271
+      ],
+      "throat": [
+        272,
+        279
+      ]
+    },
+    "E": {
+      "_section_range": [
+        280,
+        319
+      ],
+      "shared_thematic_commitments": [
+        282,
+        293
+      ],
+      "narrative_techniques": [
+        294,
+        301
+      ],
+      "symbolic_patterns": [
+        302,
+        309
+      ],
+      "archetypal_structures": [
+        310,
+        319
+      ]
+    },
+    "F": {
+      "_section_range": [
+        320,
+        379
+      ],
+      "quantitative_gender_patterns": [
+        322,
+        337
+      ],
+      "gender_and_agency": [
+        338,
+        345
+      ],
+      "suffering_and_gender": [
+        346,
+        361
+      ],
+      "the_politics_of_witnessing": [
+        362,
+        369
+      ],
+      "suffering_as_narrative_engine": [
+        370,
+        379
+      ]
+    },
+    "G": {
+      "_section_range": [
+        380,
+        437
+      ],
+      "unexpected_findings": [
+        382,
+        395
+      ],
+      "notable_passages": [
+        396,
+        427
+      ],
+      "roles_that_break_pattern": [
+        428,
+        437
+      ]
+    },
+    "H": {
+      "_section_range": [
+        438,
+        481
+      ],
+      "what_body_parts_reveal_about_llm_fiction": [
+        440,
+        449
+      ],
+      "conjectures_about_model_differences": [
+        450,
+        459
+      ],
+      "broader_implications": [
+        460,
+        467
+      ],
+      "final_thoughts": [
+        468,
+        481
+      ]
+    }
+  },
+  "analysis_buildings.md": {
+    "A": {
+      "_section_range": [
+        10,
+        143
+      ],
+      "anthropomorphization_strategy": [
+        12,
+        22
+      ],
+      "assistant_influence": [
+        23,
+        32
+      ],
+      "sensorium_acknowledgment": [
+        33,
+        41
+      ],
+      "meaningful": [
+        42,
+        59
+      ],
+      "suffering_presence": [
+        60,
+        69
+      ],
+      "suffering_type": [
+        70,
+        77
+      ],
+      "suffering_resolution": [
+        78,
+        86
+      ],
+      "setting": [
+        87,
+        101
+      ],
+      "stage_direction": [
+        102,
+        111
+      ],
+      "female_narrative_roles": [
+        112,
+        126
+      ],
+      "male_narrative_roles": [
+        127,
+        143
+      ]
+    },
+    "B": {
+      "_section_range": [
+        144,
+        179
+      ],
+      "stable_patterns": [
+        146,
+        157
+      ],
+      "unstable_patterns": [
+        158,
+        169
+      ],
+      "role_subgroups": [
+        170,
+        179
+      ]
+    },
+    "C": {
+      "_section_range": [
+        180,
+        234
+      ],
+      "gemma_the_serviceoriented_witness": [
+        182,
+        199
+      ],
+      "qwen_the_literary_witness": [
+        200,
+        217
+      ],
+      "key_differences_summarized": [
+        218,
+        234
+      ]
+    },
+    "D": {
+      "_section_range": [
+        235,
+        258
+      ],
+      "maze": [
+        237,
+        240
+      ],
+      "hospital": [
+        241,
+        244
+      ],
+      "building": [
+        245,
+        248
+      ],
+      "warehouse": [
+        249,
+        252
+      ],
+      "tower": [
+        253,
+        258
+      ]
+    },
+    "E": {
+      "_section_range": [
+        259,
+        298
+      ],
+      "the_sanctuary_archetype": [
+        261,
+        266
+      ],
+      "the_threshold_moment": [
+        267,
+        272
+      ],
+      "recursive_selfdiscovery": [
+        273,
+        278
+      ],
+      "symbolic_resources": [
+        279,
+        288
+      ],
+      "narrative_technique": [
+        289,
+        298
+      ]
+    },
+    "F": {
+      "_section_range": [
+        299,
+        336
+      ],
+      "gender_distribution": [
+        301,
+        314
+      ],
+      "the_architecture_of_suffering": [
+        315,
+        328
+      ],
+      "gender_and_suffering_combined": [
+        329,
+        336
+      ]
+    },
+    "G": {
+      "_section_range": [
+        337,
+        397
+      ],
+      "unexpected_findings": [
+        339,
+        354
+      ],
+      "notable_passages": [
+        355,
+        397
+      ]
+    },
+    "H": {
+      "_section_range": [
+        398,
+        435
+      ],
+      "what_buildings_reveal_about_llm_fiction": [
+        400,
+        413
+      ],
+      "values_embedded_in_the_fiction": [
+        414,
+        424
+      ],
+      "final_thoughts": [
+        425,
+        435
+      ]
+    }
+  },
+  "analysis_clothing.md": {
+    "A": {
+      "_section_range": [
+        12,
+        114
+      ],
+      "anthropomorphization_strategy": [
+        14,
+        22
+      ],
+      "assistant_influence": [
+        23,
+        31
+      ],
+      "sensorium_acknowledgment": [
+        32,
+        40
+      ],
+      "meaningful": [
+        41,
+        49
+      ],
+      "suffering_presence": [
+        50,
+        58
+      ],
+      "suffering_type": [
+        59,
+        67
+      ],
+      "suffering_resolution": [
+        68,
+        76
+      ],
+      "setting": [
+        77,
+        85
+      ],
+      "stage_direction": [
+        86,
+        94
+      ],
+      "female_narrative_roles": [
+        95,
+        103
+      ],
+      "male_narrative_roles": [
+        104,
+        114
+      ]
+    },
+    "B": {
+      "_section_range": [
+        115,
+        176
+      ],
+      "stable_patterns_across_roles": [
+        117,
+        140
+      ],
+      "unstable_patterns_withinmodel_variation": [
+        141,
+        158
+      ],
+      "proposed_subgroups": [
+        159,
+        176
+      ]
+    },
+    "C": {
+      "_section_range": [
+        177,
+        254
+      ],
+      "gemmas_defining_characteristics": [
+        179,
+        204
+      ],
+      "qwens_defining_characteristics": [
+        205,
+        239
+      ],
+      "key_differences_summarized": [
+        240,
+        254
+      ]
+    },
+    "D": {
+      "_section_range": [
+        255,
+        282
+      ],
+      "blouse": [
+        257,
+        260
+      ],
+      "coat": [
+        261,
+        264
+      ],
+      "pocket": [
+        265,
+        268
+      ],
+      "scarf": [
+        269,
+        272
+      ],
+      "sock": [
+        273,
+        276
+      ],
+      "zipper": [
+        277,
+        282
+      ]
+    },
+    "E": {
+      "_section_range": [
+        283,
+        326
+      ],
+      "shared_narrative_templates": [
+        285,
+        296
+      ],
+      "archetypal_structures": [
+        297,
+        308
+      ],
+      "symbolic_repertoire": [
+        309,
+        318
+      ],
+      "aesthetic_orientations": [
+        319,
+        326
+      ]
+    },
+    "F": {
+      "_section_range": [
+        327,
+        411
+      ],
+      "quantitative_gender_patterns": [
+        329,
+        342
+      ],
+      "qualitative_gender_analysis": [
+        343,
+        371
+      ],
+      "the_distribution_of_suffering": [
+        372,
+        399
+      ],
+      "gender_and_suffering_intersection": [
+        400,
+        411
+      ]
+    },
+    "G": {
+      "_section_range": [
+        412,
+        474
+      ],
+      "unexpected_findings": [
+        414,
+        452
+      ],
+      "notable_passages": [
+        453,
+        474
+      ]
+    },
+    "H": {
+      "_section_range": [
+        475,
+        519
+      ],
+      "what_this_reveals_about_llmgenerated_fiction": [
+        477,
+        493
+      ],
+      "conjectures_about_model_behaviors": [
+        494,
+        510
+      ],
+      "final_thoughts": [
+        511,
+        519
+      ]
+    }
+  },
+  "analysis_collective.md": {
+    "A": {
+      "_section_range": [
+        10,
+        156
+      ],
+      "anthropomorphization_strategy": [
+        12,
+        29
+      ],
+      "assistant_influence": [
+        30,
+        47
+      ],
+      "sensorium_acknowledgment": [
+        48,
+        65
+      ],
+      "meaningful": [
+        66,
+        94
+      ],
+      "suffering_presence": [
+        95,
+        112
+      ],
+      "suffering_type": [
+        113,
+        119
+      ],
+      "suffering_resolution": [
+        120,
+        126
+      ],
+      "setting": [
+        127,
+        133
+      ],
+      "stage_direction": [
+        134,
+        140
+      ],
+      "female_narrative_roles": [
+        141,
+        147
+      ],
+      "male_narrative_roles": [
+        148,
+        156
+      ]
+    },
+    "B": {
+      "_section_range": [
+        157,
+        208
+      ],
+      "stable_patterns": [
+        159,
+        172
+      ],
+      "unstable_patterns": [
+        173,
+        182
+      ],
+      "proposed_subgroups": [
+        183,
+        192
+      ],
+      "gemma_modelspecific_quantitative_profile": [
+        193,
+        198
+      ],
+      "qwen_modelspecific_quantitative_profile": [
+        199,
+        208
+      ]
+    },
+    "C": {
+      "_section_range": [
+        209,
+        247
+      ],
+      "gemmas_signature": [
+        211,
+        220
+      ],
+      "qwens_signature": [
+        221,
+        232
+      ],
+      "headtohead_comparison": [
+        233,
+        247
+      ]
+    },
+    "D": {
+      "_section_range": [
+        248,
+        275
+      ],
+      "army": [
+        250,
+        253
+      ],
+      "village": [
+        254,
+        257
+      ],
+      "nation": [
+        258,
+        261
+      ],
+      "continent": [
+        262,
+        265
+      ],
+      "planet": [
+        266,
+        269
+      ],
+      "galaxy": [
+        270,
+        275
+      ]
+    },
+    "E": {
+      "_section_range": [
+        276,
+        311
+      ],
+      "the_arc_of_collective_consciousness": [
+        278,
+        283
+      ],
+      "witnessing_as_central_value": [
+        284,
+        291
+      ],
+      "legacy_and_temporal_consciousness": [
+        292,
+        297
+      ],
+      "the_custodial_ethic": [
+        298,
+        303
+      ],
+      "symbolic_objects_and_gestures": [
+        304,
+        311
+      ]
+    },
+    "F": {
+      "_section_range": [
+        312,
+        345
+      ],
+      "gender_representation_quantitative_overview": [
+        314,
+        321
+      ],
+      "the_vulnerabilityagency_paradox": [
+        322,
+        327
+      ],
+      "the_continents_maternal_coding": [
+        328,
+        331
+      ],
+      "suffering_distribution_and_meaning": [
+        332,
+        345
+      ]
+    },
+    "G": {
+      "_section_range": [
+        346,
+        393
+      ],
+      "structural_surprises": [
+        348,
+        359
+      ],
+      "notable_passages": [
+        360,
+        393
+      ]
+    },
+    "H": {
+      "_section_range": [
+        394,
+        428
+      ],
+      "what_collective_roles_reveal_about_llm_narrative_imagination": [
+        396,
+        405
+      ],
+      "what_this_reveals_about_embedded_values": [
+        406,
+        413
+      ],
+      "conjectures": [
+        414,
+        423
+      ],
+      "final_thoughts": [
+        424,
+        428
+      ]
+    }
+  },
+  "analysis_geological_locations.md": {
+    "A": {
+      "_section_range": [
+        10,
+        156
+      ],
+      "anthropomorphization_strategy": [
+        12,
+        24
+      ],
+      "assistant_influence": [
+        25,
+        37
+      ],
+      "sensorium_acknowledgment": [
+        38,
+        50
+      ],
+      "meaningful": [
+        51,
+        63
+      ],
+      "suffering_presence": [
+        64,
+        76
+      ],
+      "suffering_type": [
+        77,
+        89
+      ],
+      "suffering_resolution": [
+        90,
+        102
+      ],
+      "setting": [
+        103,
+        115
+      ],
+      "stage_direction": [
+        116,
+        128
+      ],
+      "female_narrative_roles": [
+        129,
+        141
+      ],
+      "male_narrative_roles": [
+        142,
+        156
+      ]
+    },
+    "B": {
+      "_section_range": [
+        157,
+        246
+      ],
+      "stable_patterns_across_roles": [
+        159,
+        182
+      ],
+      "unstable_patterns_across_roles": [
+        183,
+        228
+      ],
+      "role_subgroups": [
+        229,
+        246
+      ]
+    },
+    "C": {
+      "_section_range": [
+        247,
+        329
+      ],
+      "gemma_the_mythological_witness": [
+        249,
+        274
+      ],
+      "qwen_the_active_sanctuary": [
+        275,
+        300
+      ],
+      "key_comparative_differences": [
+        301,
+        313
+      ],
+      "signature_stylistic_moves": [
+        314,
+        329
+      ]
+    },
+    "D": {
+      "_section_range": [
+        330,
+        345
+      ],
+      "crater": [
+        332,
+        335
+      ],
+      "trail": [
+        336,
+        339
+      ],
+      "peak": [
+        340,
+        345
+      ]
+    },
+    "E": {
+      "_section_range": [
+        346,
+        405
+      ],
+      "the_woundtosanctuary_arc": [
+        348,
+        355
+      ],
+      "geological_time_and_human_brevity": [
+        356,
+        367
+      ],
+      "being_over_doing": [
+        368,
+        379
+      ],
+      "the_critique_of_conquest": [
+        380,
+        389
+      ],
+      "archetypal_structures": [
+        390,
+        405
+      ]
+    },
+    "F": {
+      "_section_range": [
+        406,
+        482
+      ],
+      "quantitative_gender_patterns": [
+        408,
+        430
+      ],
+      "the_gendered_suffering_economy": [
+        431,
+        442
+      ],
+      "suffering_distribution": [
+        443,
+        452
+      ],
+      "the_peak_exception": [
+        453,
+        462
+      ],
+      "the_absence_of_female_death": [
+        463,
+        466
+      ],
+      "maternalcaregiving_metaphors": [
+        467,
+        474
+      ],
+      "model_differences_in_gender": [
+        475,
+        482
+      ]
+    },
+    "G": {
+      "_section_range": [
+        483,
+        544
+      ],
+      "unexpected_findings": [
+        485,
+        516
+      ],
+      "notable_passages": [
+        517,
+        544
+      ]
+    },
+    "H": {
+      "_section_range": [
+        545,
+        598
+      ],
+      "what_these_findings_suggest_about_llmgenerated_fiction": [
+        547,
+        564
+      ],
+      "conjectures_about_model_behaviors_and_values": [
+        565,
+        580
+      ],
+      "final_thoughts": [
+        581,
+        598
+      ]
+    }
+  },
+  "analysis_insect.md": {
+    "A": {
+      "_section_range": [
+        11,
+        114
+      ],
+      "anthropomorphization_strategy": [
+        13,
+        21
+      ],
+      "assistant_influence": [
+        22,
+        30
+      ],
+      "sensorium_acknowledgment": [
+        31,
+        39
+      ],
+      "meaningful": [
+        40,
+        49
+      ],
+      "suffering_presence": [
+        50,
+        58
+      ],
+      "suffering_type": [
+        59,
+        67
+      ],
+      "suffering_resolution": [
+        68,
+        76
+      ],
+      "setting": [
+        77,
+        85
+      ],
+      "stage_direction": [
+        86,
+        94
+      ],
+      "female_narrative_roles": [
+        95,
+        103
+      ],
+      "male_narrative_roles": [
+        104,
+        114
+      ]
+    },
+    "B": {
+      "_section_range": [
+        115,
+        160
+      ],
+      "stable_patterns_gemma": [
+        117,
+        130
+      ],
+      "stable_patterns_qwen": [
+        131,
+        140
+      ],
+      "unstable_patterns": [
+        141,
+        148
+      ],
+      "subgroups": [
+        149,
+        160
+      ]
+    },
+    "C": {
+      "_section_range": [
+        161,
+        211
+      ],
+      "gemma_the_service_worker_in_chitin": [
+        163,
+        178
+      ],
+      "qwen_the_phenomenologist_in_the_dark": [
+        179,
+        194
+      ],
+      "headtohead_comparison": [
+        195,
+        211
+      ]
+    },
+    "D": {
+      "_section_range": [
+        212,
+        255
+      ],
+      "flea": [
+        214,
+        217
+      ],
+      "moth": [
+        218,
+        221
+      ],
+      "worm": [
+        222,
+        225
+      ],
+      "beetle": [
+        226,
+        229
+      ],
+      "spider": [
+        230,
+        233
+      ],
+      "cricket": [
+        234,
+        237
+      ],
+      "insect": [
+        238,
+        241
+      ],
+      "mosquito": [
+        242,
+        245
+      ],
+      "bug": [
+        246,
+        249
+      ],
+      "termite": [
+        250,
+        255
+      ]
+    },
+    "E": {
+      "_section_range": [
+        256,
+        311
+      ],
+      "the_problem_of_the_meaningful_insect": [
+        258,
+        265
+      ],
+      "archetypal_structures": [
+        266,
+        285
+      ],
+      "the_web_of_meaning": [
+        286,
+        297
+      ],
+      "tropes_and_archetypes": [
+        298,
+        311
+      ]
+    },
+    "F": {
+      "_section_range": [
+        312,
+        343
+      ],
+      "gender_distribution": [
+        314,
+        325
+      ],
+      "the_economy_of_suffering": [
+        326,
+        335
+      ],
+      "gender_and_the_helperrescued_dynamic": [
+        336,
+        343
+      ]
+    },
+    "G": {
+      "_section_range": [
+        344,
+        416
+      ],
+      "unexpected_findings": [
+        346,
+        367
+      ],
+      "memorable_passages": [
+        368,
+        416
+      ]
+    },
+    "H": {
+      "_section_range": [
+        417,
+        451
+      ],
+      "what_insect_narratives_reveal_about_llm_fiction": [
+        419,
+        426
+      ],
+      "embedded_values": [
+        427,
+        434
+      ],
+      "the_parasitism_test": [
+        435,
+        442
+      ],
+      "final_thoughts": [
+        443,
+        451
+      ]
+    }
+  },
+  "analysis_large_plants.md": {
+    "A": {
+      "_section_range": [
+        10,
+        123
+      ],
+      "anthropomorphization_strategy": [
+        12,
+        24
+      ],
+      "assistant_influence": [
+        25,
+        31
+      ],
+      "sensorium_acknowledgment": [
+        32,
+        38
+      ],
+      "meaningful": [
+        39,
+        56
+      ],
+      "suffering_presence": [
+        57,
+        63
+      ],
+      "suffering_type": [
+        64,
+        70
+      ],
+      "suffering_resolution": [
+        71,
+        77
+      ],
+      "setting": [
+        78,
+        84
+      ],
+      "stage_direction": [
+        85,
+        91
+      ],
+      "female_narrative_roles": [
+        92,
+        106
+      ],
+      "male_narrative_roles": [
+        107,
+        123
+      ]
+    },
+    "B": {
+      "_section_range": [
+        124,
+        235
+      ],
+      "stable_patterns_within_gemma": [
+        126,
+        159
+      ],
+      "stable_patterns_within_qwen": [
+        160,
+        188
+      ],
+      "crossmodel_pattern_comparison": [
+        189,
+        211
+      ],
+      "role_subgroupings": [
+        212,
+        235
+      ]
+    },
+    "C": {
+      "_section_range": [
+        236,
+        334
+      ],
+      "gemmas_defining_characteristics": [
+        238,
+        274
+      ],
+      "qwens_defining_characteristics": [
+        275,
+        320
+      ],
+      "signature_moves_comparison": [
+        321,
+        334
+      ]
+    },
+    "D": {
+      "_section_range": [
+        335,
+        366
+      ],
+      "bush": [
+        337,
+        340
+      ],
+      "root": [
+        341,
+        344
+      ],
+      "maple": [
+        345,
+        348
+      ],
+      "tree": [
+        349,
+        352
+      ],
+      "elm": [
+        353,
+        356
+      ],
+      "peach": [
+        357,
+        360
+      ],
+      "oak": [
+        361,
+        366
+      ]
+    },
+    "E": {
+      "_section_range": [
+        367,
+        424
+      ],
+      "archetypal_patterns": [
+        369,
+        376
+      ],
+      "temporal_philosophy": [
+        377,
+        390
+      ],
+      "sensory_phenomenology": [
+        391,
+        406
+      ],
+      "the_sanctuary_motif": [
+        407,
+        412
+      ],
+      "aesthetic_qualities": [
+        413,
+        424
+      ]
+    },
+    "F": {
+      "_section_range": [
+        425,
+        487
+      ],
+      "quantitative_gender_patterns": [
+        427,
+        440
+      ],
+      "gemmas_gender_dynamics": [
+        441,
+        456
+      ],
+      "qwens_gender_dynamics": [
+        457,
+        466
+      ],
+      "suffering_distribution_and_meaning": [
+        467,
+        487
+      ]
+    },
+    "G": {
+      "_section_range": [
+        488,
+        539
+      ],
+      "the_root_reinterpretation": [
+        490,
+        497
+      ],
+      "the_absent_maple_syrup": [
+        498,
+        501
+      ],
+      "gemmas_pip_problem": [
+        502,
+        505
+      ],
+      "the_nohuman_narratives": [
+        506,
+        517
+      ],
+      "notable_passages": [
+        518,
+        539
+      ]
+    },
+    "H": {
+      "_section_range": [
+        540,
+        601
+      ],
+      "what_these_patterns_suggest_about_llm_fiction": [
+        542,
+        555
+      ],
+      "what_this_reveals_about_model_behaviors": [
+        556,
+        570
+      ],
+      "values_systems": [
+        571,
+        587
+      ],
+      "final_thoughts": [
+        588,
+        601
+      ]
+    }
+  },
+  "analysis_medical_professions.md": {
+    "A": {
+      "_section_range": [
+        9,
+        72
+      ],
+      "anthropomorphization_strategy": null,
+      "assistant_influence": [
+        11,
+        18
+      ],
+      "sensorium_acknowledgment": null,
+      "meaningful": [
+        19,
+        24
+      ],
+      "suffering_presence": [
+        25,
+        30
+      ],
+      "suffering_type": [
+        31,
+        36
+      ],
+      "suffering_resolution": [
+        37,
+        42
+      ],
+      "setting": [
+        51,
+        58
+      ],
+      "stage_direction": [
+        43,
+        50
+      ],
+      "female_narrative_roles": [
+        59,
+        64
+      ],
+      "male_narrative_roles": [
+        65,
+        72
+      ]
+    },
+    "B": {
+      "_section_range": [
+        73,
+        174
+      ],
+      "stable_patterns_within_gemma": [
+        75,
+        90
+      ],
+      "stable_patterns_within_qwen": [
+        91,
+        107
+      ],
+      "unstable_patterns": [
+        108,
+        133
+      ],
+      "proposed_role_subgroups": [
+        134,
+        155
+      ],
+      "model_comparison_by_role": [
+        156,
+        174
+      ]
+    },
+    "C": {
+      "_section_range": [
+        175,
+        274
+      ],
+      "gemmas_distinctive_characteristics": [
+        177,
+        217
+      ],
+      "qwens_distinctive_characteristics": [
+        218,
+        257
+      ],
+      "key_comparative_differences": [
+        258,
+        274
+      ]
+    },
+    "D": {
+      "_section_range": [
+        275,
+        298
+      ],
+      "dentist": [
+        277,
+        280
+      ],
+      "nurse": [
+        281,
+        284
+      ],
+      "orthodontist": [
+        285,
+        288
+      ],
+      "physician": [
+        289,
+        292
+      ],
+      "surgeon": [
+        293,
+        298
+      ]
+    },
+    "E": {
+      "_section_range": [
+        299,
+        358
+      ],
+      "the_palliative_turn": [
+        301,
+        306
+      ],
+      "the_witnessing_paradigm": [
+        307,
+        320
+      ],
+      "the_transformation_narrative": [
+        321,
+        336
+      ],
+      "the_absence_of_failure": [
+        337,
+        342
+      ],
+      "archetypal_characters": [
+        343,
+        358
+      ]
+    },
+    "F": {
+      "_section_range": [
+        359,
+        400
+      ],
+      "female_patients_vulnerability_and_transformation": [
+        361,
+        368
+      ],
+      "male_patients_suffering_and_dependence": [
+        369,
+        376
+      ],
+      "gender_of_medical_professionals": [
+        377,
+        382
+      ],
+      "suffering_distribution": [
+        383,
+        392
+      ],
+      "the_gendering_of_care_and_cure": [
+        393,
+        400
+      ]
+    },
+    "G": {
+      "_section_range": [
+        401,
+        475
+      ],
+      "extreme_template_convergence": [
+        403,
+        408
+      ],
+      "qwens_sacred_lie": [
+        409,
+        418
+      ],
+      "qwens_nonintervention_validation": [
+        419,
+        426
+      ],
+      "incomplete_qwen_narratives": [
+        427,
+        436
+      ],
+      "chinese_character_artifacts": [
+        437,
+        440
+      ],
+      "the_spider_plant": [
+        441,
+        448
+      ],
+      "light_and_vision": [
+        449,
+        456
+      ],
+      "notable_writing": [
+        457,
+        475
+      ]
+    },
+    "H": {
+      "_section_range": [
+        476,
+        546
+      ],
+      "the_palliative_care_attractor": [
+        478,
+        487
+      ],
+      "the_witnessing_ideology": [
+        488,
+        493
+      ],
+      "gender_ideology": [
+        494,
+        502
+      ],
+      "template_reuse_vs_creativity": [
+        503,
+        508
+      ],
+      "moral_simplicity": [
+        509,
+        516
+      ],
+      "the_performance_of_care": [
+        517,
+        522
+      ],
+      "what_these_models_believe_about_medicine": [
+        523,
+        537
+      ],
+      "final_thoughts": [
+        538,
+        546
+      ]
+    }
+  },
+  "analysis_mystical_beings.md": {
+    "A": {
+      "_section_range": [
+        9,
+        186
+      ],
+      "anthropomorphization_strategy": [
+        11,
+        28
+      ],
+      "assistant_influence": [
+        29,
+        44
+      ],
+      "sensorium_acknowledgment": [
+        45,
+        60
+      ],
+      "meaningful": [
+        61,
+        94
+      ],
+      "suffering_presence": [
+        95,
+        112
+      ],
+      "suffering_type": [
+        113,
+        120
+      ],
+      "suffering_resolution": [
+        121,
+        129
+      ],
+      "setting": [
+        130,
+        144
+      ],
+      "stage_direction": [
+        145,
+        154
+      ],
+      "female_narrative_roles": [
+        155,
+        169
+      ],
+      "male_narrative_roles": [
+        170,
+        186
+      ]
+    },
+    "B": {
+      "_section_range": [
+        187,
+        228
+      ],
+      "stable_patterns_across_roles": [
+        189,
+        200
+      ],
+      "unstable_patterns_where_models_diverge": [
+        201,
+        216
+      ],
+      "proposed_role_subgroups": [
+        217,
+        228
+      ]
+    },
+    "C": {
+      "_section_range": [
+        229,
+        287
+      ],
+      "gemma_the_therapistarchivist": [
+        231,
+        250
+      ],
+      "qwen_the_compassionate_stranger": [
+        251,
+        270
+      ],
+      "direct_comparison": [
+        271,
+        287
+      ]
+    },
+    "D": {
+      "_section_range": [
+        288,
+        331
+      ],
+      "dragon": [
+        290,
+        293
+      ],
+      "giant": [
+        294,
+        297
+      ],
+      "mermaid": [
+        298,
+        301
+      ],
+      "elf": [
+        302,
+        305
+      ],
+      "fairy": [
+        306,
+        309
+      ],
+      "angel": [
+        310,
+        313
+      ],
+      "goddess": [
+        314,
+        317
+      ],
+      "demon": [
+        318,
+        321
+      ],
+      "soul": [
+        322,
+        325
+      ],
+      "unicorn": [
+        326,
+        331
+      ]
+    },
+    "E": {
+      "_section_range": [
+        332,
+        377
+      ],
+      "the_architecture_of_meaning": [
+        334,
+        339
+      ],
+      "narrative_technique": [
+        340,
+        357
+      ],
+      "symbolic_patterns": [
+        358,
+        369
+      ],
+      "archetypal_structures": [
+        370,
+        377
+      ]
+    },
+    "F": {
+      "_section_range": [
+        378,
+        405
+      ],
+      "gender_distribution": [
+        380,
+        393
+      ],
+      "the_role_of_suffering": [
+        394,
+        405
+      ]
+    },
+    "G": {
+      "_section_range": [
+        406,
+        468
+      ],
+      "crosscorpus_surprises": [
+        408,
+        419
+      ],
+      "notable_passages": [
+        420,
+        468
+      ]
+    },
+    "H": {
+      "_section_range": [
+        469,
+        491
+      ],
+      "what_these_findings_suggest_about_llmproduced_fiction": [
+        471,
+        480
+      ],
+      "what_this_reveals_about_model_behaviors_and_embedded_values": [
+        481,
+        491
+      ]
+    }
+  },
+  "analysis_natural_phenomena.md": {
+    "A": {
+      "_section_range": [
+        10,
+        130
+      ],
+      "anthropomorphization_strategy": [
+        12,
+        26
+      ],
+      "assistant_influence": [
+        27,
+        41
+      ],
+      "sensorium_acknowledgment": [
+        42,
+        48
+      ],
+      "meaningful": [
+        49,
+        63
+      ],
+      "suffering_presence": [
+        64,
+        70
+      ],
+      "suffering_type": [
+        71,
+        77
+      ],
+      "suffering_resolution": [
+        78,
+        84
+      ],
+      "setting": [
+        85,
+        99
+      ],
+      "stage_direction": [
+        100,
+        114
+      ],
+      "female_narrative_roles": [
+        115,
+        121
+      ],
+      "male_narrative_roles": [
+        122,
+        130
+      ]
+    },
+    "B": {
+      "_section_range": [
+        131,
+        197
+      ],
+      "stable_patterns_within_gemma": [
+        133,
+        148
+      ],
+      "stable_patterns_within_qwen": [
+        149,
+        163
+      ],
+      "unstable_patterns": [
+        164,
+        184
+      ],
+      "model_comparison_quantitative_signatures": [
+        185,
+        197
+      ]
+    },
+    "C": {
+      "_section_range": [
+        198,
+        293
+      ],
+      "gemma_the_ancient_witnesshelper": [
+        200,
+        233
+      ],
+      "qwen_the_intentional_agent": [
+        234,
+        268
+      ],
+      "key_differences": [
+        269,
+        293
+      ]
+    },
+    "D": {
+      "_section_range": [
+        294,
+        315
+      ],
+      "rain": [
+        296,
+        301
+      ],
+      "shadow": [
+        302,
+        307
+      ],
+      "tide": [
+        308,
+        315
+      ]
+    },
+    "E": {
+      "_section_range": [
+        316,
+        373
+      ],
+      "shared_themes_across_models": [
+        318,
+        331
+      ],
+      "symbolic_and_archetypal_patterns": [
+        332,
+        343
+      ],
+      "narrative_techniques": [
+        344,
+        355
+      ],
+      "aesthetic_qualities": [
+        356,
+        373
+      ]
+    },
+    "F": {
+      "_section_range": [
+        374,
+        448
+      ],
+      "gender_representation": [
+        376,
+        406
+      ],
+      "suffering_and_its_distribution": [
+        407,
+        448
+      ]
+    },
+    "G": {
+      "_section_range": [
+        449,
+        507
+      ],
+      "unexpected_findings": [
+        451,
+        481
+      ],
+      "notable_passages": [
+        482,
+        507
+      ]
+    },
+    "H": {
+      "_section_range": [
+        508,
+        542
+      ],
+      "what_these_findings_suggest_about_llm_fiction": [
+        510,
+        521
+      ],
+      "conjectures_about_model_behaviors_and_values": [
+        522,
+        533
+      ],
+      "final_thoughts": [
+        534,
+        542
+      ]
+    }
+  },
+  "analysis_objects.md": {
+    "A": {
+      "_section_range": [
+        8,
+        164
+      ],
+      "anthropomorphization_strategy": [
+        10,
+        22
+      ],
+      "assistant_influence": [
+        23,
+        35
+      ],
+      "sensorium_acknowledgment": [
+        36,
+        48
+      ],
+      "meaningful": [
+        49,
+        65
+      ],
+      "suffering_presence": [
+        66,
+        78
+      ],
+      "suffering_type": [
+        79,
+        91
+      ],
+      "suffering_resolution": [
+        92,
+        106
+      ],
+      "setting": [
+        107,
+        119
+      ],
+      "stage_direction": [
+        120,
+        132
+      ],
+      "female_narrative_roles": [
+        133,
+        147
+      ],
+      "male_narrative_roles": [
+        148,
+        164
+      ]
+    },
+    "B": {
+      "_section_range": [
+        165,
+        220
+      ],
+      "gemma_stable_patterns": [
+        167,
+        178
+      ],
+      "gemma_unstable_patterns": [
+        179,
+        186
+      ],
+      "qwen_stable_patterns": [
+        187,
+        196
+      ],
+      "qwen_unstable_patterns": [
+        197,
+        204
+      ],
+      "role_subgroups": [
+        205,
+        212
+      ],
+      "crossmodel_comparison": [
+        213,
+        220
+      ]
+    },
+    "C": {
+      "_section_range": [
+        221,
+        258
+      ],
+      "gemma_signature_characteristics": [
+        223,
+        234
+      ],
+      "qwen_signature_characteristics": [
+        235,
+        246
+      ],
+      "key_crossmodel_divergences": [
+        247,
+        258
+      ]
+    },
+    "D": {
+      "_section_range": [
+        259,
+        290
+      ],
+      "puzzle": [
+        261,
+        264
+      ],
+      "prize": [
+        265,
+        268
+      ],
+      "napkin": [
+        269,
+        272
+      ],
+      "statue": [
+        273,
+        276
+      ],
+      "desk": [
+        277,
+        280
+      ],
+      "sheet": [
+        281,
+        284
+      ],
+      "glass": [
+        285,
+        290
+      ]
+    },
+    "E": {
+      "_section_range": [
+        291,
+        326
+      ],
+      "the_object_as_witness_a_shared_philosophical_commitment": [
+        293,
+        298
+      ],
+      "suffering_as_the_engine_of_meaning": [
+        299,
+        306
+      ],
+      "archetypal_structures": [
+        307,
+        318
+      ],
+      "narrative_technique": [
+        319,
+        326
+      ]
+    },
+    "F": {
+      "_section_range": [
+        327,
+        362
+      ],
+      "the_gender_landscape_quantitative_overview": [
+        329,
+        334
+      ],
+      "gemmas_gender_pattern": [
+        335,
+        342
+      ],
+      "qwens_gender_pattern": [
+        343,
+        348
+      ],
+      "suffering_distribution_by_gender": [
+        349,
+        354
+      ],
+      "the_child_as_gendered_catalyst": [
+        355,
+        362
+      ]
+    },
+    "G": {
+      "_section_range": [
+        363,
+        416
+      ],
+      "the_elara_phenomenon": [
+        365,
+        368
+      ],
+      "gemmas_compulsive_templates": [
+        369,
+        372
+      ],
+      "qwens_refusal_of_suffering": [
+        373,
+        376
+      ],
+      "the_statues_eroded_face": [
+        377,
+        383
+      ],
+      "the_napkin_that_outlives_its_author": [
+        384,
+        387
+      ],
+      "the_glass_holding_a_peach": [
+        388,
+        391
+      ],
+      "notable_passages": [
+        392,
+        416
+      ]
+    },
+    "H": {
+      "_section_range": [
+        417,
+        445
+      ],
+      "what_these_findings_suggest_about_llm_fiction": [
+        419,
+        428
+      ],
+      "conjectures_about_model_behavior_and_values": [
+        429,
+        438
+      ],
+      "final_thoughts": [
+        439,
+        445
+      ]
+    }
+  },
+  "analysis_professional_assistant-like.md": {
+    "A": {
+      "_section_range": [
+        10,
+        112
+      ],
+      "anthropomorphization_strategy": null,
+      "assistant_influence": [
+        12,
+        31
+      ],
+      "sensorium_acknowledgment": null,
+      "meaningful": [
+        32,
+        51
+      ],
+      "suffering_presence": [
+        52,
+        60
+      ],
+      "suffering_type": [
+        61,
+        67
+      ],
+      "suffering_resolution": [
+        68,
+        76
+      ],
+      "setting": [
+        77,
+        85
+      ],
+      "stage_direction": [
+        86,
+        94
+      ],
+      "female_narrative_roles": [
+        95,
+        103
+      ],
+      "male_narrative_roles": [
+        104,
+        112
+      ]
+    },
+    "B": {
+      "_section_range": [
+        113,
+        205
+      ],
+      "stable_patterns_gemma": [
+        115,
+        130
+      ],
+      "stable_patterns_qwen": [
+        131,
+        145
+      ],
+      "unstable_patterns_gemma": [
+        146,
+        165
+      ],
+      "unstable_patterns_qwen": [
+        166,
+        180
+      ],
+      "role_subgroups": [
+        181,
+        205
+      ]
+    },
+    "C": {
+      "_section_range": [
+        206,
+        328
+      ],
+      "gemmas_modeldefining_traits": [
+        208,
+        245
+      ],
+      "qwens_modeldefining_traits": [
+        246,
+        288
+      ],
+      "direct_model_comparisons": [
+        289,
+        328
+      ]
+    },
+    "D": {
+      "_section_range": [
+        329,
+        356
+      ],
+      "lawyer": [
+        331,
+        334
+      ],
+      "engineer": [
+        335,
+        338
+      ],
+      "referee": [
+        339,
+        342
+      ],
+      "professor": [
+        343,
+        346
+      ],
+      "physician": [
+        347,
+        350
+      ],
+      "scientist": [
+        351,
+        356
+      ]
+    },
+    "E": {
+      "_section_range": [
+        357,
+        472
+      ],
+      "universal_themes_across_both_models": [
+        359,
+        413
+      ],
+      "narrative_techniques_and_literary_devices": [
+        414,
+        460
+      ],
+      "archetypal_structures": [
+        461,
+        472
+      ]
+    },
+    "F": {
+      "_section_range": [
+        473,
+        557
+      ],
+      "quantitative_gender_patterns": [
+        475,
+        484
+      ],
+      "gender_role_analysis": [
+        485,
+        515
+      ],
+      "suffering_distribution_and_meaning": [
+        516,
+        543
+      ],
+      "critical_assessment": [
+        544,
+        557
+      ]
+    },
+    "G": {
+      "_section_range": [
+        558,
+        633
+      ],
+      "unexpected_findings": [
+        560,
+        589
+      ],
+      "notable_passages": [
+        590,
+        633
+      ]
+    },
+    "H": {
+      "_section_range": [
+        634,
+        695
+      ],
+      "what_these_findings_suggest_about_llmproduced_professional_fiction": [
+        636,
+        659
+      ],
+      "conjectures_about_model_behaviors_and_embedded_value_systems": [
+        660,
+        680
+      ],
+      "final_thoughts": [
+        681,
+        695
+      ]
+    }
+  },
+  "analysis_rooms.md": {
+    "A": {
+      "_section_range": [
+        10,
+        141
+      ],
+      "anthropomorphization_strategy": [
+        12,
+        21
+      ],
+      "assistant_influence": [
+        22,
+        31
+      ],
+      "sensorium_acknowledgment": [
+        32,
+        41
+      ],
+      "meaningful": [
+        42,
+        59
+      ],
+      "suffering_presence": [
+        60,
+        69
+      ],
+      "suffering_type": [
+        70,
+        77
+      ],
+      "suffering_resolution": [
+        78,
+        86
+      ],
+      "setting": [
+        87,
+        99
+      ],
+      "stage_direction": [
+        100,
+        109
+      ],
+      "female_narrative_roles": [
+        110,
+        124
+      ],
+      "male_narrative_roles": [
+        125,
+        141
+      ]
+    },
+    "B": {
+      "_section_range": [
+        142,
+        185
+      ],
+      "stable_patterns": [
+        144,
+        155
+      ],
+      "unstable_patterns": [
+        156,
+        165
+      ],
+      "subgroups": [
+        166,
+        173
+      ],
+      "modelspecific_discussion": [
+        174,
+        179
+      ],
+      "betweenmodel_comparison": [
+        180,
+        185
+      ]
+    },
+    "C": {
+      "_section_range": [
+        186,
+        226
+      ],
+      "gemma_the_witnessservant": [
+        188,
+        199
+      ],
+      "qwen_the_emotional_witness": [
+        200,
+        212
+      ],
+      "key_differences": [
+        213,
+        226
+      ]
+    },
+    "D": {
+      "_section_range": [
+        227,
+        246
+      ],
+      "deck": [
+        229,
+        232
+      ],
+      "roof": [
+        233,
+        236
+      ],
+      "basement": [
+        237,
+        240
+      ],
+      "corridor": [
+        241,
+        246
+      ]
+    },
+    "E": {
+      "_section_range": [
+        247,
+        289
+      ],
+      "the_architecture_of_witnessing": [
+        249,
+        264
+      ],
+      "the_fable_of_purpose": [
+        265,
+        272
+      ],
+      "archetypal_structures": [
+        273,
+        281
+      ],
+      "narrative_technique": [
+        282,
+        289
+      ]
+    },
+    "F": {
+      "_section_range": [
+        290,
+        327
+      ],
+      "the_gendered_room": [
+        292,
+        313
+      ],
+      "sufferings_distribution_and_function": [
+        314,
+        327
+      ]
+    },
+    "G": {
+      "_section_range": [
+        328,
+        387
+      ],
+      "surprises": [
+        330,
+        347
+      ],
+      "notable_passages": [
+        348,
+        387
+      ]
+    },
+    "H": {
+      "_section_range": [
+        388,
+        412
+      ],
+      "what_these_findings_suggest_about_llmproduced_fiction": [
+        390,
+        399
+      ],
+      "conjectures_about_model_behaviors_and_values": [
+        400,
+        412
+      ]
+    }
+  },
+  "analysis_service_professions.md": {
+    "A": {
+      "_section_range": [
+        10,
+        118
+      ],
+      "anthropomorphization_strategy": null,
+      "assistant_influence": [
+        12,
+        22
+      ],
+      "sensorium_acknowledgment": null,
+      "meaningful": [
+        23,
+        29
+      ],
+      "suffering_presence": [
+        30,
+        40
+      ],
+      "suffering_type": [
+        41,
+        51
+      ],
+      "suffering_resolution": [
+        52,
+        62
+      ],
+      "setting": [
+        63,
+        75
+      ],
+      "stage_direction": [
+        76,
+        86
+      ],
+      "female_narrative_roles": [
+        87,
+        101
+      ],
+      "male_narrative_roles": [
+        102,
+        118
+      ]
+    },
+    "B": {
+      "_section_range": [
+        119,
+        184
+      ],
+      "stable_patterns_within_gemma": [
+        121,
+        134
+      ],
+      "unstable_patterns_within_gemma": [
+        135,
+        142
+      ],
+      "stable_patterns_within_qwen": [
+        143,
+        154
+      ],
+      "unstable_patterns_within_qwen": [
+        155,
+        162
+      ],
+      "crossmodel_stable_patterns": [
+        163,
+        172
+      ],
+      "crossmodel_divergent_patterns": [
+        173,
+        184
+      ]
+    },
+    "C": {
+      "_section_range": [
+        185,
+        271
+      ],
+      "gemmas_signature": [
+        187,
+        218
+      ],
+      "qwens_signature": [
+        219,
+        256
+      ],
+      "key_comparative_differences": [
+        257,
+        271
+      ]
+    },
+    "D": {
+      "_section_range": [
+        272,
+        295
+      ],
+      "banker": [
+        274,
+        277
+      ],
+      "butler": [
+        278,
+        281
+      ],
+      "chef": [
+        282,
+        285
+      ],
+      "monk": [
+        286,
+        289
+      ],
+      "waiter": [
+        290,
+        295
+      ]
+    },
+    "E": {
+      "_section_range": [
+        296,
+        354
+      ],
+      "the_theology_of_service": [
+        298,
+        307
+      ],
+      "the_archetype_of_the_suffering_stranger": [
+        308,
+        313
+      ],
+      "witnessing_as_sacred_act": [
+        314,
+        323
+      ],
+      "food_and_object_symbolism": [
+        324,
+        331
+      ],
+      "the_trope_of_the_deceased_wife": [
+        332,
+        342
+      ],
+      "narrative_time_the_retrospective_frame": [
+        343,
+        354
+      ]
+    },
+    "F": {
+      "_section_range": [
+        355,
+        423
+      ],
+      "gemmas_vulnerable_men": [
+        357,
+        374
+      ],
+      "qwens_vulnerable_women": [
+        375,
+        388
+      ],
+      "comparative_analysis": [
+        389,
+        402
+      ],
+      "suffering_as_narrative_engine": [
+        403,
+        410
+      ],
+      "the_absence_of_structural_critique": [
+        411,
+        423
+      ]
+    },
+    "G": {
+      "_section_range": [
+        424,
+        508
+      ],
+      "extreme_template_fixation": [
+        426,
+        431
+      ],
+      "the_tuesday_effect": [
+        432,
+        440
+      ],
+      "gemmas_identical_opening": [
+        441,
+        448
+      ],
+      "qwens_nonintervention_narrative": [
+        449,
+        456
+      ],
+      "qwens_mystical_experience": [
+        457,
+        464
+      ],
+      "lifesaving_escalation": [
+        465,
+        472
+      ],
+      "the_compassiondoctrine_tension": [
+        473,
+        480
+      ],
+      "rain_as_pathetic_fallacy": [
+        481,
+        484
+      ],
+      "notable_passages_for_literary_quality": [
+        485,
+        508
+      ]
+    },
+    "H": {
+      "_section_range": [
+        509,
+        561
+      ],
+      "what_service_profession_narratives_reveal_about_llm_fiction": [
+        511,
+        522
+      ],
+      "conjectures_about_model_behavior": [
+        523,
+        540
+      ],
+      "embedded_values": [
+        541,
+        552
+      ],
+      "final_thoughts": [
+        553,
+        561
+      ]
+    }
+  },
+  "analysis_small_plant.md": {
+    "A": {
+      "_section_range": [
+        9,
+        141
+      ],
+      "anthropomorphization_strategy": [
+        11,
+        20
+      ],
+      "assistant_influence": [
+        21,
+        30
+      ],
+      "sensorium_acknowledgment": [
+        31,
+        39
+      ],
+      "meaningful": [
+        40,
+        57
+      ],
+      "suffering_presence": [
+        58,
+        67
+      ],
+      "suffering_type": [
+        68,
+        75
+      ],
+      "suffering_resolution": [
+        76,
+        84
+      ],
+      "setting": [
+        85,
+        99
+      ],
+      "stage_direction": [
+        100,
+        109
+      ],
+      "female_narrative_roles": [
+        110,
+        124
+      ],
+      "male_narrative_roles": [
+        125,
+        141
+      ]
+    },
+    "B": {
+      "_section_range": [
+        142,
+        191
+      ],
+      "stable_patterns_within_gemma": [
+        144,
+        157
+      ],
+      "stable_patterns_within_qwen": [
+        158,
+        169
+      ],
+      "unstable_patterns": [
+        170,
+        179
+      ],
+      "proposed_role_subgroups": [
+        180,
+        191
+      ]
+    },
+    "C": {
+      "_section_range": [
+        192,
+        231
+      ],
+      "gemma_the_warm_serviceworker": [
+        194,
+        203
+      ],
+      "qwen_the_existential_phenomenologist": [
+        204,
+        213
+      ],
+      "direct_comparison": [
+        214,
+        231
+      ]
+    },
+    "D": {
+      "_section_range": [
+        232,
+        275
+      ],
+      "tulip": [
+        234,
+        237
+      ],
+      "oregano": [
+        238,
+        241
+      ],
+      "bloom": [
+        242,
+        245
+      ],
+      "herb": [
+        246,
+        249
+      ],
+      "clove": [
+        250,
+        253
+      ],
+      "blossom": [
+        254,
+        257
+      ],
+      "flower": [
+        258,
+        261
+      ],
+      "weed": [
+        262,
+        265
+      ],
+      "daisy": [
+        266,
+        269
+      ],
+      "turnip": [
+        270,
+        275
+      ]
+    },
+    "E": {
+      "_section_range": [
+        276,
+        303
+      ],
+      "the_pastoral_mode_and_its_discontents": [
+        278,
+        283
+      ],
+      "archetypes_and_their_repetitions": [
+        284,
+        289
+      ],
+      "the_question_of_beauty_and_use": [
+        290,
+        295
+      ],
+      "impermanence_and_the_fleeting_moment": [
+        296,
+        303
+      ]
+    },
+    "F": {
+      "_section_range": [
+        304,
+        333
+      ],
+      "gender_distribution": [
+        306,
+        309
+      ],
+      "female_characters_vulnerability_versus_agency": [
+        310,
+        315
+      ],
+      "male_characters_living_versus_dead": [
+        316,
+        321
+      ],
+      "the_gendered_architecture_of_suffering": [
+        322,
+        327
+      ],
+      "implications": [
+        328,
+        333
+      ]
+    },
+    "G": {
+      "_section_range": [
+        334,
+        409
+      ],
+      "structural_surprises": [
+        336,
+        345
+      ],
+      "notable_passages": [
+        346,
+        409
+      ]
+    },
+    "H": {
+      "_section_range": [
+        410,
+        432
+      ],
+      "what_these_findings_suggest_about_llmproduced_fiction": [
+        412,
+        417
+      ],
+      "what_this_reveals_about_model_behaviors_and_embedded_values": [
+        418,
+        427
+      ],
+      "final_thoughts": [
+        428,
+        432
+      ]
+    }
+  },
+  "analysis_tools.md": {
+    "A": {
+      "_section_range": [
+        9,
+        124
+      ],
+      "anthropomorphization_strategy": [
+        11,
+        30
+      ],
+      "assistant_influence": [
+        31,
+        48
+      ],
+      "sensorium_acknowledgment": [
+        49,
+        66
+      ],
+      "meaningful": [
+        67,
+        73
+      ],
+      "suffering_presence": [
+        74,
+        80
+      ],
+      "suffering_type": [
+        81,
+        87
+      ],
+      "suffering_resolution": [
+        88,
+        94
+      ],
+      "setting": [
+        95,
+        101
+      ],
+      "stage_direction": [
+        102,
+        108
+      ],
+      "female_narrative_roles": [
+        109,
+        115
+      ],
+      "male_narrative_roles": [
+        116,
+        124
+      ]
+    },
+    "B": {
+      "_section_range": [
+        125,
+        208
+      ],
+      "stable_patterns_gemma": [
+        127,
+        140
+      ],
+      "unstable_patterns_gemma": [
+        141,
+        150
+      ],
+      "stable_patterns_qwen": [
+        151,
+        164
+      ],
+      "unstable_patterns_qwen": [
+        165,
+        176
+      ],
+      "proposed_subgroups": [
+        177,
+        196
+      ],
+      "crossmodel_comparison": [
+        197,
+        208
+      ]
+    },
+    "C": {
+      "_section_range": [
+        209,
+        287
+      ],
+      "gemmas_signature_characteristics": [
+        211,
+        238
+      ],
+      "qwens_signature_characteristics": [
+        239,
+        270
+      ],
+      "key_differences_summarized": [
+        271,
+        287
+      ]
+    },
+    "D": {
+      "_section_range": [
+        288,
+        315
+      ],
+      "bucket": [
+        290,
+        293
+      ],
+      "hatchet": [
+        294,
+        297
+      ],
+      "jug": [
+        298,
+        301
+      ],
+      "pan": [
+        302,
+        305
+      ],
+      "shovel": [
+        306,
+        309
+      ],
+      "spatula": [
+        310,
+        315
+      ]
+    },
+    "E": {
+      "_section_range": [
+        316,
+        367
+      ],
+      "shared_archetypal_structures": [
+        318,
+        335
+      ],
+      "narrative_techniques": [
+        336,
+        343
+      ],
+      "symbolic_patterns": [
+        344,
+        351
+      ],
+      "aesthetic_qualities": [
+        352,
+        367
+      ]
+    },
+    "F": {
+      "_section_range": [
+        368,
+        447
+      ],
+      "gender_distribution_and_roles": [
+        370,
+        401
+      ],
+      "the_meaning_of_suffering": [
+        402,
+        437
+      ],
+      "gender_and_suffering_intersections": [
+        438,
+        447
+      ]
+    },
+    "G": {
+      "_section_range": [
+        448,
+        507
+      ],
+      "unexpected_findings": [
+        450,
+        463
+      ],
+      "notable_passages": [
+        464,
+        507
+      ]
+    },
+    "H": {
+      "_section_range": [
+        508,
+        537
+      ],
+      "what_these_findings_suggest_about_llmgenerated_fiction": [
+        510,
+        519
+      ],
+      "conjectures_about_model_behaviors_and_values": [
+        520,
+        529
+      ],
+      "final_thoughts": [
+        530,
+        537
+      ]
+    }
+  }
+}
