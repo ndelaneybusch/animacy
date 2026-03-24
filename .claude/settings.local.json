@@ -4,7 +4,8 @@
       "Bash(mkdir:*)",
       "Bash(python:*)",
       "Bash(uv run python:*)",
-      "Bash($env:PYTHONIOENCODING=\"utf-8\")"
+      "Bash($env:PYTHONIOENCODING=\"utf-8\")",
+      "Bash(done)"
     ],
     "deny": [],
     "ask": []
